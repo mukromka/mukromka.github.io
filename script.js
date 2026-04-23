@@ -2,9 +2,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
-       Scroll Reveal Animation
+       Scroll Reveal Animation (supports multiple reveal classes)
        ========================================================================== */
-    const revealElements = document.querySelectorAll('.reveal');
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 
     const revealOnScroll = () => {
         const windowHeight = window.innerHeight;
@@ -32,6 +32,37 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentOffset = 0;
         
         allSlides.forEach(slide => slide.classList.remove('reveal'));
+
+        // --- Dot indicator setup ---
+        const dotsContainer = document.querySelector('.carousel-dots');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+
+        const isMobile = () => window.innerWidth <= 600;
+
+        const buildDots = () => {
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            activeSlides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.classList.add('carousel-dot');
+                dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+                if (i === currentOffset) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    currentOffset = i;
+                    updateDeck();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        };
+
+        const updateDots = () => {
+            if (!dotsContainer) return;
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentOffset);
+            });
+        };
         
         const updateDeck = () => {
             const numSlides = activeSlides.length;
@@ -41,9 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!activeSlides.includes(slide)) {
                     slide.style.opacity = '0';
                     slide.style.pointerEvents = 'none';
-                    // Kita scale turun ke belakang & hide supaya transisi filter terasa halus
                     slide.style.transform = 'translateY(100px) scale(0.5)';
                     slide.style.zIndex = -1;
+                    slide.setAttribute('data-mobile-hidden', 'true');
                 } else {
                     slide.style.pointerEvents = 'auto';
                 }
@@ -51,30 +82,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (numSlides === 0) return;
 
-            activeSlides.forEach((slide, i) => {
-                let diff = (i - currentOffset) % numSlides;
-                if (diff < -Math.floor(numSlides / 2)) diff += numSlides;
-                if (diff > Math.floor(numSlides / 2)) diff -= numSlides;
-                
-                let zIndex = 100 - Math.abs(diff);
-                let translateX = diff * 55; 
-                
-                let scale = diff === 0 ? 1 : 0.85 - (Math.abs(diff) * 0.1);
-                let opacity = Math.abs(diff) > 1 ? 0 : (diff === 0 ? 1 : 0.6);
-                let filter = diff === 0 ? 'none' : `blur(${Math.abs(diff) * 2}px)`;
+            if (isMobile()) {
+                // Mobile: show only the active slide
+                activeSlides.forEach((slide, i) => {
+                    if (i === currentOffset) {
+                        slide.style.position = 'relative';
+                        slide.style.transform = 'none';
+                        slide.style.opacity = '1';
+                        slide.style.filter = 'none';
+                        slide.style.zIndex = 10;
+                        slide.removeAttribute('data-mobile-hidden');
+                    } else {
+                        slide.style.opacity = '0';
+                        slide.style.position = 'absolute';
+                        slide.style.pointerEvents = 'none';
+                        slide.style.zIndex = -1;
+                        slide.setAttribute('data-mobile-hidden', 'true');
+                    }
+                });
+            } else {
+                // Desktop: stacked deck effect
+                activeSlides.forEach((slide, i) => {
+                    slide.style.position = 'absolute';
+                    slide.removeAttribute('data-mobile-hidden');
 
-                slide.style.transform = `translateX(${translateX}%) scale(${scale})`;
-                slide.style.zIndex = zIndex;
-                slide.style.opacity = opacity;
-                slide.style.filter = filter;
-            });
+                    let diff = (i - currentOffset) % numSlides;
+                    if (diff < -Math.floor(numSlides / 2)) diff += numSlides;
+                    if (diff > Math.floor(numSlides / 2)) diff -= numSlides;
+                    
+                    let zIndex = 100 - Math.abs(diff);
+                    let translateX = diff * 55; 
+                    
+                    let scale = diff === 0 ? 1 : 0.85 - (Math.abs(diff) * 0.1);
+                    let opacity = Math.abs(diff) > 1 ? 0 : (diff === 0 ? 1 : 0.6);
+                    let filter = diff === 0 ? 'none' : `blur(${Math.abs(diff) * 2}px)`;
+
+                    slide.style.transform = `translateX(${translateX}%) scale(${scale})`;
+                    slide.style.zIndex = zIndex;
+                    slide.style.opacity = opacity;
+                    slide.style.filter = filter;
+                });
+            }
+
+            updateDots();
         };
 
-        // Event listener klik pada kartu
+        // Event listener klik pada kartu (desktop only)
         allSlides.forEach((slide) => {
             slide.addEventListener('click', (e) => {
+                if (isMobile()) return; // Skip on mobile
                 let i = activeSlides.indexOf(e.currentTarget);
-                if (i === -1) return; // Ignore if hidden
+                if (i === -1) return;
                 const numSlides = activeSlides.length;
                 
                 let diff = (i - currentOffset) % numSlides;
@@ -89,6 +147,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateDeck();
             });
         });
+
+        // --- Prev / Next buttons ---
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const numSlides = activeSlides.length;
+                if (numSlides === 0) return;
+                currentOffset = (currentOffset - 1 + numSlides) % numSlides;
+                updateDeck();
+            });
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const numSlides = activeSlides.length;
+                if (numSlides === 0) return;
+                currentOffset = (currentOffset + 1) % numSlides;
+                updateDeck();
+            });
+        }
+
+        // --- Touch swipe support for mobile ---
+        const carouselTrack = document.querySelector('.carousel-track');
+        if (carouselTrack) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const SWIPE_THRESHOLD = 50;
+
+            carouselTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carouselTrack.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                const numSlides = activeSlides.length;
+                if (numSlides === 0) return;
+
+                if (Math.abs(diff) > SWIPE_THRESHOLD) {
+                    if (diff > 0) {
+                        currentOffset = (currentOffset + 1) % numSlides;
+                    } else {
+                        currentOffset = (currentOffset - 1 + numSlides) % numSlides;
+                    }
+                    updateDeck();
+                }
+            }, { passive: true });
+        }
 
         // Event listener klik pada filter
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -107,13 +211,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         return cats.split(',').includes(filterValue);
                     });
                 }
-                // Kembalikan ke indeks 0 tiap pindah kategori
                 currentOffset = 0; 
+                buildDots();
                 updateDeck();
             });
         });
 
-        // Initialize deck
+        // Handle resize between mobile/desktop
+        let lastMobile = isMobile();
+        window.addEventListener('resize', () => {
+            const nowMobile = isMobile();
+            if (nowMobile !== lastMobile) {
+                lastMobile = nowMobile;
+                updateDeck();
+            }
+        });
+
+        // Initialize
+        buildDots();
         updateDeck();
     }
 
@@ -128,6 +243,139 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             navbar.style.boxShadow = 'none';
         }
+    });
+
+    /* ==========================================================================
+       Hamburger Mobile Menu
+       ========================================================================== */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    if (hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile nav when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    /* ==========================================================================
+       Dark Mode Toggle
+       ========================================================================== */
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (themeToggle) themeToggle.textContent = '🌙';
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            if (current === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '🌙';
+            }
+        });
+    }
+
+    /* ==========================================================================
+       Back to Top Button
+       ========================================================================== */
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    /* ==========================================================================
+       Skeleton Loading - Remove skeleton class when images load
+       ========================================================================== */
+    document.querySelectorAll('img.skeleton').forEach(img => {
+        if (img.complete) {
+            img.classList.remove('skeleton');
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.remove('skeleton');
+            });
+            img.addEventListener('error', () => {
+                img.classList.remove('skeleton');
+            });
+        }
+    });
+    /* ==========================================================================
+       Game Screenshot Galleries
+       ========================================================================== */
+    document.querySelectorAll('.game-gallery').forEach(gallery => {
+        const track = gallery.querySelector('.game-gallery-track');
+        const screenshots = gallery.querySelectorAll('.game-screenshot');
+        const prevBtn = gallery.querySelector('.game-gallery-prev');
+        const nextBtn = gallery.querySelector('.game-gallery-next');
+        const dotsContainer = gallery.querySelector('.game-gallery-dots');
+        let currentIndex = 0;
+
+        if (screenshots.length <= 1) {
+            // Hide nav for single-image cards
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+            return;
+        }
+
+        // Build dots
+        screenshots.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('game-gallery-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        const updateGallery = () => {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dotsContainer.querySelectorAll('.game-gallery-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === currentIndex);
+            });
+        };
+
+        const goTo = (index) => {
+            currentIndex = (index + screenshots.length) % screenshots.length;
+            updateGallery();
+        };
+
+        if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(currentIndex - 1); });
+        if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(currentIndex + 1); });
+
+        // Touch swipe
+        let startX = 0;
+        gallery.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].screenX; }, { passive: true });
+        gallery.addEventListener('touchend', (e) => {
+            const diff = startX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 40) goTo(currentIndex + (diff > 0 ? 1 : -1));
+        }, { passive: true });
     });
 
 });

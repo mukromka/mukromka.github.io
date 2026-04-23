@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Mukrom Karunia Azza - UI/UX Designer & Game Developer">
+    <meta name="description" content="Portfolio of Mukrom Karunia Azza - UI/UX Designer & Game Developer based in Indonesia. Crafting seamless interfaces and engaging game mechanics.">
     <title>Azza | UI/UX & Game Designer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" type="image/svg+xml">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Azza | UI/UX & Game Designer">
+    <meta property="og:description" content="UI/UX Designer and Game Developer based in Indonesia. Crafting seamless interfaces and engaging game mechanics.">
+    <meta property="og:image" content="./hero.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     
     <!-- Google Fonts: Outfit for clean, modern, and playful geometric look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,18 +26,36 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container nav-container">
-            <a href="#" class="logo">
+            <a href="#" class="logo" aria-label="Azza's Portfolio - Home">
                 Portfolio
             </a>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="MukromKaruniaAzza_CV_GamesInstitut2026.pdf" target="_blank" class="btn btn-primary">Resume</a>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="theme-toggle" aria-label="Toggle dark mode" id="themeToggle">☀️</button>
+                <a href="MukromKaruniaAzza_CV_GamesInstitut2026.pdf" target="_blank" class="btn btn-primary" aria-label="Download Resume">Resume</a>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </nav>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#experience" class="mobile-nav-link">Experience</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+        <a href="MukromKaruniaAzza_CV_GamesInstitut2026.pdf" target="_blank" class="btn btn-primary">Resume</a>
+    </div>
 
     <!-- Hero Section -->
     <header class="hero container">
@@ -36,7 +64,7 @@
                 Where a <span class="highlight-blue">gamer's logic</span> meets a <span class="highlight-purple">designer's imagination.</span>
             </h1>
             <p class="hero-subtitle">
-                I'm a UI/UX Designer and Game Designer based in Indonesia. I specialize in crafting seamless user interfaces, intuitive user experiences, and engaging game mechanics for digital products.
+                I'm a UI/UX Designer and Game Designer with over 3 years of experience specializing in mobile-first experiences. I craft seamless interfaces, intuitive UX, and engaging mechanics.
             </p>
             <div class="hero-actions">
                 <a href="#projects" class="btn btn-primary btn-large">View My Work</a>
@@ -45,7 +73,7 @@
         </div>
         
         <div class="hero-visual">
-            <img src="./hero.png" alt="Mukrom Karunia Azza" class="hero-image floating-1" style="animation-delay: -1s;">
+            <img src="./hero.png" alt="Mukrom Karunia Azza - UI/UX & Game Designer" class="hero-image floating-1" style="animation-delay: -1s;" loading="eager">
             <div class="bento-box visual-card-1 floating-1">
                 <span class="emoji">🕹️</span>
                 <span>Game Design</span>
@@ -63,39 +91,129 @@
     </header>
 
     <!-- Tech Stack Section -->
-    <section class="tech-stack-section container reveal">
+    <section class="tech-stack-section container reveal" aria-label="Tools I use">
         <p class="tech-stack-title">My Crafting Tools</p>
         <div class="tech-stack-icons">
-            <img src="https://cdn.simpleicons.org/unity/0f172a" alt="Unity" class="tech-icon" title="Unity">
-            <img src="https://cdn.simpleicons.org/notion" alt="Notion" class="tech-icon" title="Notion">
-            <img src="https://cdn.simpleicons.org/googledocs" alt="Google Docs" class="tech-icon" title="Google Docs">
-            <img src="https://cdn.simpleicons.org/github" alt="GitHub" class="tech-icon" title="GitHub">
-            <img src="https://cdn.simpleicons.org/trello" alt="Trello" class="tech-icon" title="Trello">
-            <img src="https://cdn.simpleicons.org/miro" alt="Miro" class="tech-icon" title="Miro">
-            <img src="https://cdn.simpleicons.org/figma" alt="Figma" class="tech-icon" title="Figma">
+            <img src="https://cdn.simpleicons.org/unity/0f172a" alt="Unity" class="tech-icon skeleton" title="Unity" loading="lazy">
+            <img src="https://cdn.simpleicons.org/notion" alt="Notion" class="tech-icon skeleton" title="Notion" loading="lazy">
+            <img src="https://cdn.simpleicons.org/googledocs" alt="Google Docs" class="tech-icon skeleton" title="Google Docs" loading="lazy">
+            <img src="https://cdn.simpleicons.org/github" alt="GitHub" class="tech-icon skeleton" title="GitHub" loading="lazy">
+            <img src="https://cdn.simpleicons.org/trello" alt="Trello" class="tech-icon skeleton" title="Trello" loading="lazy">
+            <img src="https://cdn.simpleicons.org/miro" alt="Miro" class="tech-icon skeleton" title="Miro" loading="lazy">
+            <img src="https://cdn.simpleicons.org/figma" alt="Figma" class="tech-icon skeleton" title="Figma" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section container reveal-left" aria-label="Work Experience">
+        <div class="section-header">
+            <h2>Experience Journey</h2>
+            <p>My professional timeline.</p>
+        </div>
+        
+        <div class="timeline-wrapper" style="max-width: 800px; margin: 0 auto;">
+            <div class="timeline" style="margin: 0; max-width: 100%;">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bento-box timeline-card">
+                        <div style="width: 100%;">
+                            <div class="exp-card-header">
+                                <h3>UI/UX Designer & PM</h3>
+                                <span class="timeline-date">2023 - Present</span>
+                            </div>
+                            <p class="company">Bos Gabut</p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Directed end-to-end UI/UX lifecycle for game features.</li>
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Redesigned Landing Pages and implemented SEO strategies.</li>
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Generated 10K+ new users through a new conceptual design.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background: var(--secondary); box-shadow: 0 0 0 6px white, 0 0 0 10px #e0f2fe;"></div>
+                    <div class="bento-box timeline-card">
+                        <div style="width: 100%;">
+                            <div class="exp-card-header">
+                                <h3>Game Developer & UI</h3>
+                                <span class="timeline-date">2022 - 2023</span>
+                            </div>
+                            <p class="company" style="color: var(--secondary);">Zombie Shooter & Indie Projects</p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Developed core physics mechanics and aiming trajectories in Unity.</li>
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Architected scalable codebase utilizing strict SOLID principles.</li>
+                                <li class="exp-list-item"><span class="exp-icon">✨</span> Designed interactive UI animations for Multi-platform release.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section container reveal-right" aria-label="Skills and Capabilities">
+        <div class="section-header">
+            <h2>Skills & Capabilities</h2>
+            <p>My technical and soft skills.</p>
+        </div>
+
+        <div class="skills-grid">
+            <!-- Technical Skills -->
+            <div class="bento-box" style="flex-direction: column; align-items: flex-start; height: 100%;">
+                <div class="skills-box-header">
+                    <span class="emoji">💻</span>
+                    <h3>Technical Skills</h3>
+                </div>
+                <div class="skills-tags">
+                    <span class="tag tag-ui">UI/UX Design</span>
+                    <span class="tag tag-game">Game Design</span>
+                    <span class="tag tag-story">Unity 3D</span>
+                    <span class="tag tag-ui">Figma</span>
+                    <span class="tag tag-pm">Project Management</span>
+                    <span class="tag tag-game">C# Programming</span>
+                    <span class="tag tag-story">Prototyping</span>
+                    <span class="tag tag-pm">2D/3D Art</span>
+                </div>
+            </div>
+
+            <!-- Soft Skills -->
+            <div class="bento-box" style="flex-direction: column; align-items: flex-start; height: 100%;">
+                <div class="skills-box-header">
+                    <span class="emoji">🧠</span>
+                    <h3>Soft Skills</h3>
+                </div>
+                <div class="skills-tags">
+                    <span class="tag tag-story">Critical Thinking</span>
+                    <span class="tag tag-game">Teamwork</span>
+                    <span class="tag tag-ui">Problem-Solving</span>
+                    <span class="tag tag-pm">Creativity</span>
+                    <span class="tag tag-ui">Storytelling</span>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Selected Works (Projects) -->
-    <section id="projects" class="section container">
-        <div class="section-header reveal">
+    <section id="projects" class="section container" aria-label="Featured Projects">
+        <div class="section-header reveal-scale">
             <h2>Featured Projects</h2>
             <p>Here's a selection of my recent works.</p>
         </div>
 
         <div class="filter-container reveal">
-            <button class="filter-btn active" data-filter="all">All Explorations</button>
-            <button class="filter-btn" data-filter="gamedev">Game Dev</button>
-            <button class="filter-btn" data-filter="uiux">UI/UX Design</button>
-            <button class="filter-btn" data-filter="art">Art & Narrative</button>
+            <button class="filter-btn active" data-filter="all" aria-label="Show all projects">All Explorations</button>
+            <button class="filter-btn" data-filter="gamedev" aria-label="Show game dev projects">Game Dev</button>
+            <button class="filter-btn" data-filter="uiux" aria-label="Show UI/UX projects">UI/UX Design</button>
+            <button class="filter-btn" data-filter="art" aria-label="Show art projects">Art & Narrative</button>
         </div>
 
         <div class="carousel-track">
             <!-- Project 1: Bos Gabut -->
             <div class="carousel-slide reveal" data-categories="uiux">
                 <div class="slide-visual">
-                    <img src="./bos gabut card.png" alt="Bos Gabut" class="project-image">
-                    <a href="https://ngegabut.com/" class="btn-see-project" target="_blank" rel="noopener">See Project ↗</a>
+                    <img src="./bos gabut card.png" alt="Bos Gabut - Reward-based quiz game" class="project-image" loading="lazy">
+                    <a href="https://ngegabut.com/" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Bos Gabut project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Bos Gabut</h3>
@@ -117,8 +235,8 @@
             <!-- Project 2: Zombie Shooter -->
             <div class="carousel-slide reveal" data-categories="gamedev,uiux">
                 <div class="slide-visual">
-                    <img src="./zombie shooter card.png" alt="Zombie Shooter" class="project-image">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener">See Project ↗</a>
+                    <img src="./zombie shooter card.png" alt="Zombie Shooter - Physics-based aim game" class="project-image" loading="lazy">
+                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Zombie Shooter project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Zombie Shooter</h3>
@@ -140,8 +258,8 @@
             <!-- Project 3: Moon Flower -->
             <div class="carousel-slide reveal" data-categories="art">
                 <div class="slide-visual">
-                    <img src="./moonflower card.png" alt="Moon Flower" class="project-image">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener">See Project ↗</a>
+                    <img src="./moonflower card.png" alt="Moon Flower Webtoon" class="project-image" loading="lazy">
+                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Moon Flower project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Moon Flower (Webtoon)</h3>
@@ -163,8 +281,8 @@
             <!-- Project 4: Mie Ayam Simulator -->
             <div class="carousel-slide reveal" data-categories="uiux,art,gamedev">
                 <div class="slide-visual">
-                    <img src="./mie ayam simulator card.png" alt="Mie Ayam Simulator" class="project-image">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener">See Project ↗</a>
+                    <img src="./mie ayam simulator card.png" alt="Mie Ayam Simulator" class="project-image" loading="lazy">
+                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Mie Ayam Simulator project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Mie Ayam Simulator</h3>
@@ -183,26 +301,89 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Carousel Navigation -->
+        <div class="carousel-nav">
+            <button class="carousel-btn carousel-prev" aria-label="Previous project">←</button>
+            <div class="carousel-dots"></div>
+            <button class="carousel-btn carousel-next" aria-label="Next project">→</button>
+        </div>
     </section>
 
 
+    <!-- Game Showcase Section -->
+    <section id="games" class="section container" aria-label="Game Showcase">
+        <div class="section-header reveal">
+            <h2>Game Showcase</h2>
+            <p>Games I've built and contributed to.</p>
+        </div>
+
+        <div class="game-grid">
+
+            <!-- Game Card 1 -->
+            <div class="game-card reveal">
+                <img src="./placeholder-game1.png" alt="Game 1" class="game-screenshot" loading="lazy">
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Nama Game 1</h3>
+                        <div class="tags">
+                            <span class="tag tag-game">Unity</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 2 -->
+            <div class="game-card reveal">
+                <img src="./placeholder-game2.png" alt="Game 2" class="game-screenshot" loading="lazy">
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Nama Game 2</h3>
+                        <div class="tags">
+                            <span class="tag tag-game">Game Dev</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 3 -->
+            <div class="game-card reveal">
+                <img src="./placeholder-game3.png" alt="Game 3" class="game-screenshot" loading="lazy">
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Nama Game 3</h3>
+                        <div class="tags">
+                            <span class="tag tag-game">Unity</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer id="contact" class="footer">
+    <footer id="contact" class="footer" role="contentinfo">
         <div class="container footer-container reveal">
             <div class="footer-cta">
                 <h2>Got an exciting project?</h2>
                 <p>Let's work together!</p>
-                <a href="mailto:mukrom.karunia24@gmail.com" class="btn btn-primary btn-large">DM Me! 💌</a>
+                <a href="mailto:mukrom.karunia24@gmail.com" class="btn btn-primary btn-large" aria-label="Send email to Azza">DM Me! 💌</a>
             </div>
             <div class="social-links mt-2">
-                <a href="https://www.linkedin.com/in/mukrom-karunia-azza/" class="social-btn">LinkedIn</a>
-                <a href="https://www.notion.so/mukromka/Azza-s-Portfolio-1bed8db793a04a8c86d44f4e04046d31" class="social-btn">Notion</a>
-                <a href="MukromKaruniaAzza_CV_GamesInstitut2026.pdf" target="_blank" class="social-btn">Resume</a>
+                <a href="https://www.linkedin.com/in/mukrom-karunia-azza/" class="social-btn" aria-label="Visit LinkedIn profile" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.notion.so/mukromka/Azza-s-Portfolio-1bed8db793a04a8c86d44f4e04046d31" class="social-btn" aria-label="Visit Notion portfolio" target="_blank" rel="noopener">Notion</a>
+                <a href="MukromKaruniaAzza_CV_GamesInstitut2026.pdf" target="_blank" class="social-btn" aria-label="Download Resume">Resume</a>
             </div>
             <p class="copyright">© 2026 Mukrom Karunia Azza.</p>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
     <!-- Scripts -->
     <script src="script.js"></script>
