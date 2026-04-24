@@ -1004,16 +1004,52 @@ h1, h2, h3, h4 {
     font-size: 0.95rem;
 }
 
+/* Current badge for active experience */
+.badge-current {
+    display: inline-flex;
+    align-items: center;
+    background: #dcfce7;
+    color: #16a34a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 100px;
+    margin-left: 8px;
+    animation: pulse-badge 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .badge-current {
+    background: #064e3b;
+    color: #6ee7b7;
+}
+
+@keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
 /* ==========================================================================
    Game Showcase
    ========================================================================== */
 .game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 32px;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+}
+
+.game-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .game-card {
+    min-width: 340px;
+    max-width: 400px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
     position: relative;
     transition: var(--transition-bounce);
     border: none;
@@ -1351,9 +1387,9 @@ h1, h2, h3, h4 {
         font-size: 2rem;
     }
     .social-links {
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 12px;
-        align-items: center;
+        justify-content: center;
     }
     
     .timeline::before { left: 16px; }
@@ -1368,10 +1404,11 @@ h1, h2, h3, h4 {
     
     /* Game grid mobile */
     .game-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
     }
     .game-card {
+        min-width: 280px;
+        max-width: 300px;
         height: 240px;
     }
     .game-card-body {
