@@ -209,12 +209,12 @@
                 <div class="skills-tags">
                     <span class="tag tag-ui">UI/UX Design</span>
                     <span class="tag tag-game">Game Design</span>
-                    <span class="tag tag-story">Unity 3D</span>
+                    <span class="tag tag-story">Unity</span>
                     <span class="tag tag-ui">Figma</span>
                     <span class="tag tag-pm">Project Management</span>
                     <span class="tag tag-game">C# Programming</span>
                     <span class="tag tag-story">Prototyping</span>
-                    <span class="tag tag-pm">2D/3D Art</span>
+                    <span class="tag tag-pm">2D Artist</span>
                 </div>
             </div>
 
@@ -242,13 +242,6 @@
             <p>Here's a selection of my recent works.</p>
         </div>
 
-        <div class="filter-container reveal">
-            <button class="filter-btn active" data-filter="all" aria-label="Show all projects">All Explorations</button>
-            <button class="filter-btn" data-filter="gamedev" aria-label="Show game dev projects">Game Dev</button>
-            <button class="filter-btn" data-filter="uiux" aria-label="Show UI/UX projects">UI/UX Design</button>
-            <button class="filter-btn" data-filter="art" aria-label="Show art projects">Art & Narrative</button>
-        </div>
-
         <div class="carousel-track">
             <!-- Project 1: Bos Gabut -->
             <div class="carousel-slide reveal" data-categories="uiux">
@@ -273,34 +266,11 @@
                 </div>
             </div>
 
-            <!-- Project 2: Zombie Shooter -->
-            <div class="carousel-slide reveal" data-categories="gamedev,uiux">
-                <div class="slide-visual">
-                    <img src="./zombie shooter card.png" alt="Zombie Shooter - Physics-based aim game" class="project-image" loading="lazy">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Zombie Shooter project">See Project ↗</a>
-                </div>
-                <div class="slide-content bento-box">
-                    <h3>Zombie Shooter</h3>
-                    <div class="tags">
-                        <span class="tag tag-game">Game Dev</span><span class="tag tag-ui">UI/UX</span>
-                    </div>
-                    <p class="slide-desc">A physics-based aim game built with Unity.</p>
-                    <div class="slide-impact">
-                        <h4>Impact & Contributions:</h4>
-                        <ul>
-                            <li>Developed 100% of the core physics mechanics and <strong>aiming trajectories</strong> in Unity.</li>
-                            <li>Architected a scalable codebase utilizing strict <strong>SOLID principles</strong> to minimize technical debt.</li>
-                            <li>Designed and integrated interactive UI animations for a <strong>Multi-platform release</strong> (Android, WebGL).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <!-- Project 3: Moon Flower -->
             <div class="carousel-slide reveal" data-categories="art">
                 <div class="slide-visual">
                     <img src="./moonflower card.png" alt="Moon Flower Webtoon" class="project-image" loading="lazy">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Moon Flower project">See Project ↗</a>
+                    <a href="https://www.webtoons.com/id/drama/moon-flower/list?title_no=2261" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Moon Flower project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Moon Flower (Webtoon)</h3>
@@ -323,7 +293,7 @@
             <div class="carousel-slide reveal" data-categories="uiux,art,gamedev">
                 <div class="slide-visual">
                     <img src="./mie ayam simulator card.png" alt="Mie Ayam Simulator" class="project-image" loading="lazy">
-                    <a href="#" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Mie Ayam Simulator project">See Project ↗</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.EverStudio.MieAyamSimulator" class="btn-see-project" target="_blank" rel="noopener" aria-label="See Mie Ayam Simulator project">See Project ↗</a>
                 </div>
                 <div class="slide-content bento-box">
                     <h3>Mie Ayam Simulator</h3>
@@ -335,8 +305,8 @@
                         <h4>Impact & Contributions:</h4>
                         <ul>
                             <li>Crafted an intuitive <strong>Heads-Up Display (HUD)</strong> and main menu flow optimized for simulation gameplay.</li>
-                            <li>Generated scalable, high-quality <strong>2D Graphic Assets</strong> ensuring a cohesive visual identity.</li>
-                            <li>Redesigned the core <strong>Upgrading System</strong> architecture, significantly reducing player friction.</li>
+                            <li>Helped prepare all <strong>2D visual assets</strong> for the game.</li>
+                            <li>Helped the game reach over <strong>80K downloads</strong> on the Google Play Store.</li>
                         </ul>
                     </div>
                 </div>
@@ -359,50 +329,398 @@
             <p>Games I've built and contributed to.</p>
         </div>
 
+        <div class="game-filter-container reveal">
+            <button class="game-filter-btn active" data-filter="all" aria-label="Show all games">All Games</button>
+            <button class="game-filter-btn" data-filter="uiux" aria-label="Show UI/UX games">UI/UX</button>
+            <button class="game-filter-btn" data-filter="pm" aria-label="Show PM games">PM</button>
+            <button class="game-filter-btn" data-filter="gamedesign" aria-label="Show game designer games">Game Designer</button>
+            <button class="game-filter-btn" data-filter="gamedev" aria-label="Show game developer games">Game Developer</button>
+            <button class="game-filter-btn" data-filter="art" aria-label="Show 2D art games">2D Art</button>
+        </div>
+
         <div class="game-grid">
 
             <!-- Game Card 1 -->
-            <div class="game-card reveal">
-                <img src="./placeholder-game1.png" alt="Game 1" class="game-screenshot" loading="lazy">
+            <div class="game-card reveal" data-categories="art">
+                <img src="./game 1.png" alt="Inverse game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-art">2D Artist</span>
+                    </div>
+                </div>
                 <div class="game-card-body">
                     <div class="game-card-info">
-                        <h3>Nama Game 1</h3>
-                        <div class="tags">
-                            <span class="tag tag-game">Unity</span>
-                        </div>
+                        <h3>Inverse</h3>
                     </div>
-                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                    <a href="https://eternalclover.itch.io/inverse" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
                 </div>
             </div>
 
             <!-- Game Card 2 -->
-            <div class="game-card reveal">
-                <img src="./placeholder-game2.png" alt="Game 2" class="game-screenshot" loading="lazy">
+            <div class="game-card reveal" data-categories="uiux">
+                <img src="./game 2.png" alt="Halt & Harmony game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-ui">UI/UX</span>
+                    </div>
+                </div>
                 <div class="game-card-body">
                     <div class="game-card-info">
-                        <h3>Nama Game 2</h3>
-                        <div class="tags">
-                            <span class="tag tag-game">Game Dev</span>
-                        </div>
+                        <h3>Halt &amp; Harmony</h3>
                     </div>
-                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                    <a href="https://eternalclover.itch.io/halt-harmony" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
                 </div>
             </div>
 
             <!-- Game Card 3 -->
-            <div class="game-card reveal">
-                <img src="./placeholder-game3.png" alt="Game 3" class="game-screenshot" loading="lazy">
+            <div class="game-card reveal" data-categories="uiux">
+                <img src="./game 3.png" alt="Battle of Khodam game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-ui">UI/UX</span>
+                    </div>
+                </div>
                 <div class="game-card-body">
                     <div class="game-card-info">
-                        <h3>Nama Game 3</h3>
-                        <div class="tags">
-                            <span class="tag tag-game">Unity</span>
-                        </div>
+                        <h3>Battle of Khodam</h3>
                     </div>
-                    <a href="#" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                    <a href="https://eternalclover.itch.io/battle-of-khodam" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
                 </div>
             </div>
 
+            <!-- Game Card 4 -->
+            <div class="game-card reveal" data-categories="uiux">
+                <img src="./game 4.gif" alt="Volcanic game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-ui">UI/UX</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Volcanic</h3>
+                    </div>
+                    <a href="https://eternalclover.itch.io/volcanic" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 5 -->
+            <div class="game-card reveal" data-categories="uiux">
+                <img src="./game 5.png" alt="Wash and Warm game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-ui">UI/UX Supervisor</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Wash and Warm</h3>
+                    </div>
+                    <a href="https://eternalclover.itch.io/wash-warm" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 6 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 6.png" alt="Giring Sapi game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Giring Sapi</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=giringsapi.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 7 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 7.png" alt="Tap Light Switch game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Tap Light Switch</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.taplightswitch" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 8 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 8.png" alt="Tali Tantangan game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Tali Tantangan</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=talitantangan.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 9 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 9.png" alt="Hujan Mangga game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Hujan Mangga</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=hujanmangga.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 10 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 10.png" alt="Ninja Dash game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Ninja Dash</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.ninjadash" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 11 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 11.png" alt="Puncak Keberanian game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Puncak Keberanian</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=puncakkeberanian.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 12 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 12.png" alt="Match the Shape game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Match the Shape</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.matchtheshape" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 13 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 13.png" alt="Lock Breaker game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Lock Breaker</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.lockbreaker" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 14 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 14.png" alt="Pop Pop Balloons game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Pop Pop Balloons</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.poppopballoons" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 15 -->
+            <div class="game-card reveal" data-categories="gamedev">
+                <img src="./game 15.png" alt="Genius Finder game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-game">Game Developer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Genius Finder</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.geniusfinder" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 16 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 16.png" alt="Mandor Kue game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Mandor Kue</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=mandorkue.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 17 -->
+            <div class="game-card reveal" data-categories="gamedev">
+                <img src="./game 17.png" alt="Witch Trial game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-game">Game Developer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Witch Trial</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.witchtrial" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 18 -->
+            <div class="game-card reveal" data-categories="gamedev">
+                <img src="./game 18.png" alt="Sapi Kebluk game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-game">Game Developer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Sapi Kebluk</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 19 -->
+            <div class="game-card reveal" data-categories="pm">
+                <img src="./game 19.png" alt="Tupai Kepak game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Tupai Kepak</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=tupaikepak.kreatifmaju.com" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 20 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 20.png" alt="Dino Color Gate game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Dino Color Gate</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.dinocolorgate" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 21 -->
+            <div class="game-card reveal" data-categories="pm,gamedesign">
+                <img src="./game 21.png" alt="Soccer: Penalty Kick game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-pm">PM</span>
+                        <span class="tag tag-game">Game Designer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Soccer: Penalty Kick</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.penaltykick" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 22 -->
+            <div class="game-card reveal" data-categories="gamedev">
+                <img src="./game 22.png" alt="Zombie Shooter game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-game">Game Developer</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Zombie Shooter</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.kreatifmaju.zombieshooter" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+            <!-- Game Card 23 -->
+            <div class="game-card reveal" data-categories="art">
+                <img src="./mie ayam simulator card.png" alt="Mie Ayam Simulator game thumbnail" class="game-screenshot" loading="lazy">
+                <div class="game-card-tags">
+                    <div class="tags">
+                        <span class="tag tag-art">2D Artist</span>
+                    </div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-card-info">
+                        <h3>Mie Ayam Simulator</h3>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.EverStudio.MieAyamSimulator" class="btn btn-primary" target="_blank" rel="noopener">Play Game ↗</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="game-pagination" aria-label="Game showcase navigation">
+            <button class="game-page-btn game-page-prev" type="button" aria-label="Previous game">&larr;</button>
+            <div class="game-page-dots" aria-label="Game pages"></div>
+            <button class="game-page-btn game-page-next" type="button" aria-label="Next game">&rarr;</button>
         </div>
     </section>
 

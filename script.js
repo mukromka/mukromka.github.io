@@ -327,6 +327,137 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    /* ==========================================================================
+       Game Showcase Pagination
+       ========================================================================== */
+    const gameGrid = document.querySelector('.game-grid');
+    const gameCards = gameGrid ? Array.from(gameGrid.querySelectorAll('.game-card')) : [];
+    const gamePrevBtn = document.querySelector('.game-page-prev');
+    const gameNextBtn = document.querySelector('.game-page-next');
+    const gameDotsContainer = document.querySelector('.game-page-dots');
+    const gameFilterBtns = document.querySelectorAll('.game-filter-btn');
+
+    if (gameGrid && gameCards.length > 0 && gameDotsContainer) {
+        let activeGameCards = [...gameCards];
+        let activeGameIndex = 0;
+        let gameScrollTicking = false;
+        const isCenteredGameScroll = () => window.innerWidth <= 900;
+
+        const getVisibleGameCount = () => {
+            if (isCenteredGameScroll() || activeGameCards.length === 0) return 1;
+            const styles = window.getComputedStyle(gameGrid);
+            const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+            const cardWidth = activeGameCards[0].offsetWidth;
+            return Math.max(1, Math.floor((gameGrid.clientWidth + gap) / (cardWidth + gap)));
+        };
+
+        const getMaxGameIndex = () => Math.max(0, activeGameCards.length - getVisibleGameCount());
+
+        const scrollToGame = (index) => {
+            if (activeGameCards.length === 0) return;
+            const targetIndex = Math.max(0, Math.min(index, getMaxGameIndex()));
+            const targetCard = activeGameCards[targetIndex];
+            const startLeft = targetCard.offsetLeft - gameGrid.offsetLeft;
+            const centeredLeft = startLeft - ((gameGrid.clientWidth - targetCard.clientWidth) / 2);
+            gameGrid.scrollTo({
+                left: isCenteredGameScroll() ? centeredLeft : startLeft,
+                behavior: 'smooth'
+            });
+        };
+
+        const buildGameDots = () => {
+            gameDotsContainer.innerHTML = '';
+            const dotCount = getMaxGameIndex() + 1;
+            for (let index = 0; index < dotCount; index++) {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'game-page-dot';
+                dot.setAttribute('aria-label', `Go to game page ${index + 1}`);
+                dot.addEventListener('click', () => scrollToGame(index));
+                gameDotsContainer.appendChild(dot);
+            }
+        };
+
+        const updateGamePagination = () => {
+            if (activeGameCards.length === 0) {
+                activeGameIndex = 0;
+                if (gamePrevBtn) gamePrevBtn.disabled = true;
+                if (gameNextBtn) gameNextBtn.disabled = true;
+                return;
+            }
+
+            const gridRect = gameGrid.getBoundingClientRect();
+            const gridCenter = gridRect.left + (gridRect.width / 2);
+            const closestIndex = activeGameCards.reduce((closest, card, index) => {
+                const cardRect = card.getBoundingClientRect();
+                const closestRect = activeGameCards[closest].getBoundingClientRect();
+                const currentPosition = isCenteredGameScroll() ? cardRect.left + (cardRect.width / 2) : cardRect.left;
+                const closestPosition = isCenteredGameScroll() ? closestRect.left + (closestRect.width / 2) : closestRect.left;
+                const targetPosition = isCenteredGameScroll() ? gridCenter : gridRect.left;
+                const currentDistance = Math.abs(currentPosition - targetPosition);
+                const closestDistance = Math.abs(closestPosition - targetPosition);
+                return currentDistance < closestDistance ? index : closest;
+            }, 0);
+
+            activeGameIndex = Math.min(closestIndex, getMaxGameIndex());
+            gameDotsContainer.querySelectorAll('.game-page-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeGameIndex);
+            });
+
+            if (gamePrevBtn) gamePrevBtn.disabled = activeGameIndex === 0;
+            if (gameNextBtn) gameNextBtn.disabled = activeGameIndex === getMaxGameIndex();
+        };
+
+        const applyGameFilter = (filterValue) => {
+            activeGameCards = gameCards.filter(card => {
+                const categories = card.getAttribute('data-categories') || '';
+                return filterValue === 'all' || categories.split(',').includes(filterValue);
+            });
+
+            gameCards.forEach(card => {
+                card.hidden = !activeGameCards.includes(card);
+            });
+
+            activeGameIndex = 0;
+            buildGameDots();
+            gameGrid.scrollTo({ left: 0, behavior: 'smooth' });
+            window.requestAnimationFrame(updateGamePagination);
+        };
+
+        if (gamePrevBtn) {
+            gamePrevBtn.addEventListener('click', () => scrollToGame(activeGameIndex - 1));
+        }
+
+        if (gameNextBtn) {
+            gameNextBtn.addEventListener('click', () => scrollToGame(activeGameIndex + 1));
+        }
+
+        gameGrid.addEventListener('scroll', () => {
+            if (gameScrollTicking) return;
+            gameScrollTicking = true;
+            window.requestAnimationFrame(() => {
+                updateGamePagination();
+                gameScrollTicking = false;
+            });
+        }, { passive: true });
+
+        gameFilterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                gameFilterBtns.forEach(filterBtn => filterBtn.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                applyGameFilter(e.currentTarget.getAttribute('data-filter'));
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            buildGameDots();
+            updateGamePagination();
+        });
+        buildGameDots();
+        updateGamePagination();
+    }
+
     /* ==========================================================================
        Game Screenshot Galleries
        ========================================================================== */
