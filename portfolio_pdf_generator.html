@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Submission - Mukrom Karunia Azza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset & Page Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Screen Preview Styles */
+        .page {
+            background-color: #ffffff;
+            width: 297mm;
+            height: 210mm;
+            margin: 20px auto;
+            padding: 10mm 16mm 10mm 16mm;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+                width: 297mm;
+                height: 210mm;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+        }
+
+        /* Layout Grid */
+        .header-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 4px;
+            flex-shrink: 0;
+        }
+        .project-counter {
+            font-size: 11px;
+            color: #888888;
+            font-weight: 500;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            margin-bottom: 10mm;
+            gap: 24px;
+            min-height: 0; /* Critical for flex child height constraints */
+        }
+
+        /* Left Column (Sidebar) */
+        .sidebar {
+            width: 23%;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        .sidebar-item {
+            margin-bottom: 12px;
+        }
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Right Column (Content) */
+        .content-area {
+            width: 77%;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-height: 0; /* Critical for vertical image shrinking */
+        }
+        
+        .description-section {
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Text Typography */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1px;
+            line-height: 1.2;
+        }
+        .section-guideline {
+            font-size: 9px;
+            font-style: italic;
+            color: #7c7c7c;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+        .section-value {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: #111111;
+            line-height: 1.4;
+            white-space: pre-line;
+        }
+        .section-value.link {
+            word-break: break-all;
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        /* Image Display Box */
+        .image-container {
+            flex: 1;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 0; /* Critical for shrinking */
+        }
+
+        /* HTML-based layout placeholder behind the image */
+        .image-placeholder-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+            z-index: 1;
+        }
+        .placeholder-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+        .placeholder-subtitle {
+            font-size: 10.5px;
+            color: #666666;
+            max-width: 550px;
+            line-height: 1.35;
+            margin-bottom: 12px;
+        }
+        .placeholder-note {
+            font-size: 9.5px;
+            color: #888888;
+            font-style: italic;
+        }
+
+        .project-image {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #e9e9e9;
+        }
+
+        /* Footer Section */
+        .footer-area {
+            flex-shrink: 0;
+        }
+        .footer-divider {
+            border-top: 1px solid #d3d3d3;
+            margin-bottom: 8px;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer-col.col-name {
+            width: 18%;
+        }
+        .footer-col.col-univ {
+            width: 30%;
+        }
+        .footer-col.col-contact {
+            width: 27%;
+        }
+        .footer-col.col-submission {
+            width: 25%;
+            text-align: right;
+            justify-content: flex-end;
+        }
+
+        .submission-text {
+            font-size: 10px;
+            color: #7c7c7c;
+            line-height: 1.3;
+        }
+        .submission-bold {
+            font-size: 12px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1.3;
+            margin-top: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: Bos Gabut -->
+    <div class="page">
+        <div class="header-section">
+            <div class="project-counter">Project 1 of 4</div>
+        </div>
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="section-title">Artwork/Project Title</div>
+                    <div class="section-guideline">Title of your artwork/project.</div>
+                    <div class="section-value" style="font-weight:700; font-size:14px;">Bos Gabut</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Year Accomplished</div>
+                    <div class="section-guideline">The year you accomplished the artwork/project.</div>
+                    <div class="section-value">2023 - Present</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Role/Position</div>
+                    <div class="section-guideline">Your role/position on this artwork/project, e.g. Graphic Design/Designer/Project Manager/etc.</div>
+                    <div class="section-value">UI/UX Designer</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Publication Link</div>
+                    <div class="section-guideline">Your portfolio website/link (if you have).</div>
+                    <a href="https://ngegabut.com/" class="section-value link" target="_blank">https://ngegabut.com/</a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="description-section">
+                    <div class="section-title">Artwork/Project Description</div>
+                    <div class="section-guideline">Write down your concept description that demonstrates comprehensive reasoning in your process including problem understanding, research skill, effective problem solving and good logical explanation.</div>
+                    <div class="section-value" style="font-size:11.5px; line-height:1.4;">A mobile quiz-and-reward platform where users earn prizes through daily mini-game challenges. I led a full UI/UX overhaul across the app's event features and game flows, directly contributing to 10K+ new user sign-ups. I also redesigned the public-facing landing pages and integrated an SEO-driven blog to boost organic traffic. Through this, I aligned design decisions with business metrics like retention and DAU, while shipping fast iterations in a live product used by thousands of daily active players.</div>
+                </div>
+                <div class="image-container">
+                    <div class="image-placeholder-bg">
+                        <div class="placeholder-title">Artwork/project photo/picture</div>
+                        <div class="placeholder-subtitle">Photo or picture that shows craftsmanship and command of techniques, whether digital or handmade, with careful attention to detail while understanding materials and/or media to enhance the design concept.</div>
+                        <div class="placeholder-note">Screenshots of scenes & link to your online publication are required if your portfolio is a video.</div>
+                    </div>
+                    <img src="./bos gabut card.png" alt="Bos Gabut" class="project-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-area">
+            <div class="footer-divider"></div>
+            <div class="footer-container">
+                <div class="footer-col col-name">
+                    <div class="section-title">Your name</div>
+                    <div class="section-guideline">Your full name.</div>
+                    <div class="section-value">Mukrom Karunia Azza</div>
+                </div>
+                <div class="footer-col col-univ">
+                    <div class="section-title">Your university/school name (Student or Alumni)</div>
+                    <div class="section-guideline">Please choose one. If you are still a student, please also state the current semester you are in.</div>
+                    <div class="section-value">Politeknik Elektronika Negeri Surabaya (Alumni)</div>
+                </div>
+                <div class="footer-col col-contact">
+                    <div class="section-title">Your contact information</div>
+                    <div class="section-guideline">Please provide your phone number, email, and professional networking account (if you have).</div>
+                    <div class="section-value" style="font-size:11px; line-height:1.3;">+6282135782644<br>mukrom.karunia24@gmail.com<br>linkedin.com/in/mukrom-karunia-azza</div>
+                </div>
+                <div class="footer-col col-submission">
+                    <div class="submission-text">Portfolio Submission for</div>
+                    <div class="submission-bold">Apple Developer Academy</div>
+                    <div class="submission-bold">Indonesia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Moon Flower -->
+    <div class="page">
+        <div class="header-section">
+            <div class="project-counter">Project 2 of 4</div>
+        </div>
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="section-title">Artwork/Project Title</div>
+                    <div class="section-guideline">Title of your artwork/project.</div>
+                    <div class="section-value" style="font-weight:700; font-size:14px;">Moon Flower (Webtoon)</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Year Accomplished</div>
+                    <div class="section-guideline">The year you accomplished the artwork/project.</div>
+                    <div class="section-value">2020 - 2022</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Role/Position</div>
+                    <div class="section-guideline">Your role/position on this artwork/project, e.g. Graphic Design/Designer/Project Manager/etc.</div>
+                    <div class="section-value">Story Writer & Base Colour Artist</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Publication Link</div>
+                    <div class="section-guideline">Your portfolio website/link (if you have).</div>
+                    <a href="https://www.webtoons.com/id/drama/moon-flower/list?title_no=2261" class="section-value link" target="_blank">https://www.webtoons.com/id/drama/moon-flower...</a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="description-section">
+                    <div class="section-title">Artwork/Project Description</div>
+                    <div class="section-guideline">Write down your concept description that demonstrates comprehensive reasoning in your process including problem understanding, research skill, effective problem solving and good logical explanation.</div>
+                    <div class="section-value" style="font-size:11.5px; line-height:1.4;">A serialized drama comic published on LINE Webtoon Indonesia, growing to a massive readership with over 13.4M+ total reads, 270K+ favorites, and a 9.76/10 audience rating. I co-developed story arcs, wrote scripts and dialogue, and handled consistent base colouring across 60 episodes and 2 seasons. This role required developing exceptional time management skills to meet strict weekly deadlines and maintain visual quality throughout the 2-year production cycle.</div>
+                </div>
+                <div class="image-container">
+                    <div class="image-placeholder-bg">
+                        <div class="placeholder-title">Artwork/project photo/picture</div>
+                        <div class="placeholder-subtitle">Photo or picture that shows craftsmanship and command of techniques, whether digital or handmade, with careful attention to detail while understanding materials and/or media to enhance the design concept.</div>
+                        <div class="placeholder-note">Screenshots of scenes & link to your online publication are required if your portfolio is a video.</div>
+                    </div>
+                    <img src="./moonflower card.png" alt="Moon Flower" class="project-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-area">
+            <div class="footer-divider"></div>
+            <div class="footer-container">
+                <div class="footer-col col-name">
+                    <div class="section-title">Your name</div>
+                    <div class="section-guideline">Your full name.</div>
+                    <div class="section-value">Mukrom Karunia Azza</div>
+                </div>
+                <div class="footer-col col-univ">
+                    <div class="section-title">Your university/school name (Student or Alumni)</div>
+                    <div class="section-guideline">Please choose one. If you are still a student, please also state the current semester you are in.</div>
+                    <div class="section-value">Politeknik Elektronika Negeri Surabaya (Alumni)</div>
+                </div>
+                <div class="footer-col col-contact">
+                    <div class="section-title">Your contact information</div>
+                    <div class="section-guideline">Please provide your phone number, email, and professional networking account (if you have).</div>
+                    <div class="section-value" style="font-size:11px; line-height:1.3;">+6282135782644<br>mukrom.karunia24@gmail.com<br>linkedin.com/in/mukrom-karunia-azza</div>
+                </div>
+                <div class="footer-col col-submission">
+                    <div class="submission-text">Portfolio Submission for</div>
+                    <div class="submission-bold">Apple Developer Academy</div>
+                    <div class="submission-bold">Indonesia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Mie Ayam Simulator -->
+    <div class="page">
+        <div class="header-section">
+            <div class="project-counter">Project 3 of 4</div>
+        </div>
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="section-title">Artwork/Project Title</div>
+                    <div class="section-guideline">Title of your artwork/project.</div>
+                    <div class="section-value" style="font-weight:700; font-size:14px;">Mie Ayam Simulator</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Year Accomplished</div>
+                    <div class="section-guideline">The year you accomplished the artwork/project.</div>
+                    <div class="section-value">2023</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Role/Position</div>
+                    <div class="section-guideline">Your role/position on this artwork/project, e.g. Graphic Design/Designer/Project Manager/etc.</div>
+                    <div class="section-value">2D Artist & UI/UX Designer</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Publication Link</div>
+                    <div class="section-guideline">Your portfolio website/link (if you have).</div>
+                    <a href="https://play.google.com/store/apps/details?id=com.EverStudio.MieAyamSimulator" class="section-value link" target="_blank">https://play.google.com/store/apps/details...</a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="description-section">
+                    <div class="section-title">Artwork/Project Description</div>
+                    <div class="section-guideline">Write down your concept description that demonstrates comprehensive reasoning in your process including problem understanding, research skill, effective problem solving and good logical explanation.</div>
+                    <div class="section-value" style="font-size:11.5px; line-height:1.4;">A casual simulation game where players run their own Indonesian street-food stall, reaching 80K+ downloads on Google Play. I designed the in-game HUD, main menu flow, shop interface (optimized for one-handed mobile play), and created character sprites, food illustrations, and environment assets. I learned how to translate complex simulation mechanics into a clean UI and the importance of culturally authentic art direction to connect with local audiences.</div>
+                </div>
+                <div class="image-container">
+                    <div class="image-placeholder-bg">
+                        <div class="placeholder-title">Artwork/project photo/picture</div>
+                        <div class="placeholder-subtitle">Photo or picture that shows craftsmanship and command of techniques, whether digital or handmade, with careful attention to detail while understanding materials and/or media to enhance the design concept.</div>
+                        <div class="placeholder-note">Screenshots of scenes & link to your online publication are required if your portfolio is a video.</div>
+                    </div>
+                    <img src="./mie ayam simulator card.png" alt="Mie Ayam Simulator" class="project-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-area">
+            <div class="footer-divider"></div>
+            <div class="footer-container">
+                <div class="footer-col col-name">
+                    <div class="section-title">Your name</div>
+                    <div class="section-guideline">Your full name.</div>
+                    <div class="section-value">Mukrom Karunia Azza</div>
+                </div>
+                <div class="footer-col col-univ">
+                    <div class="section-title">Your university/school name (Student or Alumni)</div>
+                    <div class="section-guideline">Please choose one. If you are still a student, please also state the current semester you are in.</div>
+                    <div class="section-value">Politeknik Elektronika Negeri Surabaya (Alumni)</div>
+                </div>
+                <div class="footer-col col-contact">
+                    <div class="section-title">Your contact information</div>
+                    <div class="section-guideline">Please provide your phone number, email, and professional networking account (if you have).</div>
+                    <div class="section-value" style="font-size:11px; line-height:1.3;">+6282135782644<br>mukrom.karunia24@gmail.com<br>linkedin.com/in/mukrom-karunia-azza</div>
+                </div>
+                <div class="footer-col col-submission">
+                    <div class="submission-text">Portfolio Submission for</div>
+                    <div class="submission-bold">Apple Developer Academy</div>
+                    <div class="submission-bold">Indonesia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Game Portal Web -->
+    <div class="page">
+        <div class="header-section">
+            <div class="project-counter">Project 4 of 4</div>
+        </div>
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <div class="section-title">Artwork/Project Title</div>
+                    <div class="section-guideline">Title of your artwork/project.</div>
+                    <div class="section-value" style="font-weight:700; font-size:14px;">Game Portal Web</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Year Accomplished</div>
+                    <div class="section-guideline">The year you accomplished the artwork/project.</div>
+                    <div class="section-value">Ongoing (2024 - Present)</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Role/Position</div>
+                    <div class="section-guideline">Your role/position on this artwork/project, e.g. Graphic Design/Designer/Project Manager/etc.</div>
+                    <div class="section-value">Game Developer</div>
+                </div>
+                <div class="sidebar-item">
+                    <div class="section-title">Publication Link</div>
+                    <div class="section-guideline">Your portfolio website/link (if you have).</div>
+                    <div class="section-value" style="color: #7c7c7c; font-style: italic;">In Development</div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="description-section">
+                    <div class="section-title">Artwork/Project Description</div>
+                    <div class="section-guideline">Write down your concept description that demonstrates comprehensive reasoning in your process including problem understanding, research skill, effective problem solving and good logical explanation.</div>
+                    <div class="section-value" style="font-size:11.5px; line-height:1.4;">An integrated web portal designed to let players access and play games online quickly and seamlessly. In this active team project, I serve as the core Game Developer, solo-producing art and code assets from initial planning to full code execution. I designed and supplied custom games, and successfully integrated database connections from independent game clients to the portal's central system for real-time progress tracking.</div>
+                </div>
+                <div class="image-container">
+                    <div class="image-placeholder-bg">
+                        <div class="placeholder-title">Artwork/project photo/picture</div>
+                        <div class="placeholder-subtitle">Photo or picture that shows craftsmanship and command of techniques, whether digital or handmade, with careful attention to detail while understanding materials and/or media to enhance the design concept.</div>
+                        <div class="placeholder-note">Screenshots of scenes & link to your online publication are required if your portfolio is a video.</div>
+                    </div>
+                    <img src="./icon bosgabut.png" alt="Game Portal Web" class="project-image" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-area">
+            <div class="footer-divider"></div>
+            <div class="footer-container">
+                <div class="footer-col col-name">
+                    <div class="section-title">Your name</div>
+                    <div class="section-guideline">Your full name.</div>
+                    <div class="section-value">Mukrom Karunia Azza</div>
+                </div>
+                <div class="footer-col col-univ">
+                    <div class="section-title">Your university/school name (Student or Alumni)</div>
+                    <div class="section-guideline">Please choose one. If you are still a student, please also state the current semester you are in.</div>
+                    <div class="section-value">Politeknik Elektronika Negeri Surabaya (Alumni)</div>
+                </div>
+                <div class="footer-col col-contact">
+                    <div class="section-title">Your contact information</div>
+                    <div class="section-guideline">Please provide your phone number, email, and professional networking account (if you have).</div>
+                    <div class="section-value" style="font-size:11px; line-height:1.3;">+6282135782644<br>mukrom.karunia24@gmail.com<br>linkedin.com/in/mukrom-karunia-azza</div>
+                </div>
+                <div class="footer-col col-submission">
+                    <div class="submission-text">Portfolio Submission for</div>
+                    <div class="submission-bold">Apple Developer Academy</div>
+                    <div class="submission-bold">Indonesia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
