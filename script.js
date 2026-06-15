@@ -509,4 +509,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     });
 
+    /* ==========================================================================
+       Game Detail Modal
+       ========================================================================== */
+    const modalOverlay = document.getElementById('gameModalOverlay');
+    const modalClose = document.getElementById('gameModalClose');
+    const modalImage = document.getElementById('gameModalImage');
+    const modalTitle = document.getElementById('gameModalTitle');
+    const modalRole = document.getElementById('gameModalRole');
+    const modalDesc = document.getElementById('gameModalDesc');
+    const modalTags = document.getElementById('gameModalTags');
+    const modalLink = document.getElementById('gameModalLink');
+
+    if (modalOverlay) {
+        // Intercept game card clicks
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Read data from card
+                const title = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
+                const img = card.querySelector('.game-screenshot');
+                const desc = card.getAttribute('data-game-desc') || '';
+                const role = card.getAttribute('data-game-role') || '';
+                const href = card.getAttribute('href') || '#';
+                const tagsHTML = card.querySelector('.game-card-tags .tags');
+
+                // Populate modal
+                if (modalImage && img) {
+                    modalImage.src = img.src;
+                    modalImage.alt = img.alt;
+                }
+                if (modalTitle) modalTitle.textContent = title;
+                if (modalRole) modalRole.textContent = '🎮 Role: ' + role;
+                if (modalDesc) modalDesc.textContent = desc;
+                if (modalTags && tagsHTML) modalTags.innerHTML = tagsHTML.innerHTML;
+                if (modalLink) modalLink.href = href;
+
+                // Show modal
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal handlers
+        const closeModal = () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
 });
