@@ -145,21 +145,25 @@ button:focus-visible {
 }
 
 .wordmark {
-    width: 52px;
-    height: 52px;
-    display: inline-grid;
-    place-items: center;
+    min-width: 0;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
     border: 2px solid var(--ink);
-    border-radius: 18px;
+    border-radius: 999px;
     background: var(--primary);
     color: #fffdf8;
     box-shadow: 0 4px 0 var(--ink);
     font-family: "Fredoka", sans-serif;
     font-size: 15px;
     font-weight: 700;
-    letter-spacing: -.03em;
+    letter-spacing: -.02em;
+    line-height: 1;
+    white-space: nowrap;
     text-decoration: none;
-    transform: rotate(-3deg);
+    transform: rotate(-2deg);
     transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
 }
 
@@ -1330,7 +1334,7 @@ h1 {
 
     .site-header { position: relative; }
     .nav-wrap { min-height: 68px; }
-    .wordmark { width: 46px; height: 46px; border-radius: 15px; }
+    .wordmark { height: 42px; padding: 0 14px; font-size: 14px; }
     .text-control { display: none; }
     .mobile-nav { height: calc(100dvh - 70px); }
 
