@@ -1670,16 +1670,25 @@
       });
 
       // 3. Scroll Reveal Observer
-      const revealElements = document.querySelectorAll('.reveal');
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      } else {
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.02, rootMargin: '0px 0px -8% 0px' });
 
-      revealElements.forEach(el => revealObserver.observe(el));
+        revealElements.forEach(el => revealObserver.observe(el));
+      }
+
+      // Fallback: force-reveal everything after a short delay (safety net)
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      }, 1400);
 
       // 4. Image Slot Engine (Drag & Drop, Click Upload, localStorage Persistence)
       const imageSlots = document.querySelectorAll('.image-slot-frame[data-slot]');
