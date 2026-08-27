@@ -4,17 +4,17 @@
 
 @layer base {
   :root {
-    --bg-base: #fffbf5;
-    --text-base: #292524;
+    --bg-base: #f2efe6;
+    --text-base: #131313;
     --card-base: #ffffff;
-    --border-base: #e7e5e4;
+    --border-base: #131313;
   }
 
   [data-theme="dark"] {
-    --bg-base: #141211;
-    --text-base: #f5f5f4;
-    --card-base: #1c1917;
-    --border-base: #292524;
+    --bg-base: #131313;
+    --text-base: #f2efe6;
+    --card-base: #1c1a17;
+    --border-base: #f2efe6;
   }
 
   html {
@@ -41,16 +41,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+  background: #131313;
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #44403c;
+  background: #f2efe6;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff5733;
+  background: #e8352e;
 }

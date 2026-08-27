@@ -15,7 +15,7 @@ import { PlayfulEasterEgg } from "@/components/PlayfulEasterEgg";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen flex flex-col bg-stone-50/40 dark:bg-stone-950 text-stone-800 dark:text-stone-100 transition-colors duration-300">
+    <div className="relative min-h-screen flex flex-col bg-paper dark:bg-ink text-ink dark:text-paper transition-colors duration-300">
       <Navbar />
       <main className="flex-1">
         <Hero />

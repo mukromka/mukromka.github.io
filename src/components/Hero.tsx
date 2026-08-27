@@ -12,8 +12,13 @@ export function Hero() {
       id="top"
       className="relative min-h-[85vh] pt-28 pb-12 md:pt-36 md:pb-20 flex items-center justify-center overflow-hidden"
     >
-      {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-4xl h-80 bg-gradient-to-r from-brand-500/10 via-sun/15 to-mint/10 blur-3xl -z-10 rounded-full pointer-events-none" />
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 -z-10 opacity-[0.04] pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `linear-gradient(to right, #131313 1px, transparent 1px), linear-gradient(to bottom, #131313 1px, transparent 1px)`,
+          backgroundSize: '40px 40px'
+        }} />
+      </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
         {/* Left Column: Hero Typography & Action */}
@@ -27,24 +32,24 @@ export function Hero() {
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-xs font-mono font-bold uppercase tracking-wider mb-5 shadow-craft-sm"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
             <span>Available for Projects</span>
           </motion.div>
 
           {/* Main Title */}
-          <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-stone-900 dark:text-stone-50 leading-[1.1] mb-5 tracking-tight">
+          <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-ink dark:text-paper leading-[1.05] mb-5 tracking-tight">
             I make games that{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-500">
+            <span className="text-brand-500 underline decoration-4 decoration-brand-500/30 underline-offset-4">
               feel good to play
             </span>
             .
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 font-medium max-w-lg mb-8 leading-relaxed">
-            I&apos;m <strong className="text-stone-900 dark:text-stone-100 font-bold">Azza</strong>, a Unity Game Developer and UI/UX Designer creating cheerful mobile and web experiences from concept to launch.
+          <p className="text-base sm:text-lg text-ink/70 dark:text-paper/70 font-medium max-w-lg mb-8 leading-relaxed">
+            I&apos;m <strong className="text-ink dark:text-paper font-bold">Azza</strong>, a Unity Game Developer and UI/UX Designer creating cheerful mobile and web experiences from concept to launch.
           </p>
 
           {/* Single Focused CTA Button */}
@@ -63,7 +68,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Right Column: Character Showcase (Larger Transparent Cutout) */}
+        {/* Right Column: Character Showcase (Transparent Cutout) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -71,8 +76,9 @@ export function Hero() {
           className="lg:col-span-6 flex justify-center relative select-none"
         >
           <div className="relative w-72 sm:w-84 md:w-96 lg:w-[440px] flex items-center justify-center">
-            {/* Subtle Circular Glow behind avatar */}
-            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 bg-gradient-to-tr from-brand-500/20 to-amber-400/20 rounded-full blur-3xl -z-10" />
+            {/* Circular Frame behind avatar */}
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 border-[3px] border-ink dark:border-paper rounded-full -z-10" />
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 bg-brand-500/10 rounded-full blur-xl -z-20" />
 
             {/* Transparent Avatar Image */}
             <img
@@ -81,23 +87,21 @@ export function Hero() {
               className="w-full h-auto object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.14)] dark:drop-shadow-[0_16px_32px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500"
             />
 
-            {/* Floating Badges */}
+            {/* Floating Labels — Mono Indexed */}
             <motion.div
               animate={{ y: [0, -7, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-6 -left-3 sm:-left-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold"
+              className="absolute top-6 -left-3 sm:-left-6 px-2.5 py-1.5 rounded-lg bg-ink dark:bg-paper text-paper dark:text-ink text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest shadow-craft-sm"
             >
-              <span>🎮</span>
-              <span>15+ Games</span>
+              (01) 15+ Games
             </motion.div>
 
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-              className="absolute top-1/2 -right-3 sm:-right-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold text-purple-600 dark:text-purple-400"
+              className="absolute top-1/2 -right-3 sm:-right-6 px-2.5 py-1.5 rounded-lg bg-brand-500 text-white text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest shadow-craft-sm"
             >
-              <span>🌸</span>
-              <span>13.4M Reads</span>
+              (03) 13.4M Reads
             </motion.div>
           </div>
         </motion.div>

@@ -13,15 +13,15 @@ const ICONS_MAP: Record<string, any> = {
 
 export function SkillMatrix() {
   return (
-    <section id="skills" className="py-16 bg-stone-50/50 dark:bg-stone-900/30 relative">
+    <section id="skills" className="py-16 bg-ink/[0.02] dark:bg-paper/[0.02] relative border-y-2 border-ink/10 dark:border-paper/10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lilac/20 text-purple-700 dark:text-purple-300 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500 text-white text-xs font-mono font-bold uppercase tracking-wider mb-3 shadow-craft-sm">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Toolkit</span>
           </div>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-stone-900 dark:text-stone-50">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink dark:text-paper">
             Skills &amp; Tools
           </h2>
         </div>
@@ -37,13 +37,13 @@ export function SkillMatrix() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.35, delay: idx * 0.08 }}
-                className="p-5 rounded-3xl bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800/90 shadow-craft-sm hover:shadow-craft transition-all flex flex-col justify-between"
+                className="p-5 rounded-xl bg-white dark:bg-ink border-2 border-ink dark:border-paper shadow-craft-sm hover:shadow-craft transition-all flex flex-col justify-between"
               >
                 <div className="flex items-center gap-2.5 mb-3.5">
-                  <div className="w-8 h-8 rounded-xl bg-brand-500/10 text-brand-500 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-brand-500 text-white flex items-center justify-center border-2 border-ink dark:border-paper">
                     <Icon className="w-4 h-4" />
                   </div>
-                  <h3 className="font-display font-bold text-base text-stone-900 dark:text-stone-100">
+                  <h3 className="font-display font-bold text-base text-ink dark:text-paper tracking-tight">
                     {cat.title}
                   </h3>
                 </div>
@@ -52,7 +52,7 @@ export function SkillMatrix() {
                   {cat.skills.map((skill) => (
                     <span
                       key={skill.name}
-                      className="px-2.5 py-1 rounded-xl bg-stone-50 dark:bg-stone-800 border border-stone-200/70 dark:border-stone-700/70 text-xs font-semibold text-stone-700 dark:text-stone-200"
+                      className="px-2.5 py-1 rounded-lg bg-ink/5 dark:bg-paper/10 border border-ink/10 dark:border-paper/20 text-xs font-semibold text-ink/70 dark:text-paper/70"
                     >
                       {skill.name}
                     </span>
@@ -68,14 +68,14 @@ export function SkillMatrix() {
           {techBadges.map((t) => (
             <div
               key={t.name}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 shadow-craft-sm cursor-default"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink border-2 border-ink dark:border-paper shadow-craft-sm cursor-default"
             >
               <img
                 src={t.icon}
                 alt={t.name}
                 className="w-4 h-4 dark:invert"
               />
-              <span className="text-xs font-bold text-stone-700 dark:text-stone-200">
+              <span className="text-xs font-bold text-ink/70 dark:text-paper/70">
                 {t.name}
               </span>
             </div>

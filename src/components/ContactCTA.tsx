@@ -32,19 +32,19 @@ export function ContactCTA() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative p-7 sm:p-10 md:p-12 rounded-4xl bg-white dark:bg-stone-900 border-2 border-brand-500/30 shadow-craft text-center overflow-hidden"
+          className="relative p-7 sm:p-10 md:p-12 rounded-2xl bg-white dark:bg-ink border-2 border-ink dark:border-paper shadow-craft text-center overflow-hidden"
         >
           {/* Top Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500 text-white text-xs font-bold shadow-sm mb-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500 text-white text-xs font-mono font-bold uppercase tracking-wider shadow-craft-sm mb-4 border-2 border-ink dark:border-paper">
             <Sparkles className="w-3 h-3 fill-current" />
             <span>Got an exciting project?</span>
           </div>
 
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-stone-900 dark:text-stone-50 max-w-lg mx-auto mb-3">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink dark:text-paper max-w-lg mx-auto mb-3 tracking-tight">
             Let&apos;s work together!
           </h2>
 
-          <p className="text-stone-600 dark:text-stone-300 text-sm sm:text-base max-w-md mx-auto mb-8">
+          <p className="text-ink/70 dark:text-paper/70 text-sm sm:text-base max-w-md mx-auto mb-8">
             Looking for a Game Developer, UI/UX Designer, or creative collaborator? Reach out anytime.
           </p>
 
@@ -55,7 +55,7 @@ export function ContactCTA() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => sound.playPowerUp()}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm bg-emerald-500 hover:bg-emerald-600 text-white shadow-craft-sm hover:shadow-craft active:translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg font-bold text-sm uppercase tracking-wider bg-emerald-500 hover:bg-emerald-600 text-white shadow-craft-sm hover:shadow-craft active:translate-x-0.5 active:translate-y-0.5 transition-all border-2 border-ink dark:border-paper"
             >
               <MessageCircle className="w-4 h-4 fill-current" />
               <span>WhatsApp</span>
@@ -64,7 +64,7 @@ export function ContactCTA() {
             <a
               href={`mailto:${email}`}
               onClick={() => sound.playPowerUp()}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold text-sm bg-brand-500 hover:bg-brand-600 text-white shadow-craft-sm hover:shadow-craft active:translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg font-bold text-sm uppercase tracking-wider bg-brand-500 hover:bg-brand-600 text-white shadow-craft-sm hover:shadow-craft active:translate-x-0.5 active:translate-y-0.5 transition-all border-2 border-ink dark:border-paper"
             >
               <Mail className="w-4 h-4" />
               <span>Email</span>
@@ -73,7 +73,7 @@ export function ContactCTA() {
             <button
               type="button"
               onClick={handleCopyEmail}
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full font-bold text-xs sm:text-sm bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 border border-stone-300 dark:border-stone-700 shadow-sm transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-lg font-bold text-xs sm:text-sm uppercase tracking-wider bg-ink/5 dark:bg-paper/10 hover:bg-ink/10 dark:hover:bg-paper/20 text-ink dark:text-paper border-2 border-ink/20 dark:border-paper/20 shadow-sm transition-all"
             >
               {copied ? (
                 <>
@@ -82,7 +82,7 @@ export function ContactCTA() {
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-stone-500" />
+                  <Copy className="w-3.5 h-3.5 text-ink/40 dark:text-paper/40" />
                   <span>Copy Email</span>
                 </>
               )}
@@ -90,12 +90,12 @@ export function ContactCTA() {
           </div>
 
           {/* Social Link (LinkedIn) */}
-          <div className="flex items-center justify-center pt-5 border-t border-stone-100 dark:border-stone-800">
+          <div className="flex items-center justify-center pt-5 border-t-2 border-ink/10 dark:border-paper/10">
             <a
               href="https://www.linkedin.com/in/mukrom-karunia-azza/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-xs font-bold text-stone-700 dark:text-stone-300 hover:text-brand-500 transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ink/5 dark:bg-paper/10 border-2 border-ink/10 dark:border-paper/10 text-xs font-bold uppercase tracking-wider text-ink/70 dark:text-paper/70 hover:text-brand-500 transition-colors shadow-sm"
             >
               <LinkedInIcon className="w-4 h-4 text-sky-600" />
               <span>Connect on LinkedIn</span>

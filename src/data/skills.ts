@@ -38,7 +38,7 @@ export const skillCategories: SkillCategory[] = [
 
 export const techBadges = [
   { name: "Unity", icon: "https://cdn.simpleicons.org/unity/18181b" },
-  { name: "C#", icon: "https://cdn.simpleicons.org/csharp/18181b" },
+  { name: "C#", icon: "https://cdn.simpleicons.org/dotnet/18181b" },
   { name: "Figma", icon: "https://cdn.simpleicons.org/figma/18181b" },
   { name: "GitHub", icon: "https://cdn.simpleicons.org/github/18181b" },
 ];
