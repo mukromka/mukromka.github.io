@@ -85,25 +85,16 @@ export function Hero() {
             <motion.div
               animate={{ y: [0, -7, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-4 -left-4 sm:-left-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold"
+              className="absolute top-6 -left-3 sm:-left-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold"
             >
               <span>🎮</span>
               <span>15+ Games</span>
             </motion.div>
 
             <motion.div
-              animate={{ y: [0, 7, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-              className="absolute bottom-4 -left-2 sm:-left-4 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-600 dark:text-emerald-400"
-            >
-              <span>🍜</span>
-              <span>80K+ DL</span>
-            </motion.div>
-
-            <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-              className="absolute top-1/2 -right-4 sm:-right-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold text-purple-600 dark:text-purple-400"
+              className="absolute top-1/2 -right-3 sm:-right-6 px-3.5 py-1.5 rounded-2xl bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 shadow-craft-sm flex items-center gap-1.5 text-xs sm:text-sm font-bold text-purple-600 dark:text-purple-400"
             >
               <span>🌸</span>
               <span>13.4M Reads</span>
