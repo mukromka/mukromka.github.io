@@ -75,10 +75,10 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="lg:col-span-5 flex justify-center relative select-none"
         >
-          <div className="relative w-72 sm:w-80 md:w-96 flex items-center justify-center">
+          <div className="relative w-72 sm:w-84 md:w-96 lg:w-[440px] flex items-center justify-center">
             {/* Circular Frame behind avatar */}
-            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-72 sm:h-72 border-[3px] border-ink dark:border-paper rounded-full -z-10" />
-            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-72 sm:h-72 bg-brand-500/10 rounded-full blur-xl -z-20" />
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 border-[3px] border-ink dark:border-paper rounded-full -z-10" />
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 bg-brand-500/10 rounded-full blur-xl -z-20" />
 
             {/* Transparent Avatar Image */}
             <img
@@ -101,7 +101,7 @@ export function Hero() {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
               className="absolute bottom-2 -left-2 px-2.5 py-1.5 rounded-lg bg-emerald-500 text-white text-[10px] font-mono font-bold uppercase tracking-widest shadow-craft-sm"
             >
-              (02) 80K+ DL
+              (02) 15+ Titles
             </motion.div>
 
             <motion.div
