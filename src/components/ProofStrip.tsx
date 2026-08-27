@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, Gamepad2, Download, Eye, Sparkles } from "lucide-react";
+import { Award, Gamepad2, Eye, Sparkles } from "lucide-react";
 
 const STATS = [
   {
@@ -18,12 +18,6 @@ const STATS = [
     icon: Gamepad2,
   },
   {
-    value: "80K+",
-    unit: "Downloads",
-    label: "Mie Ayam Simulator (Google Play)",
-    icon: Download,
-  },
-  {
     value: "13.4M",
     unit: "Reads",
     label: "Moon Flower (LINE Webtoon)",
@@ -35,7 +29,7 @@ export function ProofStrip() {
   return (
     <section className="py-8 relative z-10">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {STATS.map((stat, idx) => {
             const Icon = stat.icon;
             return (

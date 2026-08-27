@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-[85vh] pt-28 pb-12 md:pt-36 md:pb-20 flex items-center justify-center overflow-hidden"
+      className="relative min-h-[82vh] pt-28 pb-12 md:pt-36 md:pb-20 flex items-center justify-center overflow-hidden"
     >
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 -z-10 opacity-[0.04] pointer-events-none">
@@ -20,13 +20,13 @@ export function Hero() {
         }} />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         {/* Left Column: Hero Typography & Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left"
+          className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left"
         >
           {/* Status Badge */}
           <motion.div
@@ -73,33 +73,41 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="lg:col-span-6 flex justify-center relative select-none"
+          className="lg:col-span-5 flex justify-center relative select-none"
         >
-          <div className="relative w-72 sm:w-84 md:w-96 lg:w-[440px] flex items-center justify-center">
+          <div className="relative w-72 sm:w-80 md:w-96 flex items-center justify-center">
             {/* Circular Frame behind avatar */}
-            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 border-[3px] border-ink dark:border-paper rounded-full -z-10" />
-            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-80 sm:h-80 bg-brand-500/10 rounded-full blur-xl -z-20" />
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-72 sm:h-72 border-[3px] border-ink dark:border-paper rounded-full -z-10" />
+            <div className="absolute inset-0 m-auto w-64 h-64 sm:w-72 sm:h-72 bg-brand-500/10 rounded-full blur-xl -z-20" />
 
             {/* Transparent Avatar Image */}
             <img
               src="/hero.webp"
               alt="Mukrom Karunia Azza"
-              className="w-full h-auto object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.14)] dark:drop-shadow-[0_16px_32px_rgba(0,0,0,0.5)] hover:scale-105 transition-transform duration-500"
+              className="w-full h-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_12px_24px_rgba(0,0,0,0.4)] hover:scale-105 transition-transform duration-500"
             />
 
             {/* Floating Labels — Mono Indexed */}
             <motion.div
-              animate={{ y: [0, -7, 0] }}
+              animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-6 -left-3 sm:-left-6 px-2.5 py-1.5 rounded-lg bg-ink dark:bg-paper text-paper dark:text-ink text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest shadow-craft-sm"
+              className="absolute top-2 -left-4 px-2.5 py-1.5 rounded-lg bg-ink dark:bg-paper text-paper dark:text-ink text-[10px] font-mono font-bold uppercase tracking-widest shadow-craft-sm"
             >
               (01) 15+ Games
             </motion.div>
 
             <motion.div
-              animate={{ y: [0, -6, 0] }}
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+              className="absolute bottom-2 -left-2 px-2.5 py-1.5 rounded-lg bg-emerald-500 text-white text-[10px] font-mono font-bold uppercase tracking-widest shadow-craft-sm"
+            >
+              (02) 80K+ DL
+            </motion.div>
+
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-              className="absolute top-1/2 -right-3 sm:-right-6 px-2.5 py-1.5 rounded-lg bg-brand-500 text-white text-[10px] sm:text-xs font-mono font-bold uppercase tracking-widest shadow-craft-sm"
+              className="absolute top-1/2 -right-4 px-2.5 py-1.5 rounded-lg bg-brand-500 text-white text-[10px] font-mono font-bold uppercase tracking-widest shadow-craft-sm"
             >
               (03) 13.4M Reads
             </motion.div>

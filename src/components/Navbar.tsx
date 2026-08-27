@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X, Download, Volume2, VolumeX } from "lucide-react";
+import { Sun, Moon, Menu, X, FileText, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sound } from "@/lib/sound";
 
@@ -143,7 +143,7 @@ export function Navbar() {
             </button>
           )}
 
-          {/* Download CV Primary CTA */}
+          {/* View CV Primary CTA */}
           <a
             href="/CV%20Mukrom%20Karunia%20Azza_2026.pdf"
             target="_blank"
@@ -151,8 +151,8 @@ export function Navbar() {
             onClick={() => sound.playPowerUp()}
             className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-brand-500 hover:bg-brand-600 text-white shadow-craft-sm hover:shadow-craft active:translate-x-0.5 active:translate-y-0.5 transition-all border-2 border-ink dark:border-paper"
           >
-            <Download className="w-3.5 h-3.5" />
-            <span>CV</span>
+            <FileText className="w-3.5 h-3.5" />
+            <span>View CV</span>
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -200,8 +200,8 @@ export function Navbar() {
                 onClick={() => sound.playPowerUp()}
                 className="flex items-center justify-center gap-2 py-2.5 rounded-lg bg-brand-500 text-sm font-bold uppercase tracking-wider text-white shadow-craft-sm border-2 border-ink dark:border-paper"
               >
-                <Download className="w-4 h-4" />
-                <span>Download CV (PDF)</span>
+                <FileText className="w-4 h-4" />
+                <span>View CV (PDF)</span>
               </a>
             </div>
           </motion.div>

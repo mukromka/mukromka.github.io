@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { User, GraduationCap, Users, Download } from "lucide-react";
+import { User, GraduationCap, Users, FileText } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 export function AboutMe() {
@@ -83,8 +83,8 @@ export function AboutMe() {
               onClick={() => sound.playPop()}
               className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-bold text-sm uppercase tracking-wider bg-brand-500 text-white shadow-craft-sm hover:shadow-craft hover:bg-brand-600 active:translate-x-0.5 active:translate-y-0.5 transition-all border-2 border-ink dark:border-paper"
             >
-              <Download className="w-4 h-4" />
-              <span>Download Resume (PDF)</span>
+              <FileText className="w-4 h-4" />
+              <span>View Resume (PDF)</span>
             </a>
           </motion.div>
         </div>
