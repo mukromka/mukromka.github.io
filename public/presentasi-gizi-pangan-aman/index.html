@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gizi & Pangan Aman untuk Keluarga</title>
+<style>
+:root{
+--paper:#f4efe6;--ink:#1d2a24;--ink-soft:#4a5b52;
+--pine:#12583f;--pine-deep:#0b3d2c;--mint:#dcecdf;
+--clay:#c2571a;--clay-soft:#f6e3d2;
+--gold:#f0b429;--red:#a32c21;--red-deep:#5c1a12;--red-soft:#f8e3de;
+--line:#cfd8cd;
+--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font);background-color:var(--paper);background-image:radial-gradient(circle at 85% 15%,rgba(220,236,223,.45) 0%,transparent 50%),radial-gradient(circle at 10% 85%,rgba(246,227,210,.4) 0%,transparent 45%);color:var(--ink);font-size:clamp(17px,1.15vw,21px);line-height:1.6}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+a{color:var(--pine);overflow-wrap:anywhere;text-decoration-thickness:2px;text-underline-offset:3px}
+a:hover{color:var(--clay)}
+:focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:1rem;top:-100px;z-index:50;background:var(--ink);color:#fff;padding:.6rem 1.1rem;text-decoration:none;font-weight:700;border-radius:0 0 8px 8px}
+.skip:focus{top:.6rem}
+#progress{position:fixed;top:0;left:0;height:6px;width:0;background:linear-gradient(90deg,var(--gold),var(--clay));z-index:40;box-shadow:0 0 12px rgba(194,87,26,.6);transition:width .25s}
+main#deck{display:block}
+.slide{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:clamp(2.5rem,6vh,4.5rem) clamp(1.25rem,6vw,6rem);position:relative;border-bottom:1px solid var(--line);overflow:hidden;max-width:1400px;margin:0 auto;width:100%}
+.slide[hidden]{display:none}
+.slide::after{content:attr(data-n);position:absolute;top:clamp(1rem,3vh,2rem);right:clamp(1rem,4vw,3rem);font-size:clamp(4rem,9vw,8rem);font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(29,42,36,.14);pointer-events:none;user-select:none;letter-spacing:-.03em}
+.eyebrow{display:inline-flex;align-items:center;width:fit-content;font-size:.66em;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--clay);margin:0 0 1rem;background:var(--clay-soft);padding:.35em .85em;border-radius:100px;border:1px solid rgba(194,87,26,.2)}
+.eyebrow::before{content:"";display:inline-block;width:.55em;height:.55em;border-radius:50%;background:var(--clay);margin-right:.65em}
+h1,h2{font-size:clamp(1.95rem,3.5vw,3.3rem);line-height:1.15;margin:0 0 1.2rem;letter-spacing:-.02em;font-weight:800;max-width:22ch;color:var(--ink)}
+h3{margin:0 0 .45rem;font-size:1.1em;font-weight:800;color:var(--pine-deep);line-height:1.3}
+p,li{max-width:62ch}
+p{margin:.45rem 0}
+ul,ol{margin:.5rem 0;padding-left:1.4em}
+li{margin:.45rem 0}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
+.grid.three{grid-template-columns:repeat(3,1fr);gap:clamp(1.2rem,2.5vw,2rem);align-items:stretch}
+figure{margin:0;display:flex;flex-direction:column;align-items:center}
+.visual{width:100%;height:auto;max-width:480px;display:block;border-radius:16px;box-shadow:6px 6px 0 var(--mint);border:2px solid var(--ink);background:#fff}
+.slide.has-photo>:not(.slide-photo){position:relative;z-index:2;max-width:53%}
+.slide-photo{position:absolute;z-index:1;right:clamp(1.25rem,5vw,5rem);top:50%;transform:translateY(-50%);width:min(42%,620px);height:min(72vh,620px);object-fit:cover;object-position:center;border-radius:24px;border:2px solid var(--ink);box-shadow:12px 12px 0 var(--mint),0 24px 55px rgba(11,61,44,.18)}
+.slide.dark .slide-photo,.slide.danger .slide-photo{border-color:rgba(255,255,255,.35);box-shadow:12px 12px 0 rgba(0,0,0,.28),0 24px 55px rgba(0,0,0,.3)}
+.slide.hero-photo>:not(.slide-photo){max-width:50%;z-index:3}
+.slide.hero-photo .slide-photo{top:0;right:0;transform:none;width:59%;max-width:none;height:100%;border:0;border-radius:0;box-shadow:none;object-position:center;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.2) 12%,#000 34%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.2) 12%,#000 34%)}
+.slide.hero-photo figure{display:none}
+section[data-n="04"] figure svg{display:none}
+section[data-n="04"] figure::before{content:"";display:block;width:100%;max-width:480px;aspect-ratio:1.5;background:url("assets/piring-makanan-bergizi-transparan.png") center/contain no-repeat;border-radius:22px;filter:drop-shadow(8px 8px 0 var(--mint))}
+section[data-n="04"] figure .visual{border-radius:22px;box-shadow:8px 8px 0 var(--mint);border-color:var(--pine)}
+.roadmap-slide .steps{grid-template-columns:repeat(2,minmax(0,1fr));max-width:850px;gap:1rem;margin-top:1.4rem}
+.roadmap-slide ol.steps li{min-height:88px;padding:1rem 1.25rem;font-size:1em;line-height:1.35}
+.roadmap-slide ol.steps li::before{flex-basis:2.35em;height:2.35em;border-radius:50%;font-size:1em}
+.roadmap-slide::before{content:"PETA BELAJAR";position:absolute;right:7%;bottom:18%;font-size:clamp(4rem,9vw,8rem);font-weight:900;line-height:.8;letter-spacing:-.08em;color:rgba(18,88,63,.07);transform:rotate(-8deg);pointer-events:none}
+figcaption{font-size:.7em;color:var(--ink-soft);margin-top:.6rem;text-align:center}
+.card{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:1.3rem 1.45rem;box-shadow:6px 6px 0 var(--mint),0 10px 20px -5px rgba(18,88,63,.06);transition:transform .2s ease,box-shadow .2s ease;display:flex;flex-direction:column;justify-content:flex-start}
+.card:hover{transform:translateY(-2px);box-shadow:8px 8px 0 var(--mint),0 14px 26px -5px rgba(18,88,63,.1)}
+.card.warm{box-shadow:6px 6px 0 var(--clay-soft),0 10px 20px -5px rgba(194,87,26,.06)}
+.card.warm:hover{transform:translateY(-2px);box-shadow:8px 8px 0 var(--clay-soft),0 14px 26px -5px rgba(194,87,26,.1)}
+.card.danger{border-color:var(--red);box-shadow:6px 6px 0 var(--red-soft),0 10px 20px -5px rgba(163,44,33,.06)}
+.card.danger:hover{transform:translateY(-2px);box-shadow:8px 8px 0 var(--red-soft),0 14px 26px -5px rgba(163,44,33,.1)}
+.big{font-size:2.2em;font-weight:900;line-height:1;color:var(--pine);margin:.1rem 0 .35rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.takeaway{margin-top:1.5rem;padding:1rem 1.35rem;background:var(--ink);color:#fdfbf5;font-weight:600;max-width:66ch;border-radius:12px;border-left:8px solid var(--clay);box-shadow:0 10px 24px -5px rgba(29,42,36,.25);line-height:1.5}
+.source{font-size:.64em;color:var(--ink-soft);margin-top:1.5rem;border-top:1px dashed var(--line);padding-top:.6rem}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--ink);border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:.7rem 0 1.2rem;max-width:72ch;box-shadow:6px 6px 0 var(--mint)}
+.timeline div{background:#fff;padding:.9rem 1.1rem;font-size:.86em;transition:background .15s}
+.timeline div:hover{background:var(--paper)}
+.timeline strong{display:block;color:var(--pine);margin-bottom:.25rem;font-size:1.05em;font-weight:800}
+ol.steps{list-style:none;counter-reset:step;padding:0;margin:.9rem 0;display:grid;gap:.75rem;max-width:68ch}
+ol.steps li{counter-increment:step;display:flex;gap:1rem;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:.8rem 1.15rem;box-shadow:4px 4px 0 var(--mint);transition:transform .15s ease}
+ol.steps li:hover{transform:translateX(4px);box-shadow:6px 6px 0 var(--mint)}
+ol.steps{gap:.45rem}
+ol.steps li{padding:.5rem .9rem;font-size:.9em;margin:.15rem 0}
+ol.steps li::before{content:counter(step);flex:0 0 2.1em;height:2.1em;display:grid;place-items:center;background:var(--clay);color:#fff;font-weight:800;border-radius:10px;font-size:.88em}
+details{max-width:66ch;margin-top:.9rem;border:2px solid var(--ink);border-radius:14px;background:#fff;box-shadow:5px 5px 0 var(--clay-soft);overflow:hidden}
+summary{cursor:pointer;padding:.85rem 1.2rem;font-weight:700;color:var(--pine);min-height:48px;background:rgba(246,227,210,.35);transition:background .2s}
+summary:hover{background:var(--clay-soft)}
+details p{padding:.6rem 1.2rem .8rem;margin:0}
+.slide.dark{background:radial-gradient(circle at 85% 15%,#185f47 0%,#0b3d2c 100%);color:#f2f7f3;border-bottom:none}
+.slide.dark::after{-webkit-text-stroke-color:rgba(255,255,255,.16)}
+.slide.dark .eyebrow{color:var(--gold);background:rgba(240,180,41,.15);border-color:rgba(240,180,41,.3)}
+.slide.dark .eyebrow::before{background:var(--gold)}
+.slide.dark a{color:var(--gold)}
+.slide.dark h1,.slide.dark h2{color:#fff}
+.slide.dark h3{color:var(--gold)}
+.slide.dark .visual{box-shadow:6px 6px 0 rgba(0,0,0,.3);border-color:rgba(255,255,255,.3)}
+.slide.dark .card{background:rgba(15,74,53,.92);border-color:rgba(242,247,243,.35);box-shadow:6px 6px 0 rgba(0,0,0,.25);color:#f2f7f3}
+.slide.dark .card:hover{box-shadow:8px 8px 0 rgba(0,0,0,.35)}
+.slide.dark .card.warm{background:rgba(61,44,16,.92);border-color:var(--gold);box-shadow:6px 6px 0 rgba(240,180,41,.25)}
+.slide.dark .card.danger{border-color:var(--red-soft);background:rgba(74,31,22,.92);box-shadow:6px 6px 0 rgba(248,227,222,.18)}
+.slide.dark .big{color:var(--gold)}
+.slide.dark .takeaway{background:#062218;border-left-color:var(--gold);color:#fff;box-shadow:0 12px 28px rgba(0,0,0,.4)}
+.slide.dark .source,.slide.dark figcaption{color:rgba(242,247,243,.7)}
+.slide.dark .timeline{background:#f2f7f3;border-color:#f2f7f3}
+.slide.dark .timeline div{background:#0f4a35;color:#f2f7f3}
+.slide.dark .timeline strong{color:var(--gold)}
+.slide.dark ol.steps li{background:#0f4a35;border-color:rgba(242,247,243,.3);color:#f2f7f3}
+.slide.dark ol.steps li::before{background:var(--gold);color:var(--pine-deep)}
+.slide.dark details{background:#0f4a35;border-color:rgba(242,247,243,.3);color:#f2f7f3}
+.slide.dark summary{color:var(--gold);background:rgba(240,180,41,.12)}
+.slide.bar{border-left:clamp(12px,1.6vw,20px) solid var(--clay);border-radius:0 20px 20px 0}
+.slide.bar::after{-webkit-text-stroke-color:rgba(194,87,26,.18)}
+.slide.bar .eyebrow{color:var(--pine);background:var(--mint);border-color:rgba(18,88,63,.2)}
+.slide.bar .eyebrow::before{background:var(--pine)}
+.slide.danger{background:radial-gradient(circle at 85% 15%,#7a2318 0%,#48140d 100%);color:#fdf1ee;border-bottom:none}
+.slide.danger::after{-webkit-text-stroke-color:rgba(255,255,255,.16)}
+.slide.danger .eyebrow{color:var(--gold);background:rgba(240,180,41,.15);border-color:rgba(240,180,41,.3)}
+.slide.danger .eyebrow::before{background:var(--gold)}
+.slide.danger a{color:var(--gold)}
+.slide.danger h1,.slide.danger h2{color:#fff}
+.slide.danger h3{color:#fff}
+.slide.danger .card{background:rgba(109,33,23,.92);border-color:rgba(253,241,238,.35);box-shadow:6px 6px 0 rgba(0,0,0,.25);color:#fdf1ee}
+.slide.danger .card.danger{background:rgba(63,18,11,.95);border-color:var(--gold);box-shadow:6px 6px 0 rgba(240,180,41,.25)}
+.slide.danger .big{color:var(--gold)}
+.slide.danger .takeaway{background:#2a0b06;border-left-color:var(--gold);color:#fff;box-shadow:0 12px 28px rgba(0,0,0,.4)}
+.slide.danger .source{color:rgba(253,241,238,.7)}
+.slide.danger ol.steps li{background:#6d2117;border-color:rgba(253,241,238,.3);color:#fdf1ee}
+.slide.danger ol.steps li::before{background:var(--gold);color:var(--red-deep)}
+nav.bar{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;align-items:stretch;gap:0;background:var(--ink);color:#f4efe6;border-top:4px solid var(--clay);box-shadow:0 -8px 25px rgba(0,0,0,.25)}
+nav.bar .brand{display:flex;align-items:center;padding:0 1.25rem;font-size:.65em;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border-right:1px solid rgba(255,255,255,.16);white-space:nowrap}
+nav.bar button{background:transparent;color:inherit;border:none;border-left:1px solid rgba(255,255,255,.16);padding:.9rem 1.25rem;font-size:.74em;font-weight:700;letter-spacing:.08em;text-transform:uppercase;min-height:56px;min-width:48px;transition:background .15s,color .15s}
+nav.bar button:hover:not(:disabled){background:rgba(255,255,255,.12);color:#fff}
+nav.bar button:active:not(:disabled){background:rgba(255,255,255,.2)}
+nav.bar button:disabled{opacity:.35;cursor:default}
+nav.bar #counter{display:flex;align-items:center;margin-left:auto;padding:0 1.25rem;font-variant-numeric:tabular-nums;font-weight:800;border-left:1px solid rgba(255,255,255,.16);font-size:.82em;color:var(--gold);letter-spacing:.05em}
+main{padding-bottom:70px}
+#announcement{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#error{position:fixed;left:1rem;bottom:84px;z-index:45;background:var(--red);color:#fff;padding:.7rem 1rem;font-weight:600;border-radius:10px;max-width:min(90vw,480px);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+#error:empty{display:none}
+dialog#overlay{border:none;padding:0;max-width:min(92vw,780px);width:100%;max-height:86vh;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:18px;box-shadow:12px 12px 0 rgba(11,61,44,.25),0 20px 50px rgba(0,0,0,.3);overflow:hidden}
+dialog#overlay::backdrop{background:rgba(11,61,44,.65);backdrop-filter:blur(8px)}
+dialog#overlay .dialog-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 1.4rem;background:var(--pine-deep);color:#f2f7f3}
+dialog#overlay .dialog-head h2{margin:0;font-size:1.15rem;letter-spacing:.05em;text-transform:uppercase;font-weight:800;color:#fff}
+dialog#overlay #close{background:var(--gold);color:var(--pine-deep);border:none;padding:.6rem 1.3rem;font-weight:800;text-transform:uppercase;font-size:.78em;letter-spacing:.08em;min-height:44px;border-radius:8px;transition:transform .15s}
+dialog#overlay #close:hover{transform:scale(1.03)}
+dialog#overlay #overview-list{padding:1.2rem 1.4rem;display:grid;gap:.5rem;max-height:54vh;overflow:auto}
+dialog#overlay #overview-list button{text-align:left;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:.65rem 1rem;font-size:.85em;font-weight:600;min-height:44px;transition:all .15s}
+dialog#overlay #overview-list button:hover{background:var(--mint);transform:translateX(3px)}
+dialog#overlay #overview-list button[aria-current]{background:var(--clay-soft);border-color:var(--clay);font-weight:800;box-shadow:3px 3px 0 var(--clay)}
+dialog#overlay #note-content{max-height:54vh;overflow:auto;padding:1.35rem 1.55rem;font-size:.95em;line-height:1.65;max-width:62ch}
+dialog#overlay .help{padding:0 1.4rem 1.2rem;font-size:.7em;color:var(--ink-soft);margin:0}
+noscript p{padding:1rem 1.5rem;background:var(--clay-soft);font-weight:600}
+.clean-deck{background:#fff;background-image:none;color:#1c2b25}
+.clean-deck #progress,.clean-deck nav.bar,.clean-deck .skip,.clean-deck .eyebrow,.clean-deck .source,.clean-deck .slide::after,.clean-deck .roadmap-slide::before,.clean-deck figcaption,.clean-deck #announcement,.clean-deck #error,.clean-deck dialog#overlay{display:none!important}
+.clean-deck main{padding-bottom:0}
+.clean-deck .slide,.clean-deck .slide.dark,.clean-deck .slide.danger,.clean-deck .slide.bar{max-width:1440px;min-height:100vh;min-height:100dvh;padding:clamp(3.5rem,9vh,7rem) clamp(2rem,8vw,8rem);background:#fff;color:#1c2b25;border:0;border-radius:0}
+.clean-deck h1,.clean-deck h2{color:#123d2e;font-size:clamp(2.15rem,4.4vw,4.25rem);line-height:1.06;letter-spacing:-.045em;margin:0 0 1.5rem;max-width:15ch}
+.clean-deck h3{color:#17654d;font-size:1.05em}
+.clean-deck p,.clean-deck li{max-width:68ch}
+.clean-deck .has-photo,.clean-deck .hero-photo{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:clamp(2rem,7vw,7rem);align-content:center;align-items:center}
+.clean-deck .has-photo>:not(.slide-photo),.clean-deck .hero-photo>:not(.slide-photo){grid-column:1;max-width:none}
+.clean-deck .has-photo .slide-photo,.clean-deck .hero-photo .slide-photo{grid-column:2;grid-row:1 / span 12;position:relative;inset:auto;transform:none;width:100%;height:auto;max-height:74vh;object-fit:cover;border:0;border-radius:0;box-shadow:none;mask-image:none;-webkit-mask-image:none}
+.clean-deck .hero-photo .slide-photo{object-fit:cover;aspect-ratio:4/5}
+.clean-deck .slide-photo{display:block}
+.clean-deck .grid{gap:clamp(2rem,6vw,6rem)}
+.clean-deck .takeaway{margin-top:1.8rem;padding:1rem 0 1rem 1.15rem;background:transparent;color:#1c2b25;border-left:4px solid #c2571a;border-radius:0;box-shadow:none}
+.clean-deck .card{background:#f7faf8;border:1px solid #d8e3db;border-radius:0;box-shadow:none}
+.clean-deck .card.warm,.clean-deck .card.danger{background:#fbf7f1;border-color:#ead9c6;box-shadow:none}
+.clean-deck ol.steps li{background:#fff;border:0;border-bottom:1px solid #d8e3db;border-radius:0;box-shadow:none;padding:1rem 0;font-size:1em}
+.clean-deck ol.steps li:hover{transform:none;box-shadow:none}
+.clean-deck .timeline{background:#d8e3db;border:0;border-radius:0;box-shadow:none}
+.clean-deck .timeline div{background:#fff;padding:1.2rem 1.25rem}
+.clean-deck .roadmap-slide .steps{max-width:900px}
+.clean-deck section[data-n="04"] figure::before{filter:none}
+@media(max-width:900px){
+body{font-size:17px}
+.grid,.grid.three{grid-template-columns:1fr;gap:1.2rem}
+.timeline{grid-template-columns:1fr}
+.slide{padding:3.2rem 1.1rem 8rem;overflow:visible}
+.slide::after{font-size:3.4rem}
+.slide.has-photo>:not(.slide-photo),.slide.hero-photo>:not(.slide-photo){max-width:none}
+.slide-photo,.slide.hero-photo .slide-photo{position:relative;inset:auto;transform:none;width:100%;height:min(42vh,360px);margin:1rem 0 1.5rem;border:2px solid var(--ink);border-radius:18px;box-shadow:7px 7px 0 var(--mint);-webkit-mask-image:none;mask-image:none;order:3}
+.clean-deck .has-photo,.clean-deck .hero-photo{display:flex;flex-direction:column;align-items:stretch;gap:1.5rem}
+.clean-deck .has-photo .slide-photo,.clean-deck .hero-photo .slide-photo{order:3;max-height:none;aspect-ratio:16/10}
+nav.bar .brand{display:none}
+nav.bar{flex-wrap:wrap}
+nav.bar button{flex:1;padding:.7rem .4rem;font-size:.62em}
+nav.bar #counter{order:-1;flex-basis:100%;justify-content:center;border-left:none;border-bottom:1px solid rgba(255,255,255,.18);padding:.5rem}
+}
+@media print{
+body,html{background:#fff;font-size:14px;color:#000}
+#progress,nav.bar,#error,.skip,dialog#overlay{display:none}
+main{padding-bottom:0}
+.slide[hidden]{display:flex}
+.slide{min-height:0;page-break-after:always;border-bottom:none;border-left:none;padding:0;margin:0 0 1rem}
+.slide.dark,.slide.danger{background:#fff;color:#000}
+.slide::after{-webkit-text-stroke-color:rgba(0,0,0,.15)}
+.card,ol.steps li,details{box-shadow:none}
+details{display:none}
+.grid,.grid.three{grid-template-columns:1fr 1fr}
+a{color:inherit}
+.source{font-size:11px}
+}
+@media screen{
+.clean-deck .slide[hidden]{display:none!important}
+.clean-deck .slide.has-photo{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:0;padding-right:54%}
+.clean-deck .has-photo .slide-photo{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:43%;height:auto;max-height:72vh;object-fit:contain;aspect-ratio:auto;margin:0}
+.clean-deck .hero-photo>.grid{display:block}
+.clean-deck .has-photo>.grid{grid-template-columns:1fr;gap:.65rem}
+.clean-deck .has-photo>:not(.slide-photo){max-width:100%}
+.clean-deck .slide h1,.clean-deck .slide h2{color:#123d2e;font-size:clamp(30px,3.3vw,52px);max-width:24ch}
+.clean-deck .slide h3,.clean-deck .slide .timeline strong{color:#17654d}
+.clean-deck .slide .card,.clean-deck .slide .timeline div,.clean-deck .slide ol.steps li,.clean-deck .slide .takeaway{color:#1c2b25;background:transparent;border:0;box-shadow:none;transform:none}
+.clean-deck .slide .card{padding:.65rem 0}
+.clean-deck nav.bar{display:contents!important}
+.clean-deck nav.bar>*{display:none!important}
+.clean-deck nav.bar #prev,.clean-deck nav.bar #next{display:block!important;position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:44px;height:64px;padding:0;min-height:44px;min-width:44px;border:0;background:transparent;color:#64766e;font-size:0}
+.clean-deck nav.bar #prev{left:4px}
+.clean-deck nav.bar #next{right:4px}
+.clean-deck nav.bar #prev::before{content:'‹';font-size:42px}
+.clean-deck nav.bar #next::before{content:'›';font-size:42px}
+.clean-deck nav.bar button:disabled{visibility:hidden}
+.clean-deck nav.bar button:hover:not(:disabled){background:#edf2ef;color:#123d2e}
+.clean-deck dialog#overlay[open]{display:block!important}
+}
+@media screen and (max-width:900px){
+.clean-deck .slide{padding:40px 56px;min-height:100dvh}
+.clean-deck .slide.has-photo{padding-right:56px}
+.clean-deck .has-photo .slide-photo{position:static;transform:none;width:100%;max-height:38vh;margin:20px 0 0;order:10;object-fit:contain}
+.clean-deck .roadmap-slide .steps{grid-template-columns:1fr}
+}
+@media screen and (min-width:901px){
+body.clean-deck{background:#e7ece9;font-size:clamp(18px,1.65vw,25px);line-height:1.5}
+.clean-deck main#deck{min-height:100dvh;display:grid;place-items:center;padding:24px 54px}
+.clean-deck .slide,.clean-deck .slide.dark,.clean-deck .slide.danger,.clean-deck .slide.bar{width:100%;max-width:1440px;min-height:min(780px,calc(100dvh - 48px));padding:clamp(36px,5vw,76px);background:#fcfdfc;box-shadow:0 12px 48px #173c2910;overflow:hidden}
+.clean-deck .slide.has-photo{padding-right:52%}
+.clean-deck .slide h1,.clean-deck .slide h2{font-size:clamp(34px,3.7vw,58px);line-height:1.1;margin-bottom:28px;letter-spacing:-.035em;max-width:25ch}
+.clean-deck .slide h1{font-size:clamp(42px,4.4vw,68px)}
+.clean-deck .slide.has-photo .slide-photo{right:4%;width:43%;max-height:64vh;border-radius:4px}
+.clean-deck .slide.hero-photo{background:#123d2e;color:#fff}
+.clean-deck .slide.hero-photo h1,.clean-deck .slide.hero-photo .takeaway{color:#fff}
+.clean-deck .slide.hero-photo .slide-photo{right:0;width:72%;height:100%;max-height:none;object-fit:cover;object-position:70% center;border-radius:0;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.15) 15%,rgba(0,0,0,.65) 36%,#000 57%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.15) 15%,rgba(0,0,0,.65) 36%,#000 57%)}
+.clean-deck .slide.hero-photo .takeaway{font-size:.85em;color:#c9e0d4;padding-left:0;background:transparent}
+.clean-deck .slide ul{padding-left:1.1em}
+.clean-deck .slide li{margin:.65em 0}
+.clean-deck .slide li::marker{color:#298167}
+.clean-deck .slide .grid.three{gap:24px}
+.clean-deck .slide .card,.clean-deck .slide .timeline div{background:#edf4ef;padding:24px;border-radius:4px}
+.clean-deck .slide .card h3,.clean-deck .slide .timeline strong{font-size:1.12em;margin-bottom:12px}
+.clean-deck .slide.has-photo .card{padding:12px 18px}
+.clean-deck .slide.has-photo>.grid{gap:12px}
+.clean-deck .slide .takeaway{padding:16px 20px;background:#edf4ef;border:0;font-size:.95em}
+.clean-deck .slide ol.steps{max-width:none;gap:12px}
+.clean-deck .slide ol.steps li{padding:12px 16px;background:#edf4ef;margin:0;font-size:.94em}
+.clean-deck .slide ol.steps li::before{background:#17654d;color:#fff;border-radius:50%}
+.clean-deck .roadmap-slide .steps{grid-template-columns:1fr 1fr;gap:24px}
+.clean-deck .roadmap-slide ol.steps li{min-height:120px}
+.clean-deck .slide .timeline{max-width:none;gap:20px;background:transparent}
+.clean-deck .slide[data-n="31"] h2,.clean-deck .slide[data-n="34"] h2{color:#8e382f}
+}
+.clean-deck .hero-photo .presenter{margin-top:2.5rem;font-size:.78em;line-height:1.6;color:#17654d}
+.clean-deck .hero-photo .presenter strong{font-size:1.2em;font-weight:600}
+@media screen and (min-width:901px){.clean-deck .hero-photo .presenter{color:#d5e7dc}}
+@media screen and (min-width:901px){
+.clean-deck .slide[data-n="15"] .timeline{grid-template-columns:repeat(3,1fr);font-size:.88em}
+.clean-deck .slide[data-n="04"]{padding-right:49%}
+.clean-deck .slide[data-n="04"]::before{content:'';position:absolute;right:4%;top:25%;width:40%;height:50%;background:url('assets/piring-makanan-bergizi-transparan.png') center/contain no-repeat}
+}
+.clean-deck .slide[data-n="03"]{background:#f4f8f5}
+.clean-deck .slide[data-n="03"] .maternal-intro{margin:0 0 22px;font-size:.92em;max-width:42ch;color:#4a6558}
+.clean-deck .maternal-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.clean-deck .maternal-cards article{padding:20px;background:rgba(255,255,255,.94);border:1px solid #deebe2;border-radius:16px}
+.clean-deck .maternal-cards h3{font-size:.95em;line-height:1.25;margin:0 0 10px;color:#17654d}
+.clean-deck .maternal-cards p{font-size:.82em;line-height:1.5;margin:0}
+.clean-deck .maternal-cards .maternal-note{grid-column:1/-1;background:#e1ede5;border-color:transparent}
+@media screen and (min-width:901px){
+.clean-deck .slide.has-photo[data-n="03"]{padding-right:46%}
+.clean-deck .slide[data-n="03"] h2{font-size:clamp(34px,3.4vw,54px);margin-bottom:18px}
+.clean-deck .slide[data-n="03"] .slide-photo{right:0;top:0;transform:none;width:51%;height:100%;max-height:none;object-fit:cover;object-position:72% center;border-radius:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 38%);mask-image:linear-gradient(90deg,transparent,#000 38%)}
+}
+@media(max-width:600px){.clean-deck .maternal-cards{grid-template-columns:1fr}.clean-deck .slide[data-n="03"] .slide-photo{-webkit-mask-image:linear-gradient(180deg,transparent,#000 20%);mask-image:linear-gradient(180deg,transparent,#000 20%)}}
+.clean-deck .slide[data-n="04"]{padding:24px;background:#fcfdfc}
+.clean-deck .slide[data-n="04"]::before{display:none}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap}
+.plate-study{display:block;width:100%;max-height:calc(100dvh - 100px);margin:auto;overflow:visible}
+.plate-label{font-family:'Segoe Print','Comic Sans MS',cursive;font-size:27px;font-weight:700}
+.plate-example{font-family:'Segoe UI',Arial,sans-serif;font-size:20px;font-weight:400;fill:#627168}
+.plate-footnote{font-family:'Segoe UI',Arial,sans-serif;font-size:17px;fill:#6a786f}
+@media(max-width:900px){.clean-deck .slide[data-n="04"]{padding:30px 44px}.plate-study{min-height:380px;max-height:none}}
+.clean-deck nav.bar #counter{display:flex!important;position:fixed;z-index:45;right:22px;bottom:18px;margin:0;padding:7px 11px;border:1px solid rgba(18,61,46,.15);border-radius:999px;background:rgba(252,253,252,.9);color:#52655c;font-size:12px;font-weight:700;line-height:1;letter-spacing:.08em;box-shadow:0 3px 14px rgba(18,61,46,.08);backdrop-filter:blur(8px)}
+.clean-deck .hero-photo~nav.bar #counter{color:#52655c}
+@media(max-width:900px){.clean-deck nav.bar #counter{right:12px;bottom:10px}}
+.clean-deck .slide[data-n="05"]{background:#f7f4ee}
+.clean-deck .slide[data-n="05"] .nursing-lead{max-width:44ch;margin:0 0 22px;color:#596860;font-size:.86em}
+.clean-deck .nursing-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.clean-deck .nursing-cards article{display:flex;gap:13px;min-height:132px;padding:17px;background:rgba(255,255,255,.9);border:1px solid #e8dfd1;border-radius:14px}
+.clean-deck .nursing-cards article>span{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#c96d45;color:#fff;font-size:12px;font-weight:800;letter-spacing:.05em}
+.clean-deck .nursing-cards h3{margin:2px 0 7px;font-size:.83em;line-height:1.25;color:#8c462d}
+.clean-deck .nursing-cards p{margin:0;font-size:.69em;line-height:1.45;color:#46564e}
+.clean-deck .nursing-key-messages{margin-top:14px;padding:12px 14px 13px;border-radius:14px;background:#efe5d8;border:1px solid #e4d4c2;color:#6f4a35}
+.clean-deck .nursing-key-messages>h3{margin:0 0 9px;font-size:.67em;line-height:1.1;letter-spacing:.08em;text-transform:uppercase;color:#8c462d}
+.clean-deck .nursing-key-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.clean-deck .nursing-key-grid article{display:flex;gap:8px;min-width:0;align-items:flex-start}
+.clean-deck .nursing-key-grid article>span{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:#c96d45;color:#fff;font-size:10px;font-weight:800}
+.clean-deck .nursing-key-grid p{margin:0;font-size:.56em;line-height:1.35;color:#5f5146}
+@media screen and (min-width:901px){
+.clean-deck .slide.has-photo[data-n="05"]{padding-right:47%}
+.clean-deck .slide[data-n="05"] h2{font-size:clamp(32px,3vw,48px);margin-bottom:15px}
+.clean-deck .slide[data-n="05"] .slide-photo{right:0;top:0;transform:none;width:50%;height:100%;max-height:none;object-fit:cover;object-position:62% center;border-radius:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 32%);mask-image:linear-gradient(90deg,transparent,#000 32%)}
+.clean-deck .slide[data-n="05"] .nursing-cards article{min-height:112px;padding:13px}
+.clean-deck .slide[data-n="05"] .nursing-cards{gap:10px}
+.clean-deck .slide[data-n="05"] .nursing-cards p{font-size:.62em;line-height:1.35}
+.clean-deck .slide[data-n="05"] .nursing-cards h3{font-size:.76em;margin-bottom:5px}
+.clean-deck .slide[data-n="05"] .nursing-key-messages{margin-top:11px}
+}
+.clean-deck .slide[data-n="06"]{background:#f5f9f6}
+.clean-deck .asi-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.clean-deck .asi-card{padding:22px 24px;background:rgba(255,255,255,.94);border:1px solid #dbe6df;border-radius:15px;box-shadow:0 2px 8px rgba(18,61,46,.04);display:flex;flex-direction:column;gap:8px}
+.clean-deck .asi-card-top{display:flex;align-items:center;gap:10px}
+.clean-deck .asi-card-top>span{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:#17654d;color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em}
+.clean-deck .asi-card h3{margin:0;color:#17654d;font-size:.92em;line-height:1.25}
+.clean-deck .asi-card p{margin:0;color:#46574f;font-size:.8em;line-height:1.5}
+@media(max-width:900px){.clean-deck .asi-cards{grid-template-columns:1fr}}
+.clean-deck .slide[data-n="07"]{background:#f4f8f5}
+.clean-deck .slide[data-n="07"]{justify-content:flex-start;padding:30px 54px 38px;background:linear-gradient(160deg,#f8fbf8 0%,#edf5ef 100%)}
+.clean-deck .mpasi-stage-layout{display:grid;grid-template-columns:1fr;gap:16px;width:100%}
+.clean-deck .slide[data-n="07"] h2{margin:0 0 4px;font-size:clamp(30px,2.8vw,43px);color:#173d31}
+.clean-deck .slide[data-n="07"] .mpasi-lead{max-width:none;margin:0;color:#536b60;font-size:.72em;line-height:1.45}
+.clean-deck .mpasi-stage-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%}
+.clean-deck .mpasi-stage-card{display:grid;grid-template-columns:42% 58%;position:relative;min-width:0;height:228px;background:#fff;border:1px solid #d7e5dc;border-radius:18px;overflow:hidden;box-shadow:0 9px 24px rgba(32,76,59,.1)}
+.clean-deck .mpasi-stage-card img{position:relative;display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.clean-deck .mpasi-stage-card::after{display:none}
+.clean-deck .mpasi-stage-copy{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;padding:25px 22px 20px;color:#173d31;background:#fff}
+.clean-deck .mpasi-stage-card h3{margin:0 0 5px;color:#17654d;font-size:.88em;line-height:1.1}
+.clean-deck .mpasi-stage-card .texture{display:block;margin-bottom:9px;color:#b15a39;font-size:.55em;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.clean-deck .mpasi-stage-card p{margin:0;color:#4c6057;font-size:.58em;line-height:1.4}
+@media screen and (min-width:901px){
+.clean-deck .slide[data-n="07"]{height:min(780px,calc(100dvh - 48px));padding:24px}
+.clean-deck .mpasi-stage-layout{height:100%;min-height:0;grid-template-rows:auto minmax(0,1fr);gap:20px}
+.clean-deck .slide[data-n="07"] h2{max-width:none;font-size:clamp(30px,2.8vw,43px);margin-bottom:8px}
+.clean-deck .slide[data-n="07"] .mpasi-lead{font-size:16px}
+.clean-deck .mpasi-stage-cards{min-height:0;grid-template-rows:repeat(2,minmax(0,1fr));gap:18px}
+.clean-deck .mpasi-stage-card{height:auto;min-height:0;grid-template-columns:46% minmax(0,1fr);border-radius:20px}
+.clean-deck .mpasi-stage-card img{min-height:0;object-fit:cover}
+.clean-deck .mpasi-stage-copy{min-width:0;padding:26px 24px}
+.clean-deck .mpasi-stage-card h3{font-size:25px;margin-bottom:10px}
+.clean-deck .mpasi-stage-card .texture{font-size:13px;line-height:1.45;letter-spacing:.04em;margin-bottom:16px}
+.clean-deck .mpasi-stage-card p{font-size:16px;line-height:1.55}
+}
+@media(max-width:900px){.clean-deck .mpasi-stage-cards{grid-template-columns:1fr}.clean-deck .mpasi-stage-card{height:210px}}
+@media(max-width:560px){.clean-deck .slide[data-n="07"]{padding:28px}.clean-deck .mpasi-stage-card{grid-template-columns:40% 60%;height:195px}.clean-deck .mpasi-stage-copy{padding:18px 15px}}
+@media(max-width:700px){
+.clean-deck .nursing-cards,.clean-deck .asi-cards{grid-template-columns:1fr}
+.clean-deck .nursing-cards article{min-height:0}
+.clean-deck .nursing-key-grid{grid-template-columns:1fr}
+}
+.clean-deck .slide[data-n="09"]{padding:28px;background:#f3f7f4}
+.clean-deck .slide[data-n="09"] h2{max-width:none;margin:0 0 20px;font-size:clamp(30px,3vw,46px)}
+.hazard-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.hazard-card{position:relative;height:440px;border-radius:20px;overflow:hidden;background:#173d31;box-shadow:0 8px 24px #173d311a}
+.hazard-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.hazard-card::after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#102c22e8 70%,#102c22)}
+.hazard-copy{position:absolute;z-index:1;bottom:0;left:0;right:0;padding:25px}
+.clean-deck .hazard-copy h3{color:#fff;font-size:28px;margin:0 0 8px}
+.hazard-copy p{color:#eef5f0;font-size:17px;line-height:1.5;margin:0}
+.hazard-reminder{font-size:16px;line-height:1.5;color:#435b4e;margin:18px 0 0}
+@media(max-width:900px){.hazard-cards{grid-template-columns:1fr}.hazard-card{height:380px}}
+@media screen and (min-width:901px) and (max-height:740px){.hazard-card{height:calc(100dvh - 250px)}}
+.clean-deck .slide.infographic-slide{padding:0;background:#063d2c;align-items:center;justify-content:center}
+.food-safety-infographic{display:block;width:100%;height:min(780px,calc(100dvh - 48px));object-fit:contain}
+.clean-deck .slide.field-workflow-slide{justify-content:flex-start;padding:26px 44px 28px;background:#f3f7f4}
+.clean-deck .field-workflow-slide h2{max-width:none;margin:0 0 20px;font-size:clamp(32px,3vw,48px);color:#173d31}
+.field-workflow-lead{margin:0 0 18px;color:#536b60;font-size:.92em}
+.field-workflow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;width:100%;height:500px;min-height:0}
+.field-phase{display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;min-height:0;padding:15px 18px 16px;border-radius:16px;background:#fff;border:1px solid #d8e6dd;border-top:6px solid #17654d;box-shadow:0 8px 22px #173d3112}
+.field-phase:last-child{background:#fff;border-color:#d8e6dd;border-top-color:#17654d;color:#173d31}
+.field-phase-head{display:flex;align-items:center;min-height:42px;padding:0 0 9px;margin:0 0 5px;border-bottom:2px solid #dcece3}
+.field-phase:last-child .field-phase-head{border-color:#dcece3}
+.field-phase-head h3{margin:0;color:#17654d;font-size:.95em;line-height:1.15}
+.field-phase:last-child .field-phase-head h3{color:#17654d}
+.field-phase-head span{color:#b15a39;font-size:.6em;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.field-phase:last-child .field-phase-head span{color:#f1c56c}
+.field-steps{display:grid;grid-template-rows:repeat(5,minmax(0,1fr));gap:0;margin:0;padding:0;list-style:none;min-height:0}
+.field-step{display:grid;grid-template-columns:34px minmax(0,1fr);gap:11px;align-items:center;min-height:0;padding:7px 0;border-bottom:1px solid #e4ece7}
+.field-step:last-child{border-bottom:0}
+.field-step-num{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#dcece3;color:#17654d;font-size:12px;font-weight:900}
+.field-phase:last-child .field-step-num{background:#dcece3;color:#17654d}
+.field-step h4{margin:0 0 3px;color:#173d31;font-size:.85em;line-height:1.2}
+.field-phase:last-child .field-step h4{color:#173d31}
+.field-step p{margin:0;max-width:none;color:#566960;font-size:.78em;line-height:1.3}
+.field-phase:last-child .field-step p{color:#566960}
+.field-workflow-slide .source{position:absolute;right:44px;bottom:10px;margin:0;padding:0;border:0;font-size:.64em}
+@media(max-width:850px){.field-workflow{grid-template-columns:1fr;height:auto}.field-phase{padding:16px}.field-workflow-slide .source{position:static;margin-top:10px}}
+.clean-deck .slide.life-stage-slide{justify-content:flex-start;padding:26px 44px 34px;background:#f3f7f4}
+.clean-deck .life-stage-slide h2{max-width:none;margin:0 0 16px;color:#173d31;font-size:clamp(32px,3vw,48px)}
+.life-stage-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;min-height:0;flex:1;width:100%}
+.life-stage-card{position:relative;min-width:0;min-height:0;overflow:hidden;border-radius:18px;background:#173d31;box-shadow:0 8px 22px #173d3118}
+.life-stage-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%;transition:transform .45s ease}
+.life-stage-card::after{content:"";position:absolute;inset:28% 0 0;background:linear-gradient(transparent,rgba(8,35,26,.82) 58%,rgba(8,35,26,.97))}
+.life-stage-card:hover img{transform:scale(1.025)}
+.life-stage-copy{position:absolute;z-index:1;left:0;right:0;bottom:0;padding:18px 20px 17px;color:#fff}
+.clean-deck .life-stage-copy h3{margin:0 0 5px;color:#fff;font-size:.9em;line-height:1.15}
+.life-stage-copy p{margin:0;color:#edf6f1;font-size:.72em;line-height:1.38}
+.life-stage-slide .source{margin:8px 0 0;padding:0;border:0;font-size:.64em}
+@media(max-width:900px){.life-stage-cards{grid-template-columns:1fr}.life-stage-card{min-height:300px}.clean-deck .slide.life-stage-slide{padding:28px}}
+.clean-deck .slide.parenting-hero{position:relative;justify-content:stretch;padding:38px 46px 42px;overflow:hidden;background:#123d2e;color:#fff}
+.parenting-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%}
+.parenting-hero::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(0deg,rgba(7,31,23,.25) 0%,rgba(7,31,23,.14) 38%,rgba(7,31,23,.03) 72%,rgba(7,31,23,.05) 100%)}
+.parenting-content{position:absolute;z-index:2;inset:38px 46px 42px;display:flex;flex-direction:column}
+.clean-deck .parenting-hero h2{max-width:19ch;margin:0;color:#fff;font-size:clamp(34px,3.7vw,52px);line-height:1.03;text-shadow:0 2px 18px rgba(0,0,0,.4)}
+.parenting-cards{position:absolute;left:0;bottom:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:min(1050px,100%)}
+.parenting-card{min-height:124px;padding:18px 20px;border:1px solid rgba(255,255,255,.9);border-radius:16px;background:rgba(255,255,255,.88);box-shadow:0 10px 28px rgba(0,0,0,.18);backdrop-filter:blur(8px)}
+.clean-deck .parenting-card h3{margin:0 0 7px;color:#9b4f35;font-size:24px}
+.parenting-card p{margin:0;color:#24352e;font-size:15px;line-height:1.48}
+.parenting-hero .source{position:absolute;right:0;bottom:-27px;margin:0;padding:0;border:0;color:rgba(255,255,255,.75);font-size:11px}
+@media(max-width:900px){.clean-deck .slide.parenting-hero{padding:34px 28px}.parenting-content{inset:34px 28px}.parenting-cards{position:static;grid-template-columns:1fr;margin-top:auto}.parenting-card{min-height:0}.parenting-hero .source{position:static;margin-top:10px}}
+.clean-deck .slide.parenting-style-slide{justify-content:flex-start;padding:26px 44px 34px;background:#f4f8f5}
+.clean-deck .parenting-style-slide h2{max-width:none;margin:0 0 16px;color:#173d31;font-size:clamp(32px,3vw,48px)}
+.parenting-style-lead{margin:0 0 18px;color:#536b60;font-size:.92em}
+.parenting-style-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%;margin:0}
+.parenting-style-card{position:relative;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:18px 22px;border:1px solid #d8e6dd;border-radius:16px;background:#fff;box-shadow:0 8px 22px #173d3112}
+.clean-deck .parenting-style-card h3{margin:0 0 7px;color:#17654d;font-size:.95em}
+.parenting-style-card p{margin:0;color:#53635b;font-size:.82em;line-height:1.45}
+.parenting-style-card .recommended-label{position:absolute;top:15px;right:18px;color:#b15a39;font-size:.6em;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.parenting-style-card.parenting-style-note{grid-column:1/-1}
+.parenting-style-slide .source{margin:12px 0 0;padding:0;border:0;font-size:.64em}
+@media(max-width:900px){.parenting-style-grid{grid-template-columns:1fr}.parenting-style-slide .source{margin-top:10px}}
+.slide h1:focus,.slide h2:focus{outline:none}
+.clean-deck .slide.healthy-habits-slide{justify-content:flex-start;padding:26px 44px 34px;background:#f4f8f5}
+.clean-deck .healthy-habits-slide h2{max-width:none;margin:0 0 16px;color:#173d31;font-size:clamp(32px,3vw,48px)}
+.healthy-habits-lead{margin:0 0 18px;color:#536b60;font-size:.92em}
+.healthy-habits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%;margin:0}
+.healthy-habit{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:center;min-width:0;padding:16px 18px;border:1px solid #d8e6dd;border-radius:16px;background:#fff;box-shadow:0 8px 22px #173d3112}
+.healthy-habit-num{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#dcece3;color:#17654d;font-size:12px;font-weight:900}
+.clean-deck .healthy-habit h3{margin:0 0 5px;color:#17654d;font-size:.92em;line-height:1.15}
+.healthy-habit p{margin:0;color:#52645b;font-size:.8em;line-height:1.35}
+.healthy-habits-slide .source{margin:12px 0 0;padding:0;border:0;font-size:.64em}
+.clean-deck .healthy-habits-grid{flex:1;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr))}
+@media(max-width:900px){.healthy-habits-grid{grid-template-columns:1fr}}
+.clean-deck .slide.healthy-practice-slide{justify-content:flex-start;padding:38px 54px 34px;background:#f7f4ee;color:#173d31}
+.clean-deck .healthy-practice-slide h2{max-width:none;margin:0 0 10px;color:#173d31;font-size:clamp(34px,3.4vw,52px);line-height:1.06}
+.healthy-practice-lead{max-width:68ch;margin:0 0 22px;color:#5b685f;font-size:.84em;line-height:1.45}
+.habit-principles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));column-gap:48px;flex:1;min-height:0;width:100%;border-top:1px solid #ded6ca}
+.habit-principle{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;align-content:center;min-width:0;padding:15px 0;border-bottom:1px solid #ded6ca}
+.habit-principle:nth-child(-n+3){grid-column:1}
+.habit-principle:nth-child(n+4){grid-column:2}
+.habit-principle:nth-child(4){grid-row:1}
+.habit-principle:nth-child(5){grid-row:2}
+.habit-principle:nth-child(6){grid-row:3}
+.habit-principle-num{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#c96d45;color:#fff;font-size:13px;font-weight:900}
+.clean-deck .habit-principle h3{margin:0 0 5px;color:#17654d;font-size:.9em;line-height:1.2}
+.habit-principle p{margin:0;color:#4f5f56;font-size:.72em;line-height:1.42}
+.healthy-practice-slide .source{margin:11px 0 0;padding:0;border:0;font-size:.62em}
+@media(max-width:900px){.habit-principles{display:block;border-top:0}.habit-principle{grid-template-columns:36px minmax(0,1fr)}.habit-principle-num{width:32px;height:32px}.clean-deck .slide.healthy-practice-slide{padding:36px 48px}}
+.clean-deck .slide.feeding-rules-slide,.clean-deck .slide.refusal-slide,.clean-deck .slide.nutrition-education-slide{justify-content:flex-start;padding:38px 54px 34px;color:#173d31}
+.clean-deck .slide.feeding-rules-slide{background:#f4f8f5}
+.clean-deck .slide.refusal-slide{background:#f7f4ee}
+.clean-deck .slide.nutrition-education-slide{background:#f3f7f4}
+.clean-deck .feeding-rules-slide h2,.clean-deck .refusal-slide h2,.clean-deck .nutrition-education-slide h2{max-width:none;margin:0 0 10px;color:#173d31;font-size:clamp(34px,3.4vw,52px);line-height:1.06}
+.section-lead{max-width:70ch;margin:0 0 24px;color:#53675d;font-size:.84em;line-height:1.45}
+.feeding-rule-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;flex:1;min-height:0;border-top:1px solid #cfddd5;border-bottom:1px solid #cfddd5}
+.feeding-rule{padding:26px 28px 22px 0}
+.feeding-rule+.feeding-rule{padding-left:28px;border-left:1px solid #cfddd5}
+.feeding-rule-mark{display:block;margin-bottom:18px;color:#c96d45;font-size:1.8em;font-weight:900;line-height:1}
+.clean-deck .feeding-rule h3{margin:0 0 16px;color:#17654d;font-size:1.05em;line-height:1.2}
+.feeding-rule ul{margin:0;padding-left:1.15em;color:#4e6056;font-size:.74em;line-height:1.45}
+.clean-deck .feeding-rule li{margin:0 0 11px}
+.refusal-signs{margin:0 0 22px;color:#765440;font-size:.75em;font-weight:700}
+.refusal-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;flex:1;min-height:0}
+.refusal-step{position:relative;padding:27px 25px;background:#fff;border-top:6px solid #c96d45;border-radius:0 0 16px 16px;box-shadow:0 8px 22px #50351e12}
+.refusal-step-num{display:block;margin-bottom:20px;color:#c96d45;font-size:1.7em;font-weight:900;line-height:1}
+.clean-deck .refusal-step h3{margin:0 0 12px;color:#17654d;font-size:1em;line-height:1.25}
+.refusal-step p{margin:0;color:#4f5e56;font-size:.75em;line-height:1.48}
+.refusal-bottom{margin:22px 0 0;padding:15px 19px;border-left:5px solid #17654d;background:#e8f0eb;color:#294b3e;font-size:.76em;font-weight:700}
+.education-layout{display:grid;grid-template-columns:1.08fr .92fr;gap:42px;flex:1;min-height:0}
+.education-methods{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:14px}
+.education-method{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:0;padding:17px 18px;overflow:hidden;border-radius:15px;background:#173d31}
+.education-method::after{content:"";position:absolute;inset:25% 0 0;background:linear-gradient(transparent,rgba(9,35,26,.93))}
+.education-method img,.cooking-focus>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clean-deck .education-method h3{position:relative;z-index:1;margin:0 0 5px;color:#fff;font-size:.82em;line-height:1.15;text-shadow:0 1px 4px #0008}
+.education-method p{position:relative;z-index:1;margin:0;color:#f0f6f2;font-size:.61em;line-height:1.35;text-shadow:0 1px 4px #0009}
+.cooking-focus{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-self:stretch;padding:28px 30px;overflow:hidden;background:#17654d;color:#fff;border-radius:18px}
+.cooking-focus::after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(transparent,rgba(8,38,27,.96) 72%)}
+.clean-deck .cooking-focus h3{position:relative;z-index:1;margin:0 0 7px;color:#fff;font-size:1.08em;line-height:1.2;text-shadow:0 1px 5px #0009}
+.cooking-focus>p{position:relative;z-index:1;margin:0;color:#eef7f2;font-size:.7em;line-height:1.4;text-shadow:0 1px 5px #0009}
+.education-key-message{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:18px;align-items:center;margin:17px 0 0;padding:14px 18px;border-left:5px solid #c96d45;background:#fff;color:#40574c}
+.education-key-message strong{color:#c96d45;font-size:.69em;letter-spacing:.08em;text-transform:uppercase}
+.education-key-message span{font-size:.7em;line-height:1.4;font-weight:700}
+.feeding-rules-slide .source,.refusal-slide .source,.nutrition-education-slide .source{margin:12px 0 0;padding:0;border:0;font-size:.62em}
+@media(max-width:900px){.feeding-rule-columns,.refusal-steps,.education-layout,.education-methods{grid-template-columns:1fr}.feeding-rule+.feeding-rule{padding-left:0;border-left:0}.feeding-rule{border-bottom:1px solid #cfddd5}.clean-deck .slide.feeding-rules-slide,.clean-deck .slide.refusal-slide,.clean-deck .slide.nutrition-education-slide{padding:34px 44px}.cooking-focus{margin-top:20px}.education-key-message{grid-template-columns:1fr;gap:5px}}
+.clean-deck .slide.maternal-table-slide{padding:30px 44px;justify-content:center;background:#f4f8f5}
+.clean-deck .maternal-table-slide h2{max-width:none;font-size:clamp(28px,3vw,42px);margin:0 0 12px}
+.maternal-table-lead{max-width:none;margin:0 0 20px;font-size:17px;color:#52645b}
+.maternal-table{width:100%;border-collapse:collapse;table-layout:auto;background:#fff;font-size:16px;line-height:1.35}
+.maternal-table th,.maternal-table td{padding:12px 15px;border-bottom:1px solid #d8e5dd;text-align:left;vertical-align:middle}
+.maternal-table thead th{background:#17654d;color:white;font-weight:700}
+.maternal-table-slide[data-n="hamil-porsi"] thead th:nth-child(2),.maternal-table-slide[data-n="hamil-porsi"] thead th:nth-child(3){white-space:nowrap}
+.maternal-table tbody th{color:#173d31;font-weight:700;min-width:145px}
+.maternal-table tbody tr:nth-child(even){background:#edf4ef}
+.maternal-drinks{display:flex;gap:28px;padding:15px 0 0;font-size:17px;color:#173d31}
+.maternal-table-foot{max-width:none;font-size:12px;line-height:1.4;color:#52645b;margin:14px 0 0}
+@media(max-width:900px){.clean-deck .slide.maternal-table-slide{padding:26px}.maternal-table{font-size:14px}.maternal-table th,.maternal-table td{padding:9px}.maternal-drinks{flex-wrap:wrap;gap:8px}}
+.clean-deck .slide.maternal-menu-combined{padding:28px 34px}
+.maternal-menu-combined .maternal-table{table-layout:fixed;font-size:15px;line-height:1.35}
+.maternal-menu-combined .maternal-table th,.maternal-menu-combined .maternal-table td{padding:10px 12px;min-width:0}
+.maternal-menu-combined .maternal-table td{vertical-align:top}
+.clean-deck .slide.child-menu-slide{padding:30px 38px}
+.child-recipe-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:26px;align-items:start}
+.child-menu-slide .maternal-table{font-size:15px;line-height:1.4}
+.child-menu-slide .maternal-table th,.child-menu-slide .maternal-table td{padding:11px 12px;min-width:0}
+.child-method h3{font-size:23px;margin:0 0 12px}
+.child-method ol{margin:0;padding-left:24px;font-size:16px;line-height:1.45}
+.child-method li{margin:0 0 13px;padding-left:4px}
+.child-menu-slide .maternal-table-foot{max-width:none}
+@media(max-width:900px){.child-recipe-grid{grid-template-columns:1fr}.child-menu-slide .maternal-table{font-size:14px}}
+.local-food-slide .maternal-table{table-layout:fixed;font-size:17px;line-height:1.35}
+.local-food-slide .maternal-table th:first-child{width:20%}
+.local-food-slide .maternal-table th:nth-child(2){width:34%}
+.local-food-slide .maternal-table td,.local-food-slide .maternal-table tbody th{vertical-align:top;padding:11px 15px}
+.clean-deck .local-food-slide .maternal-table-foot,.clean-deck .local-food-slide .local-food-note{max-width:none}
+.local-food-note{max-width:none;font-size:16px;line-height:1.4;margin:18px 0 0;color:#173d31}
+@media(max-width:1050px){.local-food-slide .maternal-table{font-size:15px;line-height:1.4}}
+.clean-deck .slide.child-menu-compare{padding:28px 38px}
+.clean-deck .child-menu-compare h2{font-size:36px}
+.clean-deck .child-menu-compare .maternal-table-lead{max-width:none;font-size:16px;margin-bottom:18px}
+.child-menu-compare .maternal-table{table-layout:fixed;font-size:16px;line-height:1.4}
+.child-menu-compare .maternal-table th,.child-menu-compare .maternal-table td{padding:10px 12px;min-width:0;vertical-align:top}
+.child-menu-compare .maternal-table td:last-child,.child-menu-compare .maternal-table thead th:last-child{border-left:2px solid #d8e5dd}
+.clean-deck .child-menu-compare .maternal-table-foot{max-width:none}
+@media(max-width:900px){.clean-deck .slide.child-menu-compare{padding:24px}.child-menu-compare .maternal-table{font-size:14px}.clean-deck .child-menu-compare h2{font-size:28px}}
+.clean-deck .slide.hygiene-goals-slide{justify-content:flex-start;padding:30px 44px 34px;background:#f4f8f5}
+.clean-deck .hygiene-goals-slide h2{max-width:none;margin:0 0 10px;color:#173d31;font-size:clamp(32px,3vw,46px)}
+.hygiene-goals-lead{margin:0 0 20px;color:#536b60;font-size:17px}
+.hygiene-goals-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:100%;margin:0}
+.hygiene-goal{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;align-items:center;min-width:0;padding:18px 20px;border:1px solid #d8e6dd;border-radius:16px;background:#fff;box-shadow:0 8px 22px #173d3112}
+.hygiene-goal:last-child{grid-column:1/-1}
+.hygiene-goal-num{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#dcece3;color:#17654d;font-weight:900}
+.clean-deck .hygiene-goal h3{margin:0 0 4px;color:#17654d;font-size:20px;line-height:1.2}
+.hygiene-goal p{margin:0;color:#52645b;font-size:16px;line-height:1.35}
+.hygiene-goals-slide .source{margin:14px 0 0;padding:0;border:0;font-size:12px}
+.hygiene-indicator-slide .maternal-table{table-layout:fixed;font-size:17px}
+.hygiene-indicator-slide .maternal-table th:first-child{width:10%}
+.hygiene-indicator-slide .maternal-table th:nth-child(2){width:65%}
+.hygiene-indicator-slide .maternal-table th:nth-child(3){width:25%}
+.hygiene-indicator-slide .maternal-table td,.hygiene-indicator-slide .maternal-table tbody th{padding:13px 15px}
+.hygiene-indicator-message{margin:18px 0 0;padding:14px 18px;border-left:5px solid #b15a39;background:#fff;color:#173d31;font-size:19px;font-weight:700}
+@media(max-width:900px){.hygiene-goals-grid{grid-template-columns:1fr}.hygiene-goal:last-child{grid-column:auto}.hygiene-indicator-slide .maternal-table{font-size:14px}}
+.clean-deck .parenting-style-slide{padding:14px 44px 14px;overflow:hidden}
+.clean-deck .parenting-style-slide h2{margin-bottom:5px}
+.parenting-style-lead{margin-bottom:6px;font-size:17px;line-height:1.3}
+.parenting-style-grid{gap:10px}
+.clean-deck .parenting-style-grid{flex:1;min-height:0;grid-template-rows:minmax(0,1fr) minmax(0,1fr) auto}
+.parenting-style-card{padding:10px 18px}
+.clean-deck .parenting-style-card h3{margin-bottom:4px;font-size:24px}
+.parenting-style-card p{font-size:16px;line-height:1.4}
+.parenting-style-slide .source{margin-top:8px;font-size:11px}
+.clean-deck .hygiene-goals-slide h2,.clean-deck .parenting-style-slide h2{font-size:clamp(2.15rem,4.4vw,4.25rem);line-height:1.06;letter-spacing:-.045em}
+.hygiene-goals-lead,.parenting-style-lead{font-size:17px}
+.clean-deck .hygiene-goal h3{font-size:24px}
+.hygiene-goal p,.parenting-style-card p{font-size:17px;line-height:1.45}
+.clean-deck .slide.authoritative-tips-slide{justify-content:flex-start;padding:24px 44px 26px;background:#f4f8f5}
+.clean-deck .authoritative-tips-slide h2{max-width:none;margin:0 0 8px;font-size:clamp(2.15rem,4.4vw,4.25rem);line-height:1.06;letter-spacing:-.045em}
+.authoritative-tips-lead{margin:0 0 14px;color:#536b60;font-size:17px;line-height:1.4}
+.authoritative-tips-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;flex:1;min-height:0;width:100%}
+.authoritative-tip{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-content:start;min-width:0;min-height:0;padding:16px 18px;border:1px solid #d8e6dd;border-radius:16px;background:#fff;box-shadow:0 8px 22px #173d3112}
+.authoritative-tip-num{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#dcece3;color:#17654d;font-weight:900}
+.clean-deck .authoritative-tip h3{margin:0 0 6px;color:#17654d;font-size:21px;line-height:1.2}
+.authoritative-tip p{margin:0;color:#52645b;font-size:16px;line-height:1.4}
+.authoritative-tips-slide .source{margin:10px 0 0;padding:0;border:0;font-size:12px}
+@media(max-width:950px){.authoritative-tips-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none}.authoritative-tip{min-height:150px}}
+@media(max-width:650px){.authoritative-tips-grid{grid-template-columns:1fr}.authoritative-tips-slide{padding:24px}.authoritative-tip{min-height:0}}
+.clean-deck .slide.phbs-slide{padding:0;background:#fff;align-items:center;justify-content:center}
+.phbs-infographic{display:block;width:100%;height:min(780px,calc(100dvh - 48px));object-fit:contain}
+.poisoning-origin-slide{display:flex;flex-direction:column}
+.poisoning-origin-slide .poisoning-lead{max-width:880px;margin:0 0 24px;color:#506259;font-size:clamp(18px,1.55vw,24px);line-height:1.45}
+.poisoning-types{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
+.poisoning-type{padding:24px 26px;border-radius:22px;background:#fff;border:1px solid #dbe8df;box-shadow:0 12px 28px rgba(27,72,50,.09)}
+.poisoning-type strong{display:block;margin-bottom:8px;color:#0b6047;font-size:clamp(23px,2vw,31px)}
+.poisoning-type p{margin:0;font-size:clamp(17px,1.35vw,21px);line-height:1.45}
+.poisoning-chain{display:grid;grid-template-columns:1fr 48px 1fr 48px 1fr;align-items:center;padding:22px 26px;border-radius:22px;background:#173f31;color:#fff}
+.poisoning-chain article{text-align:center}
+.clean-deck .poisoning-chain h3{margin:0 0 6px;color:#f6c85f;font-size:clamp(19px,1.6vw,25px)}
+.poisoning-chain p{margin:0;color:#eef7f2;font-size:clamp(15px,1.2vw,19px);line-height:1.35}
+.poisoning-chain .chain-arrow{text-align:center;color:#f6c85f;font-size:32px;font-weight:800}
+.poisoning-origin-slide .source{margin-top:auto;padding-top:15px}
+.clean-deck .poisoning-symptoms-slide{display:block;padding:0;background:#faf8f1}
+.poisoning-infographic{display:block;width:100%;height:min(780px,calc(100dvh - 48px));object-fit:contain;object-position:center;border-radius:0;box-shadow:none}
+.clean-deck .emergency-aid-slide{display:flex;flex-direction:column;background:#fbfcfa;color:#18382c}
+.emergency-aid-slide h2{max-width:850px;margin-bottom:22px}
+.emergency-aid-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;min-height:0;flex:1}
+.emergency-actions{display:grid;grid-template-rows:repeat(3,1fr);gap:14px}
+.emergency-action{display:grid;grid-template-columns:62px 1fr;gap:16px;align-items:center;padding:17px 20px;border:1px solid #dbe7df;border-radius:20px;background:#fff;box-shadow:0 10px 24px rgba(25,67,47,.07)}
+.emergency-action span{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#176a4e;color:#fff;font-size:25px;font-weight:900}
+.emergency-action h3{margin:0 0 4px;color:#12543f;font-size:clamp(20px,1.7vw,27px)}
+.emergency-action p{margin:0;color:#40544b;font-size:clamp(15px,1.2vw,19px);line-height:1.38}
+.emergency-photo{position:relative;overflow:hidden;border-radius:24px;min-height:330px;background:#173f31}
+.emergency-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.emergency-photo::after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(22,62,47,.92))}
+.clean-deck .emergency-photo figcaption{display:block;position:absolute;z-index:1;left:22px;right:22px;bottom:20px;color:#fff;font-size:clamp(17px,1.35vw,21px);line-height:1.4;font-weight:700}
+.emergency-warning{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin-top:18px;padding:15px 20px;border-radius:18px;background:#8f2f24;color:#fff}
+.emergency-warning strong{font-size:clamp(17px,1.35vw,21px);color:#ffd477}
+.emergency-warning span{font-size:clamp(15px,1.15vw,18px);line-height:1.35}
+.emergency-aid-slide .source{margin-top:8px}
+.klb-report-slide{display:flex;flex-direction:column}
+.klb-report-slide h2{max-width:1000px;margin-bottom:12px}
+.klb-lead{margin:0 0 20px;color:#52635b;font-size:clamp(17px,1.35vw,21px)}
+.klb-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}
+.klb-flow article{position:relative;padding:18px 17px;border-radius:19px;background:#fff;border:1px solid #dce8e0;box-shadow:0 8px 20px rgba(25,67,47,.07)}
+.klb-flow article:not(:last-child)::after{content:"›";position:absolute;z-index:2;right:-12px;top:50%;transform:translateY(-50%);display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#e5a832;color:#fff;font-size:24px;font-weight:900}
+.klb-flow span{display:block;margin-bottom:8px;color:#b26819;font-size:14px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.klb-flow h3{margin:0 0 6px;color:#0e6047;font-size:clamp(18px,1.45vw,23px)}
+.klb-flow p{margin:0;color:#45574f;font-size:clamp(14px,1.05vw,17px);line-height:1.35}
+.klb-details{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+.klb-detail{padding:18px 21px;border-radius:18px;background:#173f31;color:#fff}
+.clean-deck .klb-detail h3{margin:0 0 9px;color:#ffd16a;font-size:clamp(19px,1.5vw,24px)}
+.klb-detail p{margin:0;color:#edf5f1;font-size:clamp(14px,1.1vw,17px);line-height:1.45}
+.klb-alert{margin-top:15px;padding:13px 18px;border-radius:15px;background:#9f3428;color:#fff;text-align:center;font-size:clamp(16px,1.25vw,20px);font-weight:800}
+.closing-slide{display:grid!important;place-items:center;text-align:center;background:radial-gradient(circle at 50% 45%,#24765a,#103f30 72%)!important;color:#fff!important}
+.closing-slide::before{content:"";position:absolute;width:min(46vw,560px);aspect-ratio:1;border:1px solid rgba(255,255,255,.13);border-radius:50%}
+.closing-content{position:relative;z-index:1}
+.clean-deck .closing-slide h2{margin:0;color:#fff;font-size:clamp(68px,9vw,132px);letter-spacing:-.05em}
+.closing-slide p{margin:18px 0 0;color:#dcece5;font-size:clamp(20px,2vw,30px)}
+.closing-slide strong{color:#ffd16a}
+@media(max-width:760px){.poisoning-types{grid-template-columns:1fr}.poisoning-chain{grid-template-columns:1fr}.poisoning-chain .chain-arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body class="clean-deck">
+<div id="progress" aria-hidden="true"></div>
+<a class="skip" href="#deck">Lewati ke materi</a>
+<main id="deck" tabindex="-1">
+<section class="slide dark has-photo hero-photo" data-n="01" aria-labelledby="s1" data-seconds="60" data-note="Hari ini kita belajar empat bekal yang saling berhubungan: memenuhi gizi, menjaga pangan aman, membangun perilaku makan, dan menanggapi keracunan. Sasaran kita ialah ibu hamil, ibu menyusui, balita, keluarga, serta kader dan penyuluh. Sesi berlangsung sekitar 27 menit 30 detik. Semua inti bagian modul diwakili, tetapi tabel, resep, dan tindakan klinis tidak dibacakan seluruhnya. Sebutkan satu kebutuhan keluarga yang ingin dibantu. Simpan pertanyaan panjang untuk diskusi setelah sesi; di akhir kita menjawab empat pertanyaan singkat.">
+<img class="slide-photo" src="assets/hero-keluarga-sehat.png" alt="Keluarga Indonesia menikmati makanan bergizi bersama di meja makan">
+<p class="eyebrow">01 · Gizi dan keamanan pangan · 60 detik</p><div class="grid"><div><h1 id="s1" tabindex="-1">Gizi &amp;<br>Pangan Aman</h1><p>Adaptasi singkat untuk ibu hamil, ibu menyusui, balita, keluarga, dan kader.</p><p class="takeaway">Gizi beragam. Pangan aman. Pengasuhan hangat. Tanggap keracunan.</p><p class="presenter">Dipresentasikan oleh<br><strong>Ummu Atiyah, S.Ag.</strong></p><p class="source">Sumber modul: hlm. 6–9 (halaman PDF).</p></div><figure><svg class="visual" viewBox="0 0 500 350" role="img" aria-labelledby="family-title"><title id="family-title">Tiga anggota keluarga duduk bersama mengelilingi meja makan</title><defs><linearGradient id="fbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf5ee"/><stop offset="1" stop-color="#d8ecdf"/></linearGradient><linearGradient id="ftbl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a5713d"/><stop offset="1" stop-color="#7d5326"/></linearGradient></defs><rect x="10" y="10" width="480" height="330" rx="26" fill="url(#fbg)"/><path d="M72 150L250 42l178 108" fill="none" stroke="#0e7c6b" stroke-width="16" stroke-linecap="round"/><circle cx="150" cy="150" r="34" fill="#c98a5e"/><circle cx="350" cy="150" r="34" fill="#dda475"/><circle cx="250" cy="192" r="26" fill="#d59a68"/><path d="M96 274v-52q54-62 108 0v52" fill="#0e7c6b"/><path d="M296 274v-52q54-62 108 0v52" fill="#c2691f"/><path d="M210 280v-38q40-48 80 0v38" fill="#e3b654"/><rect x="48" y="272" width="404" height="26" rx="13" fill="url(#ftbl)"/><path d="M88 298v36m324-36v36" stroke="#7d5326" stroke-width="14" stroke-linecap="round"/><ellipse cx="250" cy="270" rx="56" ry="13" fill="#ffffff"/><ellipse cx="250" cy="266" rx="32" ry="8" fill="#5c8a3c"/></svg><figcaption>Ilustrasi original: dukungan keluarga hadir di meja makan.</figcaption></figure></div>
+</section>
+<section class="slide roadmap-slide" data-n="02" aria-labelledby="s2" data-seconds="45" data-note="Empat tujuan resmi menjadi peta belajar kita. Pertama, menjelaskan pemenuhan gizi kelompok 3B dan keluarga. Kedua, menerapkan prinsip pangan aman. Ketiga, membangun perilaku konsumsi melalui pengasuhan yang hangat dengan aturan jelas. Keempat, mengenali keracunan dan menghubungkan korban dengan pertolongan serta pelaporan. Modul aslinya dirancang untuk belajar mandiri 135 menit; sesi ini memilih inti setiap bagian untuk praktik keluarga. Perhatikan hubungan antartujuan: menu bergizi tetap harus aman, dan anak perlu lingkungan makan yang mendukung.">
+<p class="eyebrow">02 · Orientasi · 45 detik</p><h2 id="s2" tabindex="-1">Pokok Pembahasan</h2><ol class="steps"><li>Gizi 3B: kebutuhan, ASI, MPASI, pangan lokal.</li><li>Keamanan pangan: bahaya, higiene, sanitasi.</li><li>Perilaku konsumsi: pola asuh dan kebiasaan makan.</li><li>Keracunan: kenali, bantu sesuai kewenangan, laporkan.</li></ol><p class="source">Sumber modul: hlm. 6–9 (halaman PDF).</p>
+</section>
+<section class="slide bar has-photo" data-n="03" aria-labelledby="s3" data-seconds="45" data-note="Saat hamil, kualitas dan keragaman makanan lebih penting daripada anggapan harus makan dua porsi besar. Karbohidrat dan lemak menyediakan energi, sedangkan protein membantu pertumbuhan jaringan. Folat penting untuk pembentukan sel dan perkembangan saraf janin; besi membantu pembentukan sel darah merah; kalsium mendukung tulang. Kebutuhan tambahan berubah menurut trimester, jadi tabel harian bukan resep seragam untuk semua ibu. Contoh sederhana ialah nasi, lauk telur atau ikan matang, sayur hijau, dan buah. Kebutuhan khusus perlu dibahas dengan tenaga kesehatan.">
+<img class="slide-photo" src="assets/foto-gizi-ibu-hamil.png" alt="Ibu hamil menikmati menu beragam dengan nasi, ikan matang, tahu, sayuran, buah, dan air putih">
+<h2 id="s3" tabindex="-1">Gizi Seimbang<br>untuk Ibu Hamil</h2><p class="maternal-intro">Utamakan makanan beragam dan bermutu, dengan porsi sesuai kebutuhan.</p><div class="maternal-cards"><article><h3>Energi &amp; pertumbuhan</h3><p>Karbohidrat dan lemak memberi energi. Protein membantu pertumbuhan jaringan.</p></article><article><h3>Zat gizi penting</h3><p>Folat untuk sel dan saraf, zat besi untuk darah, serta kalsium untuk tulang.</p></article><article class="maternal-note"><h3>Sesuaikan porsinya</h3><p>Kebutuhan berubah menurut trimester dan kondisi ibu—bukan otomatis makan dua kali lipat.</p></article></div><p class="source">Sumber modul: hlm. 10–11, 30 (halaman PDF).</p>
+</section>
+<section class="slide" data-n="04" aria-labelledby="s4" data-seconds="90" data-note="Isi Piringku membantu menyusun komposisi satu kali makan, sedangkan tabel anjuran porsi ibu hamil dan menyusui merupakan pembagian kebutuhan satu hari. Jangan menumpuk semua porsi harian dalam satu piring. Ilustrasi ini hanya mengenalkan kelompok pangan, bukan proporsi resmi karena gambar sumber tidak terekstraksi lengkap. Susun contoh nasi, pepes ikan matang, tahu, sayur bening, dan pepaya. Sesuaikan jumlah dengan kebutuhan ibu atau anak. Pilih bahan segar yang terjangkau dan batasi gula, garam, serta lemak berlebih. Pangan lokal memberi banyak pilihan tanpa harus membeli bahan mahal. Untuk energi, beras dapat divariasikan dengan jagung, ubi, atau sagu. Lauk hewani bisa ikan matang, telur, atau ayam; lauk nabati bisa tahu, tempe, atau kacang hijau. Lemak juga berasal dari bahan seperti alpukat, kelapa, dan kemiri dengan penggunaan secukupnya. Sayur dan buah menyumbang vitamin serta mineral, dan teri matang menjadi salah satu sumber mineral. Penggantian dalam kelompok tidak berarti berat atau kandungan gizinya sama persis; sesuaikan porsi dan kondisi alergi.">
+<h2 id="s4" class="visually-hidden" tabindex="-1">Kelompok zat gizi dalam satu piring</h2><p class="visually-hidden">Isi Piringku adalah komposisi sekali makan; kebutuhan harian dibagi sepanjang hari. Karbohidrat, protein hewani dan nabati, lemak, vitamin, serta mineral perlu disusun beragam.</p>
+<svg class="plate-study" viewBox="0 0 1200 680" role="img" aria-labelledby="plate-study-title plate-study-desc">
+<title id="plate-study-title">Satu piring dengan sumber karbohidrat, protein hewani, vitamin dan mineral, serta lemak</title>
+<desc id="plate-study-desc">Panah menunjuk nasi merah sebagai sumber karbohidrat, ayam sebagai protein hewani, sayuran sebagai vitamin dan mineral, serta alpukat sebagai lemak. Contoh menu, bukan diagram takaran porsi resmi.</desc>
+<defs><marker id="sketch-tip" markerWidth="12" markerHeight="12" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 Q6 3 10 5 Q6 7 2 10" fill="none" stroke="context-stroke" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<image href="assets/piring-makanan-bergizi-transparan.png" x="230" y="85" width="740" height="493"/>
+<g class="sketch-arrows" fill="none" stroke-width="2.7" stroke-linecap="round" marker-end="url(#sketch-tip)">
+<path stroke="#a36b2e" d="M884 107 C827 73 760 88 708 164"/>
+<path stroke="#9c4d37" d="M245 489 C317 525 370 501 452 427"/>
+<path stroke="#397b49" d="M264 161 C304 140 355 159 423 236"/>
+<path stroke="#397b49" d="M932 349 C904 317 869 318 824 345"/>
+<path stroke="#74803a" d="M883 520 C840 555 805 523 765 459"/>
+</g>
+<g class="plate-label"><text x="864" y="65" fill="#a36b2e">Karbohidrat</text><text class="plate-example" x="878" y="97">Nasi merah</text>
+<text x="44" y="456" fill="#9c4d37">Protein hewani</text><text class="plate-example" x="46" y="488">Ayam panggang</text>
+<text x="30" y="107" fill="#397b49">Vitamin &amp; mineral</text><text class="plate-example" x="33" y="141">Brokoli, wortel, buncis</text>
+<text x="936" y="303" fill="#397b49">Vitamin &amp; mineral</text><text class="plate-example" x="953" y="337">Tomat, mentimun</text>
+<text x="904" y="509" fill="#74803a">Lemak</text><text class="plate-example" x="906" y="543">Alpukat</text></g>
+<text x="600" y="632" text-anchor="middle" class="plate-footnote">Contoh menu beragam • Porsi disesuaikan dengan kebutuhan</text>
+</svg><p class="source">Sumber modul: hlm. 12–16, 18–22, 27, 31, 37–41 (halaman PDF).</p>
+</section>
+
+<section class="slide maternal-table-slide" data-n="hamil-porsi" aria-labelledby="hamil-porsi" data-seconds="90" data-note="Jumlah untuk satu hari, dibagi ke beberapa waktu makan. Sumber: modul hlm. PDF 13, Tabel 1.2 (Buku KIA 2024). Acuan modul, sesuaikan dengan kondisi ibu bersama tenaga kesehatan."><h2 id="hamil-porsi" tabindex="-1">Anjuran Porsi Harian Ibu Hamil</h2><p class="maternal-table-lead">Jumlah untuk satu hari, dibagi ke beberapa waktu makan.</p><table class="maternal-table"><thead><tr><th scope="col">Kelompok pangan</th><th scope="col">Trimester 1</th><th scope="col">Trimester 2–3</th><th scope="col">Contoh ukuran 1 porsi</th></tr></thead><tbody><tr><th scope="row">Makanan pokok</th><td>5 porsi</td><td>6 porsi</td><td>Nasi 100 g (¾ gelas)</td></tr><tr><th scope="row">Protein hewani</th><td>4 porsi</td><td>4 porsi</td><td>Ikan 50 g (1 potong sedang) / telur 55 g (1 butir)</td></tr><tr><th scope="row">Protein nabati</th><td>4 porsi</td><td>4 porsi</td><td>Tempe 50 g (1 potong) / tahu 100 g (2 potong sedang)</td></tr><tr><th scope="row">Sayuran</th><td>4 porsi</td><td>4 porsi</td><td>100 g (1 mangkuk matang tanpa kuah)</td></tr><tr><th scope="row">Buah</th><td>4 porsi</td><td>4 porsi</td><td>Pisang 100 g / pepaya 100–190 g</td></tr><tr><th scope="row">Lemak</th><td>5 porsi</td><td>5 porsi</td><td>5 g (1 sendok teh), termasuk lemak untuk memasak</td></tr><tr><th scope="row">Gula</th><td>2 porsi</td><td>2 porsi</td><td>10 g (1 sendok makan), termasuk dalam makanan/minuman</td></tr></tbody></table><div class="maternal-drinks"><strong>Air putih: 8–12 gelas per hari</strong><span>Garam: paling banyak 1 sendok teh per hari</span></div><p class="maternal-table-foot">Sumber: modul hlm. PDF 13, Tabel 1.2 (Buku KIA 2024). Acuan modul, sesuaikan dengan kondisi ibu bersama tenaga kesehatan.</p></section>
+<section class="slide maternal-table-slide" data-n="hamil-ukuran" aria-labelledby="hamil-ukuran" data-seconds="90" data-note="Pilih variasi makanan pokok. Tabel ini menunjukkan alternatif ukuran satu porsi. Sumber: modul hlm. PDF 13, Tabel 1.2. Ukuran rumah tangga mengikuti modul dan dapat berbeda menurut ukuran bahan. Gunakan berat gram sebagai acuan."><h2 id="hamil-ukuran" tabindex="-1">Pilihan Makanan Pokok: Ukuran 1 Porsi</h2><p class="maternal-table-lead">Pilih variasi makanan pokok. Tabel ini menunjukkan alternatif ukuran satu porsi.</p><table class="maternal-table"><thead><tr><th scope="col">Pilihan makanan pokok</th><th scope="col">Berat untuk 1 porsi</th><th scope="col">Ukuran rumah tangga dalam modul</th></tr></thead><tbody><tr><th scope="row">Nasi</th><td>100 g</td><td>¾ gelas</td></tr><tr><th scope="row">Jagung</th><td>125 g</td><td>3 buah sedang</td></tr><tr><th scope="row">Kentang</th><td>210 g</td><td>2 buah sedang</td></tr><tr><th scope="row">Singkong</th><td>120 g</td><td>½ potong</td></tr><tr><th scope="row">Roti putih</th><td>70 g</td><td>3 iris</td></tr><tr><th scope="row">Mi basah</th><td>200 g</td><td>2 gelas</td></tr></tbody></table><p class="maternal-table-foot">Sumber: modul hlm. PDF 13, Tabel 1.2. Ukuran rumah tangga mengikuti modul dan dapat berbeda menurut ukuran bahan. Gunakan berat gram sebagai acuan.</p></section>
+<section class="slide maternal-table-slide maternal-menu-combined" data-n="hamil-menu-t1" aria-labelledby="hamil-menu-t1" data-seconds="120" data-note="Perbandingan contoh menu satu hari untuk trimester 1 dan trimester 2–3. Semua pilihan dan ukuran mengikuti Tabel 1.3 dan 1.4 modul halaman PDF 14–16. Sesuaikan menu dengan kebutuhan ibu."><h2 id="hamil-menu-t1" tabindex="-1">Contoh Menu Harian Ibu Hamil</h2><p class="maternal-table-lead">Perbandingan trimester 1 dan trimester 2–3. Ukuran menggunakan takaran rumah tangga.</p><table class="maternal-table"><colgroup><col style="width:14%"><col style="width:43%"><col style="width:43%"></colgroup><thead><tr><th scope="col">Waktu makan</th><th scope="col">Trimester 1</th><th scope="col">Trimester 2–3</th></tr></thead><tbody><tr><th scope="row">Pagi</th><td>Lontong sayur: 1 lontong sedang<br>Telur rebus: 1 butir · Sayur labu siam tahu: 1 mangkuk<br>Pisang: 1 potong sedang</td><td>Nasi uduk: 2 centong · Ayam kecap: 1 potong sedang<br>Sambal goreng: 1 potong sedang · Selada timun: 2 buah<br>Melon: 1 potong sedang</td></tr><tr><th scope="row">Selingan pagi</th><td>Kue lontar: 1 potong sedang · Jeruk: 1 buah sedang</td><td>Panada/roti isi: 1 buah · Rujak buah: 1 mangkuk</td></tr><tr><th scope="row">Siang</th><td>Nasi putih: 2 centong · Sate ikan pusut: 1 potong sedang<br>Tahu bumbu kecap: 1 potong sedang · Sayur ares: 1 mangkuk<br>Pisang: 1 potong sedang</td><td>Nasi putih: 2 centong · Pepes ikan: 1 potong sedang<br>Tahu goreng: 2 potong sedang · Sayur asem: 1 mangkuk<br>Pepaya: 1 potong sedang</td></tr><tr><th scope="row">Selingan sore</th><td>Arem-arem: 1 buah sedang</td><td>Martabak telur: 1 buah · Melon: 1 potong sedang</td></tr><tr><th scope="row">Malam</th><td>Nasi putih liwet: 2 centong · Ayam goreng serundeng: 1 potong sedang<br>Urap sayur: 1 mangkuk · Jeruk: 1 potong sedang</td><td>Nasi putih: 2 centong · Ayam tangkap: 1 potong sedang<br>Sayur tempe labu siam: 1 mangkuk</td></tr></tbody></table><p class="maternal-table-foot">Sumber: modul hlm. PDF 14–16, Tabel 1.3–1.4. Contoh menu disesuaikan dengan kebutuhan ibu.</p></section>
+<section class="slide has-photo" data-n="05" aria-labelledby="s6" data-seconds="45" data-note="Kebutuhan energi dan zat gizi ibu meningkat selama menyusui. Penuhi dengan makanan beragam; porsi tambahan dapat dibagi kecil dan lebih sering. Sediakan air putih dan makanan berkuah untuk membantu hidrasi, tanpa memakai angka gelas yang bertentangan dalam sumber. Susui bayi sesering dibutuhkan untuk mendukung produksi ASI. Modul mengenalkan galaktagog sebagai bahan pendukung laktasi, tetapi satu makanan, herbal, atau obat tidak menjamin ASI bertambah. Bila ada kesulitan menyusui, cari bantuan tenaga kesehatan; jangan menggantikan praktik menyusui dengan produk pelancar ASI.">
+<img class="slide-photo" src="assets/foto-dukungan-ibu-menyusui.png" alt="Ayah mendukung ibu yang sedang menggendong bayi dengan menyediakan air dan makanan bergizi">
+<p class="visually-hidden">Kebutuhan meningkat selama menyusui. Jaga hidrasi dan sering menyusui. Galaktagog atau bahan pelancar ASI digunakan tanpa jaminan hasil.</p>
+<h2 id="s6" tabindex="-1">Menjaga Gizi Ibu<br>Selama Menyusui</h2><p class="nursing-lead">Tubuh ibu membutuhkan makanan, cairan, dan dukungan yang cukup selama masa menyusui.</p><div class="nursing-cards"><article><span>01</span><div><h3>Makan beragam</h3><p>Pilih makanan pokok, lauk berprotein, sayur, dan buah. Porsi tambahan dapat dibagi menjadi beberapa kali makan.</p></div></article><article><span>02</span><div><h3>Cukup cairan</h3><p>Minum air putih secara teratur dan pilih makanan berkuah untuk membantu memenuhi kebutuhan cairan.</p></div></article><article><span>03</span><div><h3>Susui sesuai kebutuhan bayi</h3><p>Menyusui sesering dibutuhkan membantu menjaga rangsangan produksi ASI.</p></div></article><article><span>04</span><div><h3>Minta bantuan bila perlu</h3><p>Makanan atau herbal bukan jaminan ASI bertambah. Konsultasikan kesulitan menyusui kepada tenaga kesehatan.</p></div></article></div><div class="nursing-key-messages" aria-label="Pesan kunci untuk penyuluh"><h3>Pesan kunci untuk penyuluhan</h3><div class="nursing-key-grid"><article><span>01</span><p>Dorong orang tua menerapkan pola asuh otoritatif: hangat, responsif, dan tegas dalam aturan makan.</p></article><article><span>02</span><p>Edukasi ibu sebagai pengasuh utama agar pengetahuan dan keterampilan gizi dibangun sejak dini.</p></article><article><span>03</span><p>Ajak seluruh keluarga rutin ke Posyandu dan manfaatkan layanan kesehatan yang tersedia.</p></article></div></div><p class="source">Sumber modul: hlm. 17–23 (halaman PDF); pesan kunci penyuluh: modul hlm. 65.</p>
+</section>
+<section class="slide bar" data-n="06" aria-labelledby="s7" data-seconds="45" data-note="ASI eksklusif berarti hanya ASI sejak lahir hingga usia enam bulan, tanpa air putih, madu, atau makanan lain, kecuali obat atau tetes vitamin yang diresepkan tenaga kesehatan. ASI menyediakan zat gizi dan komponen kekebalan yang membantu melindungi bayi dari infeksi serta mendukung pencernaan dan perkembangan. Menyusui juga membangun kedekatan emosional dan mengenalkan variasi rasa dari makanan ibu. Manfaat ini tidak berarti bayi mustahil sakit. Ketika genap enam bulan, mulai MPASI sambil melanjutkan ASI; makanan pendamping melengkapi kebutuhan yang makin meningkat.">
+<p class="eyebrow">03 · ASI · 45 detik</p><h2 id="s7" tabindex="-1">ASI Eksklusif untuk<br>6 Bulan Pertama</h2><div class="asi-cards"><article class="asi-card"><div class="asi-card-top"><span>01</span><h3>ASI murni 0–6 bulan</h3></div><p>Sejak lahir hingga usia 6 bulan, bayi cukup diberi ASI saja—tanpa air putih, madu, atau susu formula—karena saluran cernanya belum siap menerima makanan lain. Obat atau tetes vitamin hanya jika diresepkan tenaga kesehatan.</p></article><article class="asi-card"><div class="asi-card-top"><span>02</span><h3>Proteksi &amp; gizi alami</h3></div><p>ASI mengandung antibodi (IgA) pelindung infeksi saluran cerna dan napas, prebiotik alami, serta DHA &amp; laktosa yang dibutuhkan untuk tumbuh kembang otak bayi.</p></article><article class="asi-card"><div class="asi-card-top"><span>03</span><h3>Ikatan batin &amp; lanjutan MPASI</h3></div><p>Kontak kulit <em>(skin-to-skin)</em> mempererat ikatan ibu–bayi. Setelah genap 6 bulan, MPASI mulai diberikan sambil menyusui tetap dilanjutkan hingga usia 2 tahun.</p></article></div><p class="source">Sumber modul: hlm. 23–25 (halaman PDF).</p>
+</section>
+<section class="slide bar" data-n="07" aria-labelledby="s8" data-seconds="90" data-note="Mulai MPASI saat bayi genap enam bulan sambil tetap melanjutkan ASI. Pada usia enam sampai delapan bulan, gunakan makanan lumat kental sebanyak dua sampai tiga kali makan utama. Pada usia sembilan sampai sebelas bulan, naikkan menjadi makanan cincang atau lunak sebanyak tiga sampai empat kali makan utama. Acuan mangkuk dalam modul berukuran 250 ml dan bukan jumlah yang wajib dihabiskan. Berikan porsi bertahap sesuai kemampuan dan respons anak. Setelah berusia dua belas bulan, anak mulai mengikuti menu keluarga dengan tekstur yang aman. Usia dua belas sampai dua puluh tiga bulan masih memerlukan potongan lunak dan pendampingan. Pada usia dua puluh empat sampai lima puluh sembilan bulan, sajikan menu keluarga beragam dengan porsi yang mengikuti pertumbuhan dan aktivitas anak. Keluarga menyediakan makanan, memberi teladan, dan mendampingi dengan kasih sayang.">
+<p class="eyebrow">07 · Tahapan makan anak · 90 detik</p><div class="mpasi-stage-layout"><div class="mpasi-stage-intro"><h2 id="s8" tabindex="-1">Tahapan Makan Anak Sesuai Usia</h2><p class="mpasi-lead">Tekstur dan porsi meningkat bertahap, mengikuti kemampuan makan anak.</p></div><div class="mpasi-stage-cards"><article class="mpasi-stage-card"><img src="assets/mpasi-6-8-bulan-v2.png" alt="Bubur lumat kental dengan ayam dan sayur untuk bayi usia 6 sampai 8 bulan"><div class="mpasi-stage-copy"><h3>6–8 bulan</h3><span class="texture">Lumat kental</span><p>2–3 kali makan utama. Mulai bertahap hingga ½ mangkuk ukuran 250 ml.</p></div></article><article class="mpasi-stage-card"><img src="assets/mpasi-9-11-bulan.png" alt="Nasi lembek cincang dengan lauk dan sayur untuk bayi usia 9 sampai 11 bulan"><div class="mpasi-stage-copy"><h3>9–11 bulan</h3><span class="texture">Cincang dan lunak</span><p>3–4 kali makan utama. Acuan porsi ½–¾ mangkuk ukuran 250 ml.</p></div></article><article class="mpasi-stage-card"><img src="assets/menu-12-23-bulan.png" alt="Menu keluarga lunak berisi nasi, ayam, tahu, sayur dan pepaya untuk anak usia 12 sampai 23 bulan"><div class="mpasi-stage-copy"><h3>12–23 bulan</h3><span class="texture">Menu keluarga lunak</span><p>Potong kecil agar mudah dikunyah. Berikan 3–4 kali makan utama sesuai kemampuan.</p></div></article><article class="mpasi-stage-card"><img src="assets/menu-24-59-bulan.png" alt="Menu keluarga beragam berisi nasi, ayam, tempe, sayur dan pisang untuk anak usia 24 sampai 59 bulan"><div class="mpasi-stage-copy"><h3>24–59 bulan</h3><span class="texture">Menu keluarga beragam</span><p>Sesuaikan porsi dengan pertumbuhan dan aktivitas. Dampingi makan dengan kasih sayang.</p></div></article></div></div><p class="source">Sumber modul: hlm. 25–34, 36 (halaman PDF).</p>
+</section>
+<section class="slide maternal-table-slide child-menu-slide" data-n="anak-resep-68" aria-labelledby="anak-resep-68" data-seconds="90" data-note="Sumber: modul hlm. PDF 27–28, Tabel 1.10. Selingan pada sumber: jeruk 100 g (2 buah). Sajikan buah dengan bentuk yang sesuai usia dan kemampuan bayi. Takaran bahan adalah untuk tiga porsi resep, bukan untuk sekali makan."><h2 id="anak-resep-68" tabindex="-1">Contoh MPASI Usia 6–8 Bulan</h2><p class="maternal-table-lead">Bubur sup daging kacang merah <strong>• Bahan untuk 3 porsi</strong></p><div class="child-recipe-grid"><table class="maternal-table"><thead><tr><th scope="col">Bahan</th><th scope="col">Takaran</th></tr></thead><tbody><tr><th scope="row">Nasi</th><td>50 g (6 sdm)</td></tr><tr><th scope="row">Ayam cincang</th><td>30 g (3 sdm)</td></tr><tr><th scope="row">Telur ayam</th><td>25 g (½ butir)</td></tr><tr><th scope="row">Buncis, wortel, kacang merah</th><td>Masing-masing 10 g (1 sdm)</td></tr><tr><th scope="row">Daun bawang, seledri</th><td>10 g (1 batang), 1 batang</td></tr><tr><th scope="row">Kaldu ayam</th><td>300 ml</td></tr><tr><th scope="row">Minyak untuk menumis</th><td>2,5 g (½ sdt)</td></tr><tr><th scope="row">Bawang merah, bawang putih</th><td>Masing-masing 2 siung, haluskan</td></tr></tbody></table><div class="child-method"><h3>Cara membuat</h3><ol><li>Didihkan kaldu. Masukkan kacang merah dan masak sampai empuk.</li><li>Tumis bumbu, tambahkan ayam cincang hingga berubah warna.</li><li>Masukkan tumisan ke kaldu, masak ayam sampai empuk.</li><li>Tambahkan nasi, buncis, dan wortel.</li><li>Masukkan telur kocok dan masak sampai matang.</li><li>Haluskan menjadi bubur lumat sesuai kemampuan bayi.</li></ol></div></div><p class="maternal-table-foot">Sumber: modul hlm. PDF 27–28, Tabel 1.10. Selingan pada sumber: jeruk 100 g (2 buah). Sajikan buah dengan bentuk yang sesuai usia dan kemampuan bayi.</p></section>
+<section class="slide maternal-table-slide child-menu-slide" data-n="anak-resep-912" aria-labelledby="anak-resep-912" data-seconds="90" data-note="Sumber: modul hlm. PDF 29, Tabel 1.10. Label usia mengikuti resep modul. Selingan: semangka 180 g (1 potong besar), sesuaikan potongan dan jumlah. Takaran bahan adalah untuk tiga porsi resep, bukan untuk sekali makan."><h2 id="anak-resep-912" tabindex="-1">Contoh MPASI Usia 9–12 Bulan</h2><p class="maternal-table-lead">Nasi tim ikan kembung telur puyuh <strong>• Bahan untuk 3 porsi</strong></p><div class="child-recipe-grid"><table class="maternal-table"><thead><tr><th scope="col">Bahan</th><th scope="col">Takaran</th></tr></thead><tbody><tr><th scope="row">Nasi putih</th><td>115 g (12 sdm)</td></tr><tr><th scope="row">Ikan kembung</th><td>30 g (1 potong kecil), haluskan</td></tr><tr><th scope="row">Telur puyuh</th><td>30 g (3 butir)</td></tr><tr><th scope="row">Wortel</th><td>15 g (1 potong besar)</td></tr><tr><th scope="row">Tomat</th><td>10 g (1 buah sedang)</td></tr><tr><th scope="row">Minyak kelapa</th><td>7,5 g (1½ sdt)</td></tr><tr><th scope="row">Kaldu ayam</th><td>75 ml (⅓ gelas belimbing)</td></tr><tr><th scope="row">Pepaya</th><td>50 g (½ potong), haluskan</td></tr></tbody></table><div class="child-method"><h3>Cara membuat</h3><ol><li>Masukkan nasi, ikan, telur puyuh, dan minyak ke mangkuk tim.</li><li>Tambahkan kaldu ayam.</li><li>Masukkan wortel dan tomat, lalu tim hingga matang.</li><li>Angkat dan sajikan dengan saus pepaya.</li><li>Pastikan ikan bebas duri. Sesuaikan tekstur dengan kemampuan anak.</li></ol></div></div><p class="maternal-table-foot">Sumber: modul hlm. PDF 29, Tabel 1.10. Label usia mengikuti resep modul. Selingan: semangka 180 g (1 potong besar), sesuaikan potongan dan jumlah.</p></section>
+<section class="slide maternal-table-slide child-menu-compare" data-n="anak-menu-1223" aria-labelledby="anak-menu-1223" data-seconds="150" data-note="Sumber: modul hlm. PDF 32 dan 34, Tabel 1.12 dan 1.13. Menu 24–59 bulan juga muncul pada hlm. 33 dengan label usia berbeda; di sini mengikuti Tabel 1.13. Porsi merupakan contoh, bukan jumlah yang harus dihabiskan. Sesuaikan tekstur dan porsi dengan kemampuan makan anak."><h2 id="anak-menu-1223" tabindex="-1">Contoh Menu Sehari Anak Usia 12–59 Bulan</h2><p class="maternal-table-lead">Sesuaikan tekstur dan porsi dengan kemampuan anak. Takaran ini bukan jumlah yang harus dihabiskan.</p><table class="maternal-table"><colgroup><col style="width:14%"><col style="width:43%"><col style="width:43%"></colgroup><thead><tr><th scope="col">Waktu makan</th><th scope="col">12–23 bulan</th><th scope="col">24–59 bulan</th></tr></thead><tbody><tr><th scope="row">Pagi</th><td>Bubur Manado (1 mangkuk kecil)<br>Pepaya (1 potong)</td><td>Kentang rebus (2 buah sedang), telur kecap (1 butir)<br>Sup tahu wortel (tahu 1 potong sedang + wortel 5 sdm)<br>Pepaya (1 potong)</td></tr><tr><th scope="row">Selingan pagi</th><td>Talam kacang hijau (1 potong kecil)</td><td>Arem-arem (1 buah sedang)</td></tr><tr><th scope="row">Siang</th><td>Nasi putih (½ centong), semur ayam (1 potong sedang)<br>Tahu goreng (1 potong sedang)<br>Bobor bayam (½ mangkuk kecil)<br>Semangka (1 potong sedang)</td><td>Nasi putih (7 sdm), soto ayam (ayam 5 sdm)<br>Perkedel tahu (1 potong sedang)<br>Semangka (1 potong)</td></tr><tr><th scope="row">Selingan sore</th><td>Telur gulung (½ butir)</td><td>Puding hunkwe (1 potong sedang)</td></tr><tr><th scope="row">Malam</th><td>Nasi putih (½ centong), telur dadar (1 butir)<br>Bola-bola tempe (1 potong sedang)<br>Sayur sop (½ mangkuk kecil), jeruk (1 buah sedang)</td><td>Nasi putih (7 sdm), botok teri basah (teri 5 sdm)<br>Tempe goreng (1 potong sedang)<br>Sayur sop (½ mangkuk kecil), jeruk (1 buah sedang)</td></tr></tbody></table><p class="maternal-table-foot">Sumber: modul hlm. PDF 32 dan 34, Tabel 1.12 dan 1.13. sdm = sendok makan.</p></section>
+<section class="slide" data-n="08" aria-labelledby="s10" data-seconds="45" data-note="Alergi makanan melibatkan sistem imun dan pemicunya berbeda pada setiap anak. Hindari bahan yang telah dikenali sebagai pemicu, tetapi tetap rencanakan sumber gizi pengganti bersama tenaga kesehatan. Tabel modul memberi contoh telur diganti ayam atau daging; ini bukan jaminan semua bahan lain aman dan bukan kesetaraan semua zat gizi. Perhatikan kandungan protein, kalsium, dan zat gizi lain sesuai bahan yang dihindari. Minuman nabati bukan pengganti ASI atau formula bayi. Jangan membatasi banyak kelompok pangan tanpa penilaian karena anak tetap memerlukan keragaman.">
+<p class="eyebrow">08 · Kebutuhan spesifik · 45 detik</p><h2 id="s10" tabindex="-1">Pilihan Makanan untuk Anak dengan Alergi</h2><ul><li><strong>Kenali makanan pemicu.</strong> Alergi melibatkan sistem imun. Hindari bahan yang telah dikenali sebagai pemicu pada anak.</li><li><strong>Pilih pengganti yang cocok.</strong> Contohnya, ayam atau daging dapat menggantikan telur sebagai sumber protein bila anak dapat mengonsumsinya tanpa reaksi alergi.</li><li><strong>Pastikan gizinya tetap cukup.</strong> Pengganti tidak universal: kecocokan dan kandungan gizinya berbeda. Rencanakan bersama tenaga kesehatan sebelum membatasi banyak kelompok makanan.</li><li><strong>Perhatikan kebutuhan susu bayi.</strong> Minuman nabati bukan pengganti ASI atau formula bayi. Konsultasikan pilihan yang sesuai bila bayi alergi.</li></ul><p class="source">Sumber modul: hlm. 35, 37–41 (halaman PDF); batas penggantian: editorial keselamatan.</p>
+</section>
+<section class="slide maternal-table-slide" data-n="alergen-substitusi" aria-labelledby="alergen-substitusi" data-seconds="90" data-note="Tabel ini merangkum contoh alternatif bahan dari Tabel 1.14 modul, halaman PDF 35. Alternatif tidak menjamin aman untuk semua anak dan tidak setara untuk seluruh zat gizi. Kedelai, kacang, telur, dan ikan juga dapat menjadi alergen. Pilih hanya bahan yang dapat ditoleransi anak. Rencanakan penggantian bersama tenaga kesehatan, terutama bila membatasi beberapa kelompok pangan. Minuman kedelai bukan pengganti ASI atau formula bayi."><h2 id="alergen-substitusi" tabindex="-1">Alternatif Pengganti Makanan Pemicu Alergi</h2><p class="maternal-table-lead">Contoh dari modul. Pilih bahan pengganti yang dapat ditoleransi anak.</p><table class="maternal-table"><thead><tr><th scope="col">Makanan pemicu</th><th scope="col">Zat gizi yang perlu diperhatikan</th><th scope="col">Contoh alternatif dalam modul</th></tr></thead><tbody><tr><th scope="row">Susu sapi</th><td>Protein, kalsium, vitamin D</td><td>Minuman kedelai*, kacang-kacangan, ikan laut</td></tr><tr><th scope="row">Telur</th><td>Protein, vitamin B12</td><td>Daging merah, ayam, ikan, kedelai</td></tr><tr><th scope="row">Ikan laut</th><td>Protein, omega-3</td><td>Daging, kacang-kacangan</td></tr><tr><th scope="row">Kacang tanah</th><td>Protein, lemak sehat</td><td>Daging, telur</td></tr><tr><th scope="row">Kedelai</th><td>Protein nabati</td><td>Kacang hijau, kacang merah</td></tr></tbody></table><p class="maternal-table-lead" style="margin:20px 0 0"><strong>Pengganti tidak selalu setara gizinya.</strong> Bahan alternatif juga dapat memicu alergi. Rencanakan pilihan bersama tenaga kesehatan.</p><p class="maternal-table-foot">*Modul menyebut “susu kedelai”. Minuman kedelai bukan pengganti ASI atau formula bayi.<br>Sumber: modul hlm. PDF 35, Tabel 1.14. Catatan batas penggantian: penjelasan keselamatan dari slide sebelumnya.</p></section>
+<section class="slide bar" data-n="09" aria-labelledby="s11" data-seconds="45" data-note="Pangan aman berarti risiko cemaran dikendalikan sejak bahan dipilih sampai makanan disajikan. Bahaya biologis mencakup bakteri, virus, parasit, dan jamur; kimia mencakup pestisida, bahan pembersih, atau bahan berbahaya; fisik mencakup kaca, staples, dan rambut. Periksa perubahan bau, warna, tekstur, serta kemasan yang bocor, rusak, atau menggembung. Pemeriksaan ini membantu menolak pangan mencurigakan, tetapi pangan yang tampak normal belum tentu aman. Jangan mencicipi untuk menguji keamanan. Tanyakan satu contoh cemaran dari dapur peserta, lalu hubungkan dengan langkah pencegahan berikutnya.">
+<p class="eyebrow">09 · Keamanan pangan · 45 detik</p><h2 id="s11" tabindex="-1">Tiga Jenis Bahaya dalam Makanan</h2><div class="hazard-cards"><article class="hazard-card"><img src="assets/bahaya-biologis-v2.png" alt="Ilustrasi AI roti berjamur sebagai contoh bahaya biologis"><div class="hazard-copy"><h3>Biologis</h3><p>Cemaran dari bakteri, virus, parasit, atau jamur. Contoh pada gambar: roti berjamur.</p></div></article><article class="hazard-card"><img src="assets/bahaya-kimia-v2.png" alt="Ilustrasi AI penyimpanan cairan pembersih dekat bahan makanan yang berisiko mencemari pangan"><div class="hazard-copy"><h3>Kimia</h3><p>Bahan kimia yang mencemari makanan, seperti pestisida, cairan pembersih, atau boraks/formalin.</p></div></article><article class="hazard-card"><img src="assets/bahaya-fisik-v2.png" alt="Ilustrasi AI staples dan pecahan kaca pada nasi sebagai contoh bahaya fisik"><div class="hazard-copy"><h3>Fisik</h3><p>Benda asing yang masuk ke makanan, seperti pecahan kaca, staples, rambut, atau batu.</p></div></article></div><p class="hazard-reminder">Tolak makanan dengan bau, warna, atau tekstur menyimpang dan kemasan rusak. Tampak normal belum tentu aman. Jangan uji dengan mencicipi.</p><p class="source">Sumber modul: hlm. 42–43, 93 (halaman PDF). Gambar: ilustrasi AI.</p>
+</section>
+<section class="slide maternal-table-slide local-food-slide" data-n="pangan-lokal-utama" aria-labelledby="pangan-lokal-utama" data-seconds="90" data-note="Ringkasan Tabel 1.15 modul halaman PDF 37–41. Penggantian dilakukan dalam kelompok pangan yang sama, dengan porsi disesuaikan. Berat dan kandungan semua zat gizi tidak otomatis sama. Contoh olahan dipilih dari modul tanpa mengulang klaim kandungan yang tidak terukur."><h2 id="pangan-lokal-utama" tabindex="-1">Alternatif Pangan Lokal: Karbohidrat & Protein</h2><p class="maternal-table-lead">Manfaatkan bahan yang mudah diperoleh dan terjangkau di sekitar keluarga.</p><table class="maternal-table"><thead><tr><th scope="col">Kelompok pangan</th><th scope="col">Pilihan bahan lokal</th><th scope="col">Contoh olahan dan daerah</th></tr></thead><tbody><tr><th scope="row">Karbohidrat</th><td>Beras, jagung, sagu, singkong,<br>talas, ubi jalar, sukun</td><td>Nasi jagung — Jawa Timur/Madura<br>Papeda — Maluku/Papua<br>Tiwul dan gatot — Gunungkidul<br>Lemet dan getuk — Jawa Tengah<br>Binte biluhuta — Gorontalo</td></tr><tr><th scope="row">Protein hewani</th><td>Ikan laut/tawar, ayam, telur bebek,<br>daging sapi, kerang, udang</td><td>Pepes ikan — Sunda/Jawa Barat<br>Asam padeh — Sumatera Barat<br>Pindang serani — Jepara<br>Ikan kuah kuning — Maluku</td></tr><tr><th scope="row">Protein nabati</th><td>Kedelai, koro, kacang tanah,<br>kacang hijau, lamtoro</td><td>Tempe benguk — Jawa Tengah<br>Oncom — Sunda<br>Sayur lamtoro — NTB/NTT<br>Koro pedang goreng — Jawa Timur</td></tr></tbody></table><p class="local-food-note">Variasikan dalam kelompok pangan yang sama. Sesuaikan porsi dan kondisi alergi, serta pilih olahan yang matang dan aman.</p><p class="maternal-table-foot">Sumber: modul hlm. PDF 37–41, Tabel 1.15. Contoh diringkas; penggantian bukan berarti berat atau seluruh kandungan gizinya sama.</p></section>
+<section class="slide maternal-table-slide local-food-slide" data-n="pangan-lokal-pelengkap" aria-labelledby="pangan-lokal-pelengkap" data-seconds="90" data-note="Ringkasan Tabel 1.15 modul halaman PDF 37–41. Penggantian dilakukan dalam kelompok pangan yang sama, dengan porsi disesuaikan. Berat dan kandungan semua zat gizi tidak otomatis sama. Contoh olahan dipilih dari modul tanpa mengulang klaim kandungan yang tidak terukur."><h2 id="pangan-lokal-pelengkap" tabindex="-1">Alternatif Pangan Lokal: Pelengkap Menu</h2><p class="maternal-table-lead">Manfaatkan bahan yang mudah diperoleh dan terjangkau di sekitar keluarga.</p><table class="maternal-table"><thead><tr><th scope="col">Kelompok pangan</th><th scope="col">Pilihan bahan lokal</th><th scope="col">Contoh olahan dan daerah</th></tr></thead><tbody><tr><th scope="row">Sumber lemak</th><td>Kelapa, kemiri, kacang tanah,<br>wijen, alpukat</td><td>Sayur lodeh — Jawa<br>Gulai nangka — Sumatera Barat<br>Pallubasa — Makassar<br>Sambal kacang — Jawa/Bali</td></tr><tr><th scope="row">Sayur dan buah</th><td>Beragam sayuran dan buah lokal</td><td>Sayur bening bayam — Jawa<br>Plecing kangkung — Lombok<br>Rujak buah — Bali/Jawa Timur<br>Sup kelor — NTT/Sulawesi</td></tr><tr><th scope="row">Sumber mineral</th><td>Bayam merah, daun singkong,<br>ikan teri, kerang, pisang, kacang hijau</td><td>Pepes teri — Jawa<br>Sayur daun singkong — Sumatera/Kalimantan<br>Bubur kacang hijau — berbagai daerah</td></tr></tbody></table><p class="local-food-note">Variasikan dalam kelompok pangan yang sama. Sesuaikan porsi dan kondisi alergi, serta pilih olahan yang matang dan aman.</p><p class="maternal-table-foot">Sumber: modul hlm. PDF 37–41, Tabel 1.15. Contoh diringkas; penggantian bukan berarti berat atau seluruh kandungan gizinya sama.</p></section>
+<section class="slide hygiene-goals-slide" data-n="hygiene-goals" aria-labelledby="hygiene-goals-title" data-seconds="60" data-note="Tujuan standar higiene dan sanitasi MBG 3B menurut modul: menjamin keamanan pangan bagi sasaran, mencegah kontaminasi silang, mengurangi risiko keracunan pangan, meningkatkan kualitas pelayanan distribusi makanan bergizi, dan mendukung perilaku hidup bersih dan sehat masyarakat.">
+<p class="eyebrow">20 · Higiene dan sanitasi · 60 detik</p><h2 id="hygiene-goals-title" tabindex="-1">Tujuan Standar Higiene<br>dan Sanitasi MBG 3B</h2><p class="hygiene-goals-lead">Lima tujuan ini menghubungkan kebersihan proses dengan keamanan makanan yang diterima keluarga.</p><div class="hygiene-goals-grid"><article class="hygiene-goal"><span class="hygiene-goal-num">1</span><div><h3>Menjamin keamanan pangan</h3><p>Pastikan makanan aman bagi seluruh sasaran MBG 3B.</p></div></article><article class="hygiene-goal"><span class="hygiene-goal-num">2</span><div><h3>Mencegah kontaminasi silang</h3><p>Pisahkan bahan mentah, makanan matang, alat, dan area kerja.</p></div></article><article class="hygiene-goal"><span class="hygiene-goal-num">3</span><div><h3>Mengurangi risiko keracunan</h3><p>Kurangi peluang cemaran sejak pengolahan sampai makanan dibagikan.</p></div></article><article class="hygiene-goal"><span class="hygiene-goal-num">4</span><div><h3>Meningkatkan kualitas distribusi</h3><p>Jaga mutu pelayanan saat makanan bergizi disiapkan dan disalurkan.</p></div></article><article class="hygiene-goal"><span class="hygiene-goal-num">5</span><div><h3>Mendukung PHBS masyarakat</h3><p>Bangun kebiasaan bersih dan sehat di rumah, dapur, serta lingkungan.</p></div></article></div><p class="source">Sumber modul: hlm. 47 (halaman PDF), bagian “Tujuan Standar Higiene dan Sanitasi MBG 3B”.</p>
+</section>
+
+<section class="slide infographic-slide" data-n="10" aria-labelledby="s12" data-seconds="90" data-note="Lima kunci ini berlaku di dapur keluarga maupun layanan makanan. Jaga kebersihan tangan, alat, dan bahan. Pisahkan bahan mentah dari makanan matang; cuci alat sebelum berpindah penggunaan dan simpan daging mentah dalam wadah kedap di rak bawah. Masak sampai matang sesuai jenis pangan, lalu segera sajikan atau simpan pada suhu aman. Gunakan air layak konsumsi dan bahan baku yang aman. Minta peserta mengingat satu titik rawan di rumah, misalnya talenan yang dipakai bergantian, karena keamanan harus dijaga sepanjang proses, bukan hanya ketika memasak. Pencegahan dimulai saat membeli: periksa kedaluwarsa dan kemasan, gunakan air layak konsumsi, serta cuci buah dan sayur. Masak sampai matang sesuai jenis pangan, bukan memakai satu angka waktu memasak untuk semua makanan. Segera sajikan atau simpan dengan benar; sumber mendukung dingin di bawah lima derajat dan panas di atas enam puluh derajat, tetapi memuat konflik waktu suhu ruang sehingga kita tidak mengulang angka yang bertentangan. Produk beku tetap dalam freezer dan dicairkan dengan aman, bukan di meja pada suhu ruang. Pisahkan mentah dan matang, bersihkan alat, serta kendalikan hama.">
+<h2 id="s12" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap">Lima kunci pangan aman</h2><img class="food-safety-infographic" src="assets/infografis-lima-kunci-realistis.png" alt="Lima kunci pangan aman: jaga kebersihan dan kendalikan hama; pisahkan mentah dan matang; masak sampai matang; simpan pada suhu aman, dingin &lt;5°C atau panas &gt;60°C, simpan pangan beku di freezer dan lakukan pencairan di lemari pendingin; gunakan air dan bahan aman serta periksa kedaluwarsa dan kemasan.">
+</section>
+
+<section class="slide phbs-slide" data-n="phbs" aria-labelledby="phbs-title" data-seconds="90" data-note="Sumber: modul bagian 6, PHBS dalam Pelaksanaan MBG 3B, hlm. PDF 49–50. PHBS adalah perilaku kesehatan atas kesadaran agar anggota keluarga mampu menjaga kesehatannya sendiri. Enam contoh: cuci tangan pakai sabun, menggunakan jamban sehat, mengonsumsi makanan bergizi, menjaga kebersihan lingkungan, menggunakan air bersih, dan membuang sampah pada tempatnya. Visual dibuat dengan AI sebagai ilustrasi."><h2 id="phbs-title" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap">PHBS: Perilaku Hidup Bersih dan Sehat</h2><img class="phbs-infographic" src="assets/infografis-phbs.png" alt="PHBS, Perilaku Hidup Bersih dan Sehat: cuci tangan pakai sabun, gunakan jamban sehat, konsumsi makanan bergizi, jaga kebersihan lingkungan, gunakan air bersih, dan buang sampah pada tempatnya."></section>
+<section class="slide maternal-table-slide hygiene-indicator-slide" data-n="hygiene-indicators" aria-labelledby="hygiene-indicators-title" data-seconds="60" data-note="Indikator keberhasilan higiene sanitasi MBG 3B menurut modul: penjamah makanan mencuci tangan 100%, penggunaan alat bersih 100%, tempat pengolahan bersih 100%, tidak ada keracunan pangan 0 kasus, tersedia air bersih 100%, dan distribusi makanan higienis 100%. Angka adalah target program, bukan klaim hasil yang sudah tercapai.">
+<p class="eyebrow">21 · Higiene dan sanitasi · 60 detik</p><h2 id="hygiene-indicators-title" tabindex="-1">Indikator Keberhasilan Higiene Sanitasi MBG 3B</h2><p class="maternal-table-lead">Gunakan indikator ini sebagai sasaran pemantauan program, bukan sebagai klaim hasil.</p><table class="maternal-table"><colgroup><col style="width:10%"><col style="width:65%"><col style="width:25%"></colgroup><thead><tr><th scope="col">No.</th><th scope="col">Indikator</th><th scope="col">Target</th></tr></thead><tbody><tr><th scope="row">1</th><td>Penjamah makanan mencuci tangan</td><td>100%</td></tr><tr><th scope="row">2</th><td>Penggunaan alat bersih</td><td>100%</td></tr><tr><th scope="row">3</th><td>Tempat pengolahan bersih</td><td>100%</td></tr><tr><th scope="row">4</th><td>Tidak ada keracunan pangan</td><td>0 kasus</td></tr><tr><th scope="row">5</th><td>Tersedia air bersih</td><td>100%</td></tr><tr><th scope="row">6</th><td>Distribusi makanan higienis</td><td>100%</td></tr></tbody></table><p class="hygiene-indicator-message">Higiene terjaga, sanitasi sukses, makanan aman, generasi sehat!</p><p class="maternal-table-foot">Sumber modul: hlm. 53 (halaman PDF), bagian “Indikator Keberhasilan Higiene Sanitasi MBG 3B”.</p>
+</section>
+<section class="slide field-workflow-slide" data-n="12" aria-labelledby="s16" data-seconds="90" data-note="Sepuluh langkah pendampingan dibagi menjadi dua fase yang saling berhubungan. Fase persiapan dimulai dengan pendekatan tokoh formal, pemetaan dan pendekatan sasaran, serta pelibatan tokoh informal. Setelah dukungan terbentuk, tim menyusun dan menguatkan kesepakatan tentang peran, jadwal, rujukan, pelaporan, daftar sasaran, serta formulir kerja. Fase pelaksanaan menerjemahkan kesepakatan menjadi kegiatan. Tim menjalankan KIE, membentuk kelompok pelopor, memberi pelayanan teknis, mencatat dan melaporkan kegiatan melalui SIGA, lalu melakukan pembinaan dan evaluasi. Urutannya membantu setiap pihak memahami siapa yang terlibat, apa yang dikerjakan, dan bagaimana hasilnya diperbaiki. Langkah-langkah ini dapat disesuaikan dengan kondisi wilayah, tetapi dukungan, kejelasan peran, pencatatan, dan tindak lanjut tetap perlu dijaga.">
+<p class="eyebrow">12 · Alur pendampingan · 90 detik</p><h2 id="s16" tabindex="-1">Tahapan Kegiatan Pendampingan</h2><div class="field-workflow"><article class="field-phase"><header class="field-phase-head"><h3>Persiapan</h3></header><ol class="field-steps"><li class="field-step"><span class="field-step-num">1</span><div><h4>Pendekatan tokoh formal</h4><p>Minta dukungan SPPG, Puskesmas, pemerintah desa, dan Pokja Kampung KB.</p></div></li><li class="field-step"><span class="field-step-num">2</span><div><h4>Pemetaan dan pendekatan sasaran</h4><p>Tentukan keluarga sasaran, kebutuhan, kader, sarana, dan titik distribusi.</p></div></li><li class="field-step"><span class="field-step-num">3</span><div><h4>Pendekatan tokoh informal</h4><p>Libatkan tokoh agama, adat, dan masyarakat.</p></div></li><li class="field-step"><span class="field-step-num">4</span><div><h4>Pembentukan kesepakatan</h4><p>Tetapkan peran, jadwal, jalur rujukan, dan cara pelaporan.</p></div></li><li class="field-step"><span class="field-step-num">5</span><div><h4>Penguatan kesepakatan</h4><p>Siapkan surat tugas, daftar sasaran, jadwal, dan formulir kerja.</p></div></li></ol></article><article class="field-phase"><header class="field-phase-head"><h3>Pelaksanaan dan evaluasi</h3></header><ol class="field-steps" start="6"><li class="field-step"><span class="field-step-num">6</span><div><h4>KIE</h4><p>Sampaikan komunikasi, informasi, dan edukasi melalui forum atau media.</p></div></li><li class="field-step"><span class="field-step-num">7</span><div><h4>Kelompok pelopor</h4><p>Libatkan penerima manfaat dan pengelola untuk menjaga keberlanjutan.</p></div></li><li class="field-step"><span class="field-step-num">8</span><div><h4>Pelayanan teknis</h4><p>Dampingi distribusi, mediasi SPPG dengan kader, dan proses rujukan.</p></div></li><li class="field-step"><span class="field-step-num">9</span><div><h4>Pencatatan dan pelaporan</h4><p>Catat kegiatan rutin melalui SIGA atau sistem yang terintegrasi.</p></div></li><li class="field-step"><span class="field-step-num">10</span><div><h4>Pembinaan dan evaluasi</h4><p>Tindak lanjuti hasil pemantauan melalui forum koordinasi.</p></div></li></ol></article></div><p class="source">Sumber modul: hlm. 52 (halaman PDF).</p>
+</section>
+<section class="slide life-stage-slide" data-n="13" aria-labelledby="s18" data-seconds="90" data-note="Kebutuhan gizi berubah pada setiap tahap kehidupan. Pada masa hamil, menu beragam mendukung kesehatan ibu dan pertumbuhan janin. Saat nifas dan menyusui, makanan bergizi, cairan, istirahat, dan dukungan keluarga membantu pemulihan serta proses menyusui. Pada balita, pemberian makan berkembang dari ASI, MPASI mulai usia enam bulan, hingga menu keluarga dengan tekstur yang sesuai. Anak prasekolah dan sekolah perlu dibiasakan sarapan, membawa bekal bergizi, minum air putih, dan membatasi jajanan tinggi gula, garam, dan lemak. Orang dewasa perlu menyeimbangkan jumlah makanan dengan aktivitas serta memantau berat badan. Pada lansia, kebutuhan energi dapat menurun, tetapi protein, serat, vitamin, mineral, dan cairan tetap harus dipenuhi. Pesan utamanya: tidak ada satu pola makan yang sama untuk semua umur; sesuaikan bentuk, jumlah, dan pilihan makanan dengan tahap kehidupan dan kondisi kesehatan.">
+<h2 id="s18" tabindex="-1">Perbedaan Variasi Kebutuhan Gizi di Setiap Umur</h2><div class="life-stage-cards"><article class="life-stage-card"><img src="assets/life-hamil.png" alt="Ibu hamil menikmati menu beragam"><div class="life-stage-copy"><h3>Hamil</h3><p>Menu beragam memenuhi kebutuhan ibu sekaligus mendukung pertumbuhan janin.</p></div></article><article class="life-stage-card"><img src="assets/life-menyusui.png" alt="Ibu setelah melahirkan dengan makanan bergizi dan air putih"><div class="life-stage-copy"><h3>Nifas/menyusui</h3><p>Utamakan makanan bergizi, cukup cairan, istirahat, dan dukungan keluarga.</p></div></article><article class="life-stage-card"><img src="assets/life-balita.png" alt="Balita makan menu sesuai usia"><div class="life-stage-copy"><h3>Balita</h3><p>Mulai MPASI pada usia 6 bulan, lalu tingkatkan tekstur menuju menu keluarga.</p></div></article><article class="life-stage-card"><img src="assets/life-sekolah.png" alt="Anak sekolah sarapan dengan bekal dan air putih"><div class="life-stage-copy"><h3>Prasekolah/sekolah</h3><p>Biasakan sarapan, bekal bergizi, dan air putih; batasi jajanan berlebih.</p></div></article><article class="life-stage-card"><img src="assets/life-dewasa.png" alt="Orang dewasa menikmati makanan seimbang setelah beraktivitas"><div class="life-stage-copy"><h3>Dewasa</h3><p>Seimbangkan jumlah makanan dengan aktivitas dan pantau berat badan.</p></div></article><article class="life-stage-card"><img src="assets/life-lansia.png" alt="Lansia menikmati makanan kaya protein, sayur, dan air putih"><div class="life-stage-copy"><h3>Lansia</h3><p>Sesuaikan energi; protein, serat, vitamin, mineral, dan cairan tetap penting.</p></div></article></div><p class="source">Sumber modul: hlm. 54–57 (halaman PDF).</p>
+</section>
+
+<section class="slide parenting-hero" data-n="14" aria-labelledby="s20" data-seconds="45" data-note="Pola asuh gizi memiliki tiga peran yang berjalan bersama. Asuh berarti keluarga memenuhi kebutuhan fisik anak dengan makanan yang cukup, aman, dan bergizi. Asih berarti mendampingi waktu makan dengan perhatian, kesabaran, dan suasana hangat tanpa paksaan. Asah berarti memberi contoh serta melatih kebiasaan makan sehat secara konsisten. Ketiganya tidak dapat dipisahkan: makanan bergizi akan lebih mudah diterima ketika suasana makan nyaman dan anak terus dibimbing untuk mencoba.">
+<img class="parenting-bg" src="assets/foto-pengasuhan-makan-positif.png" alt="Ibu memberi teladan makan sayur kepada anak dalam suasana makan yang hangat tanpa paksaan"><div class="parenting-content"><h2 id="s20" tabindex="-1">Tiga Peran Keluarga dalam Membentuk Kebiasaan Makan Anak</h2><div class="parenting-cards"><article class="parenting-card"><h3>Asuh</h3><p>Sediakan makanan yang cukup, aman, dan bergizi sesuai kebutuhan anak.</p></article><article class="parenting-card"><h3>Asih</h3><p>Dampingi anak dengan hangat, sabar, dan tanpa memaksa saat waktu makan.</p></article><article class="parenting-card"><h3>Asah</h3><p>Berikan contoh dan biasakan anak memilih serta mencoba makanan sehat.</p></article></div><p class="source">Sumber modul: hlm. 57–58 (halaman PDF).</p></div>
+</section>
+<section class="slide parenting-style-slide" data-n="15" aria-labelledby="s21" data-seconds="90" data-note="Tabel 1.2 modul mengelompokkan pola asuh menjadi otoriter, permisif, otoritatif, dan neglect/pengabaian. Otoriter: aturan sangat ketat dan anak dipaksa makan; dampaknya anak dapat takut makan, kurang mandiri, dan dalam temuan modul 56% rentan gizi kurang. Permisif: terlalu bebas tanpa panduan gizi; dampaknya anak cenderung memilih makanan kurang sehat, sulit diatur, dan berisiko kegemukan. Otoritatif: aturan jelas dan tegas tetapi hangat dengan komunikasi dua arah; dampaknya anak makan lebih bergizi dan mandiri, dengan 7,4% mengalami gizi kurang/buruk dalam temuan modul. Pengabaian: orang tua kurang terlibat dalam penyediaan makanan dan waktu makan; dampaknya anak berisiko kekurangan zat gizi dan terlambat membangun kebiasaan makan sehat. Faktor lain seperti akses pangan, pengetahuan, sanitasi, penyakit infeksi, dan waktu pengasuh juga memengaruhi status gizi.">
+<h2 id="s21" tabindex="-1">Pengelompokan Pola Asuh dan Dampaknya</h2><p class="parenting-style-lead">Empat pola dibedakan dari tingkat kehangatan, aturan, dan keterlibatan orang tua saat anak makan.</p><div class="parenting-style-grid"><article class="parenting-style-card"><h3>Otoriter</h3><p><strong>Ciri:</strong> Aturan sangat ketat, anak dipaksa makan, dan sedikit ruang untuk bicara.<br><strong>Dampak:</strong> Anak takut makan dan kurang mandiri; 56% rentan gizi kurang dalam temuan modul.</p></article><article class="parenting-style-card"><h3>Permisif</h3><p><strong>Ciri:</strong> Anak terlalu bebas memilih tanpa panduan gizi yang jelas.<br><strong>Dampak:</strong> Anak cenderung memilih makanan kurang sehat, sulit diatur, dan berisiko kegemukan.</p></article><article class="parenting-style-card"><h3>Pengabaian</h3><p><strong>Ciri:</strong> Orang tua kurang terlibat; penyediaan makanan dan waktu makan tidak konsisten.<br><strong>Dampak:</strong> Anak berisiko kekurangan zat gizi dan terlambat membangun kebiasaan makan sehat.</p></article><article class="parenting-style-card"><span class="recommended-label">Terbaik</span><h3>Otoritatif</h3><p><strong>Ciri:</strong> Aturan jelas dan tegas, tetap hangat, dengan komunikasi dua arah.<br><strong>Dampak:</strong> Anak makan lebih bergizi dan mandiri; 7,4% mengalami gizi kurang/buruk dalam temuan modul.</p></article><article class="parenting-style-card parenting-style-note"><h3>Faktor lain yang memengaruhi gizi</h3><p>Akses pangan dan pendapatan, pengetahuan keluarga, sanitasi dan penyakit infeksi, serta waktu pengasuh dan pembagian tugas turut menentukan status gizi anak.</p></article></div><p class="source">Sumber modul: hlm. 59–61 (halaman PDF), Tabel 1.2 dan uraian dampak pola asuh.</p>
+</section>
+<section class="slide healthy-habits-slide" data-n="17" aria-labelledby="s23" data-seconds="60" data-note="Enam kebiasaan ini membantu anak membangun pola makan sehat. Tetapkan jadwal makan utama dan selingan agar anak mengenali waktu makan. Sajikan makanan yang beragam untuk memperkenalkan rasa dan zat gizi yang berbeda. Orang tua menentukan makanan dan waktu penyajiannya, sedangkan anak menentukan jumlah yang dimakan. Ciptakan suasana tenang tanpa gawai, ancaman, atau paksaan. Anak belajar dari contoh, jadi orang dewasa perlu ikut menikmati makanan sehat. Kunjungan Posyandu setiap bulan membantu keluarga memantau pertumbuhan dan perkembangan anak. Mulailah dari satu kebiasaan yang dapat dilakukan secara konsisten oleh semua pengasuh.">
+<h2 id="s23" tabindex="-1">6 Tips Praktis Pola Asuh Gizi Otoritatif</h2><p class="healthy-habits-lead">Kebiasaan sederhana akan lebih efektif jika dilakukan secara konsisten oleh semua pengasuh.</p><div class="healthy-habits-grid"><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">1</span><div><h3>Jadwal teratur</h3><p>Tetapkan waktu makan utama dan selingan yang konsisten.</p></div></article><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">2</span><div><h3>Makanan beragam</h3><p>Ganti-ganti makanan pokok, lauk, sayur, dan buah.</p></div></article><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">3</span><div><h3>Bagi tanggung jawab</h3><p>Orang tua mengatur menu dan waktu. Anak menentukan jumlah.</p></div></article><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">4</span><div><h3>Suasana nyaman</h3><p>Jauhkan gawai. Hindari ancaman, tekanan, dan paksaan.</p></div></article><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">5</span><div><h3>Berikan teladan</h3><p>Orang dewasa ikut menikmati makanan sehat.</p></div></article><article class="healthy-habit"><span class="healthy-habit-num" aria-hidden="true">6</span><div><h3>Posyandu bulanan</h3><p>Pantau berat, tinggi, dan perkembangan anak setiap bulan.</p></div></article></div><p class="source">Sumber modul: hlm. 63–65 (halaman PDF).</p>
+</section>
+<section class="slide feeding-rules-slide" data-n="18" aria-labelledby="s24" data-seconds="75" data-note="Basic Feeding Rules atau Aturan Dasar Pemberian Makan mencakup tiga aspek. Pertama, jadwal: tetapkan tiga kali makan utama dan makanan selingan secara konsisten, batasi sesi makan paling lama tiga puluh menit, dan berikan air putih saja di antara jadwal. Kedua, lingkungan: ciptakan suasana ceria tanpa paksaan, gawai, mainan, hadiah, atau hukuman. Ketiga, prosedur: mulai dengan porsi kecil, dahulukan makanan padat, berikan minuman di akhir, dan beri kesempatan anak belajar makan sendiri.">
+<h2 id="s24" tabindex="-1">Basic Feeding Rules</h2><p class="section-lead">Tiga aturan dasar membantu anak mengenali lapar, kenyang, dan rutinitas makan.</p><div class="feeding-rule-columns"><article class="feeding-rule"><span class="feeding-rule-mark" aria-hidden="true">01</span><h3>Jadwal</h3><ul><li>Tiga kali makan utama dan selingan pada waktu yang konsisten.</li><li>Satu sesi makan paling lama 30 menit.</li><li>Di antara jadwal, berikan air putih.</li></ul></article><article class="feeding-rule"><span class="feeding-rule-mark" aria-hidden="true">02</span><h3>Lingkungan</h3><ul><li>Ciptakan suasana makan yang tenang dan menyenangkan.</li><li>Jauhkan televisi, mainan, dan gawai.</li><li>Hindari paksaan, hadiah, atau hukuman.</li></ul></article><article class="feeding-rule"><span class="feeding-rule-mark" aria-hidden="true">03</span><h3>Prosedur</h3><ul><li>Mulai dengan porsi kecil sesuai kemampuan anak.</li><li>Dahulukan makanan padat, lalu minuman di akhir.</li><li>Beri kesempatan anak belajar makan sendiri.</li></ul></article></div><p class="source">Sumber modul: hlm. 66–72 (halaman PDF), bagian Aturan Dasar Pemberian Makan.</p>
+</section>
+<section class="slide refusal-slide" data-n="penolakan-halus" aria-labelledby="penolakan-halus-title" data-seconds="60" data-note="Kenali tanda penolakan seperti menutup mulut, memalingkan kepala, atau menangis. Tawarkan kembali makanan secara netral tanpa membujuk berlebihan. Beri kesempatan selama sepuluh sampai lima belas menit. Jika anak tetap menolak atau mulai sangat kesal, akhiri sesi makan dengan tenang. Respons ini menghargai sinyal internal anak dan menjaga waktu makan tetap bebas tekanan.">
+<h2 id="penolakan-halus-title" tabindex="-1">Menghadapi Penolakan Makan dengan Tenang</h2><p class="section-lead">Kenali tandanya: anak menutup mulut, memalingkan kepala, menangis, atau mulai sangat kesal.</p><div class="refusal-steps"><article class="refusal-step"><span class="refusal-step-num" aria-hidden="true">01</span><h3>Tawarkan kembali secara netral</h3><p>Berikan makanan kembali dengan tenang. Hindari bujukan berlebihan dan jangan memaksa anak membuka mulut.</p></article><article class="refusal-step"><span class="refusal-step-num" aria-hidden="true">02</span><h3>Beri waktu 10–15 menit</h3><p>Amati respons anak. Waktu ini memberi kesempatan anak menerima makanan tanpa tekanan.</p></article><article class="refusal-step"><span class="refusal-step-num" aria-hidden="true">03</span><h3>Akhiri bila penolakan berlanjut</h3><p>Jika anak tetap menolak atau sangat kesal, hentikan sesi makan dengan tenang dan lanjutkan pada jadwal berikutnya.</p></article></div><p class="refusal-bottom">Tujuannya menjaga pengalaman makan tetap positif dan membantu anak mengenali sinyal lapar serta kenyang.</p><p class="source">Sumber modul: hlm. 72–73 (halaman PDF), bagian Cara Menghadapi Penolakan secara Halus.</p>
+</section>
+<section class="slide nutrition-education-slide" data-n="19" aria-labelledby="s25" data-seconds="90" data-note="Edukasi gizi untuk anak usia dini perlu interaktif dan menyenangkan. Modul menyebut video edukasi dengan pendampingan, alat peraga dan boneka, permainan visual interaktif, media gambar nyata, serta kegiatan memasak bersama. Memasak bersama memberi anak pengalaman langsung untuk mengenal bahan, aroma, rasa, dan tekstur makanan. Orang dewasa mendampingi kegiatan agar tetap aman dan menyenangkan.">
+<h2 id="s25" tabindex="-1">Metode Edukasi Gizi yang Menyenangkan</h2><p class="section-lead">Anak usia dini lebih mudah belajar melalui pengalaman yang konkret dan melibatkan banyak indera.</p><div class="education-layout"><div class="education-methods"><article class="education-method"><img src="assets/edukasi-video.png" alt="Ibu mendampingi anak menonton video edukasi makanan sehat"><h3>Video edukasi</h3><p>Pilih tayangan singkat sesuai usia dan dampingi anak saat menonton.</p></article><article class="education-method"><img src="assets/edukasi-boneka.png" alt="Ibu mengajarkan makanan sehat menggunakan boneka dan alat peraga"><h3>Alat peraga dan boneka</h3><p>Sampaikan fungsi makanan melalui cerita dan permainan peran.</p></article><article class="education-method"><img src="assets/edukasi-permainan-visual.png" alt="Anak bermain tebak buah dan sayur menggunakan kartu gambar"><h3>Permainan visual</h3><p>Ajak anak menebak nama, warna, atau manfaat buah dan sayur.</p></article><article class="education-method"><img src="assets/edukasi-gambar-makanan.png" alt="Ibu dan anak mengenali kelompok pangan melalui gambar makanan nyata"><h3>Gambar makanan nyata</h3><p>Gunakan gambar makanan pokok, lauk, sayur, dan buah untuk latihan mengenali pilihan bergizi.</p></article></div><aside class="cooking-focus"><img src="assets/edukasi-memasak-bersama.png" alt="Ibu dan anak mencuci sayuran saat memasak bersama"><h3>Memasak bersama</h3><p>Pengalaman langsung membantu anak mengenal bahan, aroma, rasa, dan tekstur makanan.</p></aside></div><div class="education-key-message"><strong>Pesan kunci</strong><span>Jadikan kegiatan edukasi sebagai rutinitas mingguan dengan menu bervariasi. Orang tua perlu memberi teladan karena anak belajar dengan meniru.</span></div><p class="source">Sumber modul: hlm. 73–79 (halaman PDF), bagian Edukasi Pemberian Makanan Sehat pada Anak Usia Dini.</p>
+</section>
+
+
+<section class="slide poisoning-origin-slide" data-n="20" aria-labelledby="s28" data-seconds="60" data-note="Slide ini menjelaskan dua cara mikroba menyebabkan keracunan makanan. Pada intoksikasi, mikroba lebih dahulu menghasilkan racun di dalam makanan, lalu racun tersebut ikut tertelan. Pada infeksi, mikroba hidup masuk bersama makanan dan menimbulkan gangguan di tubuh. Kejadian biasanya terbentuk melalui rangkaian yang dapat dicegah: makanan tercemar, penyimpanan memberi kesempatan mikroba berkembang, kemudian pemasakan atau penanganan tidak cukup untuk menghilangkan bahayanya. Bahan kimia dan toksin alami juga dapat menyebabkan keracunan. Tidak semua toksin alami hilang setelah dimasak.">
+<p class="eyebrow">31 · Keracunan makanan · Cara terjadinya</p><h2 id="s28" tabindex="-1">Bagaimana Keracunan Makanan Terjadi?</h2><p class="poisoning-lead">Bahaya masuk melalui makanan atau minuman. Mikroba dapat menyebabkan sakit melalui dua mekanisme berikut.</p><div class="poisoning-types"><article class="poisoning-type"><strong>Intoksikasi</strong><p>Mikroba menghasilkan racun di dalam makanan. Racun tersebut kemudian tertelan dan menimbulkan gejala.</p></article><article class="poisoning-type"><strong>Infeksi</strong><p>Mikroba hidup ikut tertelan melalui makanan, lalu berkembang atau menyebabkan gangguan di dalam tubuh.</p></article></div><div class="poisoning-chain" aria-label="Rangkaian terjadinya keracunan makanan"><article><h3>1. Kontaminasi</h3><p>Makanan terkena mikroba atau bahan berbahaya.</p></article><span class="chain-arrow" aria-hidden="true">›</span><article><h3>2. Berkembang</h3><p>Penyimpanan yang tidak aman memberi mikroba waktu untuk tumbuh.</p></article><span class="chain-arrow" aria-hidden="true">›</span><article><h3>3. Bahaya bertahan</h3><p>Pemasakan atau penanganan tidak cukup menghilangkan bahayanya.</p></article></div><p class="source">Sumber modul: hlm. 82–86 (halaman PDF). Bahan kimia dan toksin alami juga dapat menyebabkan keracunan; tidak semua toksin hilang saat dimasak.</p>
+</section>
+<section class="slide poisoning-symptoms-slide" data-n="21" aria-labelledby="s29" data-seconds="60" data-note="Gunakan infografis untuk membedakan tiga kondisi. Keracunan makanan terjadi karena pangan terkontaminasi dan dapat mengenai beberapa orang yang menyantap menu sama. Alergi melibatkan reaksi sistem imun dan dapat muncul meskipun pemicunya sedikit. Sesak atau pembengkakan yang mengganggu napas membutuhkan pertolongan darurat. Intoleransi terjadi ketika tubuh sulit mencerna komponen tertentu, misalnya laktosa. Waktu muncul gejala keracunan dapat berbeda dari beberapa jam hingga beberapa hari, sehingga waktu saja tidak cukup untuk memastikan diagnosis.">
+<h2 id="s29" class="visually-hidden" tabindex="-1">Keracunan, Alergi, atau Intoleransi?</h2><img class="poisoning-infographic" src="assets/infografis-gejala-keracunan-alergi-intoleransi.png" alt="Infografis perbedaan keracunan makanan, alergi makanan, dan intoleransi makanan berdasarkan penyebab serta gejalanya">
+</section>
+<section class="slide emergency-aid-slide" data-n="23" aria-labelledby="s31" data-seconds="60" data-note="Prioritas keluarga ialah menghentikan makanan yang dicurigai dan mencari bantuan. Orang yang muntah atau diare dapat kehilangan cairan. Bila korban sadar dan mampu menelan, berikan oralit sesuai petunjuk kemasan sedikit demi sedikit. Jangan memberi minuman melalui mulut bila kesadaran menurun atau korban sulit menelan. Segera cari pertolongan bila muntah terus, demam tinggi, sangat lemas, mata cekung, urin sedikit, sesak, atau kesadaran menurun. Jangan memancing muntah dan jangan memberikan obat penghenti diare tanpa anjuran tenaga kesehatan.">
+<p class="eyebrow">33 · Keracunan makanan · Pertolongan awal</p><h2 id="s31" tabindex="-1">Pertolongan Awal Keracunan Makanan</h2><div class="emergency-aid-grid"><div class="emergency-actions"><article class="emergency-action"><span aria-hidden="true">1</span><div><h3>Hentikan makanan yang dicurigai</h3><p>Jangan lanjutkan konsumsi. Hubungi kader atau tenaga kesehatan dan ingat makanan yang terakhir dikonsumsi.</p></div></article><article class="emergency-action"><span aria-hidden="true">2</span><div><h3>Ganti cairan yang hilang</h3><p>Berikan oralit sesuai petunjuk kemasan, sedikit demi sedikit, hanya bila korban sadar dan mampu menelan.</p></div></article><article class="emergency-action"><span aria-hidden="true">3</span><div><h3>Cari pertolongan medis</h3><p>Segera ke Puskesmas atau rumah sakit jika muntah terus, demam tinggi, sangat lemas, mata cekung, atau urin sedikit.</p></div></article></div><figure class="emergency-photo"><img src="assets/foto-respons-keracunan.png" alt="Petugas kesehatan mendampingi keluarga saat menangani dugaan keracunan pangan"><figcaption>Sesak, sulit menelan, atau kesadaran menurun memerlukan bantuan darurat. Jangan memberikan minuman melalui mulut.</figcaption></figure></div><div class="emergency-warning"><strong>Hindari tindakan berbahaya</strong><span>Jangan memancing muntah dan jangan memberikan obat penghenti diare tanpa anjuran tenaga kesehatan.</span></div><p class="source">Sumber modul: hlm. 92–93 dan 95–97 (halaman PDF). Batas oralit dan larangan tindakan: editorial keselamatan.</p>
+</section>
+<section class="slide poisoning-symptoms-slide" data-n="22" aria-labelledby="s30" data-seconds="60" data-note="Gunakan infografis untuk menunjukkan tanda penolakan pada bahan yang mudah rusak. Susu dengan bau menyimpang, gumpalan, atau lendir yang tidak semestinya harus ditolak. Telur dengan bintik tidak wajar atau bau busuk tidak digunakan. Ikan yang busuk, berlendir, kusam, atau tidak kenyal juga harus dibuang. Daging dengan bau dan warna menyimpang atau permukaan berlendir tidak boleh diolah. Jangan mencicipi bahan yang mencurigakan untuk menguji keamanannya. Tampilan normal juga tidak menjamin pangan bebas bahaya.">
+<h2 id="s30" class="visually-hidden" tabindex="-1">Pencegahan Keracunan Makanan</h2><img class="poisoning-infographic" src="assets/infografis-pencegahan-keracunan-makanan.png" alt="Infografis tanda pangan mencurigakan pada susu, telur, ikan, dan daging serta peringatan untuk tidak mencicipinya">
+</section>
+
+<section class="slide poisoning-symptoms-slide" data-n="25" aria-labelledby="s34" data-seconds="60" data-note="Kebiasaan dapur yang bersih mencegah mikroba mencemari dan berkembang pada makanan. Cuci tangan dengan sabun dan air mengalir setelah menggunakan toilet sebelum kembali menangani makanan. Jaga dapur, bahan pangan, dan peralatan dari serangga serta hewan. Jangan membiarkan makanan matang pada suhu ruang lebih dari dua jam. Segera masukkan makanan yang cepat rusak atau sisa makanan ke lemari pendingin.">
+<h2 id="s34" class="visually-hidden" tabindex="-1">Kebiasaan Dapur yang Aman</h2><img class="poisoning-infographic" src="assets/infografis-pencegahan-dapur-aman.png" alt="Infografis kebiasaan dapur yang aman: mencuci tangan setelah dari toilet, mengendalikan serangga dan hewan, membatasi makanan matang di suhu ruang, serta menyimpan sisa makanan">
+</section>
+<section class="slide poisoning-symptoms-slide" data-n="26" aria-labelledby="s35" data-seconds="60" data-note="Pilih dan siapkan bahan pangan dengan aman. Cuci buah dan sayuran sebelum digunakan, terutama jika akan dikonsumsi mentah. Hindari bahan yang secara alami dapat mengandung racun, seperti ikan buntal dan jamur liar yang belum diketahui keamanannya. Anak perlu dilindungi dari makanan yang berisiko mengandung toksin Clostridium botulinum. Jika keamanan makanan diragukan, jangan dikonsumsi.">
+<h2 id="s35" class="visually-hidden" tabindex="-1">Pilih Bahan Pangan yang Aman</h2><img class="poisoning-infographic" src="assets/infografis-pencegahan-bahan-aman.png" alt="Infografis memilih bahan pangan aman: mencuci buah dan sayur, menghindari ikan buntal dan jamur liar, serta melindungi anak dari makanan berisiko toksin Clostridium botulinum">
+</section>
+<section class="slide klb-report-slide" data-n="37" aria-labelledby="s36" data-seconds="90" data-note="Pelaporan dugaan KLB keracunan massal harus cepat, tepat, dan sistematis. Dahulukan pertolongan korban. Fasilitas kesehatan tingkat pertama melapor ke Puskesmas, kemudian Dinas Kesehatan kabupaten atau kota meneruskan ke provinsi dan pusat melalui sistem surveilans. Laporan kewaspadaan dini disampaikan kurang dari dua puluh empat jam sejak indikasi ditemukan, tetapi tidak perlu menunggu data lengkap. Formulir W1 mencatat lokasi dan waktu, jumlah orang terpapar, sakit, dirawat, atau meninggal, gejala dominan, serta pangan yang dicurigai. TGC melakukan wawancara, pelacakan bahan dan proses pengolahan, serta pengambilan sampel sesuai prosedur.">
+<p class="eyebrow">37 · Keracunan makanan · Pelaporan KLB</p><h2 id="s36" tabindex="-1">Prosedur Pelaporan Keracunan Massal</h2><p class="klb-lead">Pertolongan korban berjalan bersamaan dengan laporan kewaspadaan dini.</p><div class="klb-flow"><article><span>Tahap 1</span><h3>Tolong dan laporkan</h3><p>Hubungi fasilitas kesehatan atau Puskesmas segera setelah ditemukan indikasi keracunan massal.</p></article><article><span>Tahap 2</span><h3>Pelaporan berjenjang</h3><p>FKTP melapor ke Puskesmas, lalu Dinkes kabupaten atau kota meneruskan ke provinsi dan pusat.</p></article><article><span>Tahap 3</span><h3>Kirim laporan W1</h3><p>Sampaikan laporan kewaspadaan dini kurang dari 24 jam. Data yang belum diketahui dapat dilengkapi kemudian.</p></article><article><span>Tahap 4</span><h3>Investigasi TGC</h3><p>Petugas mewawancarai korban, menelusuri bahan dan proses, serta mengambil sampel sesuai prosedur.</p></article></div><div class="klb-details"><article class="klb-detail"><h3>Isi minimum laporan awal</h3><p>Lokasi dan waktu kejadian, jumlah terpapar, sakit, dirawat, atau meninggal, gejala dominan, serta makanan atau minuman yang dicurigai.</p></article><article class="klb-detail"><h3>Koordinasi tindak lanjut</h3><p>Puskesmas dan Dinas Kesehatan mengoordinasikan investigasi, pemeriksaan laboratorium, pengendalian sumber, serta laporan akhir.</p></article></div><div class="klb-alert">Jangan menunggu 24 jam atau menunggu seluruh data lengkap untuk mulai menolong dan melapor.</div><p class="source">Sumber modul: hlm. 98–103 (halaman PDF), bagian prosedur pelaporan KLB keracunan massal.</p>
+</section>
+<section class="slide closing-slide" data-n="38" aria-labelledby="closing-title" data-seconds="20" data-note="Terima kasih atas perhatian peserta. Buka sesi pertanyaan atau tutup dengan mengajak peserta menerapkan satu kebiasaan gizi dan keamanan pangan di keluarga.">
+<div class="closing-content"><h2 id="closing-title" tabindex="-1">Terima Kasih</h2><p>Semoga bermanfaat untuk keluarga yang <strong>sehat dan aman</strong></p><p>Ummu Atiyah, S.Ag.</p></div>
+</section>
+</main>
+<nav class="bar" aria-label="Navigasi presentasi"><span class="brand">Gizi & Pangan Aman</span><button id="prev" type="button" aria-label="Slide sebelumnya">Sebelumnya</button><button id="next" type="button" aria-label="Slide berikutnya">Berikutnya</button><span id="counter" aria-label="Posisi slide"></span><button id="overview" type="button" aria-haspopup="dialog">Daftar slide</button><button id="notes" type="button" aria-haspopup="dialog">Catatan</button><button id="fullscreen" type="button">Layar penuh</button></nav>
+<p id="announcement" role="status" aria-live="polite" aria-atomic="true"></p><p id="error" role="status"></p>
+<dialog id="overlay" aria-labelledby="overlay-title"><div class="dialog-head"><h2 id="overlay-title">Daftar slide</h2><button id="close" type="button" autofocus>Tutup</button></div><div id="overview-list"></div><div id="note-content"></div><p class="help">Tab berpindah antar tombol · Esc menutup. Navigasi slide berhenti saat dialog terbuka.</p></dialog>
+<noscript><p>JavaScript nonaktif: semua slide ditampilkan berurutan. Gulir atau cetak dari browser.</p></noscript>
+<script>
+'use strict';
+const slides = Array.from(document.querySelectorAll('.slide'));
+slides.forEach((slide, i) => {
+  slide.dataset.slideNumber = String(i + 1).padStart(2, '0');
+  const eyebrow = slide.querySelector('.eyebrow');
+  if (eyebrow) eyebrow.textContent = eyebrow.textContent.replace(/^\d+\s*·/, `${i + 1} ·`);
+});
+const dialog = document.getElementById('overlay');
+const overviewList = document.getElementById('overview-list');
+const noteContent = document.getElementById('note-content');
+let current = 0;
+let opener = null;
+function showSlide(index, focus = true) {
+  if (!Number.isInteger(index)) return;
+  current = Math.max(0, Math.min(slides.length - 1, index));
+  slides.forEach((slide, i) => { slide.hidden = i !== current; });
+  document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  document.getElementById('prev').disabled = current === 0;
+  document.getElementById('progress').setAttribute('style', 'width:' + ((current + 1) / slides.length * 100) + '%');
+  document.getElementById('next').disabled = current === slides.length - 1;
+  const heading = slides[current].querySelector('h1, h2');
+  document.getElementById('announcement').textContent = `Slide ${current + 1} dari ${slides.length}: ${heading.textContent}`;
+  if (focus) { heading.focus({preventScroll:true}); window.scrollTo(0, 0); }
+}
+function openOverlay(mode) {
+  if (dialog.open) return;
+  opener = document.activeElement;
+  overviewList.hidden = mode !== 'overview';
+  noteContent.hidden = mode !== 'notes';
+  document.getElementById('overlay-title').textContent = mode === 'overview' ? `Daftar ${slides.length} slide` : `Catatan slide ${current + 1}`;
+  noteContent.textContent = slides[current].dataset.note;
+  overviewList.querySelectorAll('button').forEach((button, i) => { if (i === current) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current'); });
+  dialog.showModal();
+  document.getElementById('close').focus();
+}
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    else throw new Error('unsupported');
+  } catch { document.getElementById('error').textContent = 'Layar penuh tidak tersedia. Gunakan menu browser atau lanjutkan dalam jendela biasa.'; }
+}
+slides.forEach((slide, i) => {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = `${i + 1}. ${slide.querySelector('h1, h2').textContent}`;
+  button.addEventListener('click', () => { opener = null; dialog.close(); showSlide(i); });
+  overviewList.appendChild(button);
+});
+document.getElementById('prev').addEventListener('click', () => showSlide(current - 1));
+document.getElementById('next').addEventListener('click', () => showSlide(current + 1));
+document.getElementById('overview').addEventListener('click', () => openOverlay('overview'));
+document.getElementById('notes').addEventListener('click', () => openOverlay('notes'));
+document.getElementById('close').addEventListener('click', () => dialog.close());
+dialog.addEventListener('close', () => { if (opener && opener.isConnected) opener.focus(); opener = null; });
+document.getElementById('fullscreen').addEventListener('click', toggleFullscreen);
+document.addEventListener('fullscreenchange', () => { document.getElementById('fullscreen').textContent = document.fullscreenElement ? 'Keluar layar penuh' : 'Layar penuh'; });
+document.addEventListener('keydown', event => {
+  if (dialog.open || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.repeat) return;
+  if (event.target.closest('button, a, input, textarea, select, summary, [contenteditable="true"]')) return;
+  const key = event.key.toLowerCase();
+  const actions = {arrowright: () => showSlide(current + 1), pagedown: () => showSlide(current + 1), ' ': () => showSlide(current + 1), arrowleft: () => showSlide(current - 1), pageup: () => showSlide(current - 1), home: () => showSlide(0), end: () => showSlide(slides.length - 1), o: () => openOverlay('overview'), n: () => openOverlay('notes'), f: toggleFullscreen};
+  if (Object.hasOwn(actions, key)) { event.preventDefault(); actions[key](); }
+});
+showSlide(0, false);
+document.body.classList.add('ready');
+</script>
+</body>
+</html>

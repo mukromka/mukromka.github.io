@@ -1,0 +1,9 @@
+Mode: built-in image_gen (skill imagegen)
+Use case: infographic-diagram. Create one polished Indonesian educational presentation infographic, landscape 16:9. Title exactly "PHBS" and subtitle exactly "Perilaku Hidup Bersih dan Sehat". Six clearly separated photo-led scenes in a spacious 3-column by 2-row composition. Realistic editorial photography, natural light, Indonesian home and family context, NOT cartoon or illustrated people. Off-white background and deep green typography and restrained green accents, consistent with a clean nutrition presentation. Large legible text, no source footer, no logos, no watermark. Each scene has exactly one label, rendered accurately:
+1 "Cuci tangan pakai sabun" — close-up of hands being washed with visible soap under running tap water.
+2 "Gunakan jamban sehat" — clean private bathroom with sanitary toilet and water, no person using it.
+3 "Konsumsi makanan bergizi" — realistic balanced meal with rice, cooked fish, vegetables and fresh fruit.
+4 "Jaga kebersihan lingkungan" — Indonesian adult sweeping a clean home courtyard.
+5 "Gunakan air bersih" — clean water flowing from a tap into a clean household container, distinct from handwashing.
+6 "Buang sampah pada tempatnya" — hand placing a small piece of household waste inside a proper covered rubbish bin.
+Labels below or over clean white areas adjacent to each photograph. No extra explanatory text. Images are large, coherent soft rounded photo crops, all six examples equally prominent. Keep generous safe margins, strong presentation readability, elegant restrained layout.
