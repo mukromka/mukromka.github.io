@@ -20,11 +20,10 @@ export const gamesData: GameItem[] = [
     categories: ["all", "gamedev", "uiux"],
     image: "/game 22.webp",
     href: "https://play.google.com/store/apps/details?id=com.kreatifmaju.zombieshooter",
-    description:
-      "A physics-based aiming game: clear each level of zombies. My first game end to end: design, UI and code, with a level database, UI animation in Unity, AdMob ads, and Android and web builds.",
+    description: "Fast-paced top-down zombie wave shooter.",
     platform: "Google Play",
     isPlayableWeb: false,
-    tags: ["Unity C#", "SOLID", "AdMob", "Level design"],
+    tags: ["Shooter", "Survival", "Unity C#"],
   },
   {
     id: "sapi-kebluk",

@@ -1,29 +1,41 @@
 import type { Metadata, Viewport } from "next";
-import { Baloo_2, Inter, JetBrains_Mono } from "next/font/google";
+import { Unbounded, Onest } from "next/font/google";
 import "./globals.css";
 
-const display = Baloo_2({
+const display = Unbounded({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
-const sans = Inter({
+
+const sans = Onest({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", weight: ["400", "500"], display: "swap" });
 
-const title = "Mukrom Karunia Azza — UI/UX Designer & Game Developer";
+const title = "Mukrom Karunia Azza — Game Developer & UI/UX Designer";
 const description =
-  "Azza designs game UI and builds the game behind it in Unity. Bos Gabut 2.0 (10K+ users in two months), Mie Ayam Simulator (80K+ downloads), 15+ mobile and web games.";
+  "Unity game developer and UI/UX designer from Indonesia. 15+ shipped mobile and web games, 80K+ downloads on Google Play, 13.4M reads on LINE Webtoon.";
 
 export const metadata: Metadata = {
   title,
   description,
-  keywords: ["Mukrom Karunia Azza", "Azza", "UI/UX Designer", "Game UI", "Game Developer", "Unity", "Indonesia"],
+  keywords: [
+    "Mukrom Karunia Azza",
+    "Azza",
+    "Game Developer",
+    "Unity Developer",
+    "UI/UX Designer",
+    "Game UI",
+    "2D Artist",
+    "Mie Ayam Simulator",
+    "Bos Gabut",
+    "Moon Flower Webtoon",
+    "Indonesia Game Developer",
+  ],
   authors: [{ name: "Mukrom Karunia Azza" }],
   creator: "Mukrom Karunia Azza",
   metadataBase: new URL("https://mukromka.github.io"),
@@ -36,18 +48,25 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-  twitter: { card: "summary_large_image", title, description, images: ["/hero.webp"] },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/hero.webp"],
+  },
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E8743B'/%3E%3Cpath d='M18 14l30 16-13 3-6 13z' fill='%23fff'/%3E%3C/svg%3E",
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1631'/%3E%3Cpath d='M20 18l26 14-26 14z' fill='%23FFC93C'/%3E%3C/svg%3E",
   },
 };
 
-export const viewport: Viewport = { themeColor: "#2C2C31" };
+export const viewport: Viewport = {
+  themeColor: "#0F1631",
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
-      <body className="font-sans">{children}</body>
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <body className="min-h-screen bg-night font-sans text-ink">{children}</body>
     </html>
   );
 }

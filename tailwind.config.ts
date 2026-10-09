@@ -5,22 +5,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        chrome: { DEFAULT: "#2C2C31", raised: "#38383F", line: "#45454E", text: "#EDEDF0", dim: "#A6A6B0" },
-        canvas: { DEFAULT: "#E6E6EB", dot: "#C4C4CE" },
-        ink: { DEFAULT: "#16161B", mute: "#5A5A66", faint: "#8A8A96" },
-        select: "#2F6BFF",
-        redline: "#EC2F68",
-        comp: "#8B5CF6",
-        azza: { DEFAULT: "#E8743B", deep: "#B9521F", paper: "#FBEBD2" },
+        night: "#0F1631",
+        panel: "#172046",
+        raised: "#1F2A5A",
+        line: "#2C3A78",
+        ink: "#EEF0FF",
+        dim: "#A9B1DB",
+        cursor: { DEFAULT: "#FFC93C", ink: "#1C1400" },
+        go: "#5EE6B0",
       },
       fontFamily: {
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      borderRadius: {
+        media: "14px",
+        control: "10px",
       },
       boxShadow: {
-        frame: "0 1px 2px rgba(22,22,27,0.06), 0 12px 32px -16px rgba(22,22,27,0.28)",
-        float: "0 12px 40px -12px rgba(22,22,27,0.45)",
+        lift: "0 18px 40px -18px rgba(3, 6, 24, 0.85)",
+        cursor: "0 0 0 2px #FFC93C, 0 12px 30px -12px rgba(255, 201, 60, 0.45)",
+      },
+      keyframes: {
+        drift: {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(-50%)" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.35" },
+        },
+      },
+      animation: {
+        drift: "drift 60s linear infinite",
+        "drift-slow": "drift 85s linear infinite",
+        blink: "blink 1.6s ease-in-out infinite",
       },
     },
   },
