@@ -1,52 +1,44 @@
-# Design — Azza portfolio v3
+# Design — Azza portfolio v4: "the portfolio is a design file"
 
-Rebuild of the portfolio from scratch, keeping the existing content in `src/data/`.
+Rebuild of v3 after feedback: the About page and the copy read as templates and didn't prove UI/UX skill.
 
-## Research that shaped it
+## Decisions confirmed with Azza
 
-- **Game developer portfolios that get people hired** put the work first: playable or watchable
-  builds, and an exact credit (role, platform, tools) on every title. Dean Tate's level design
-  site and the 2026 Colorlib round-up of game dev portfolios both lean on this.
-- **Interactive game-flavoured portfolios** (Bruno Simon's drivable site, Hugo Peters' animated
-  characters, Cherri Hartigan's minigame on Awwwards, the Kaido "world map" template) show that
-  the site itself can prove the skill, as long as the content stays one click away.
-- **Game UI references** (Game UI Database, HUDS+GUIS): good menus are readable, contextual and
-  show one clear selection state.
-- **Skills used:** `frontend-design` (Anthropic), `ui-ux-pro-max` (design-system search: suggested
-  a scroll-storytelling page with bold asymmetric layout), `impeccable` (craft floor + motion
-  rules). They live in `.claude/skills/`.
+- Concept: **designer's canvas**. The whole site behaves like a design tool file.
+- Numbers: **Mie Ayam Simulator 80K+ downloads**, **Bos Gabut 10K+ users within two months** of the new FTUE.
+  The old "4.5★" rating was removed: the Play Store screenshot in the portfolio PDF shows 3.8★.
+- Language: English.
+- Extra CV material (awards, certifications, community) only as a glimpse, not as new sections.
 
-The previous design (cream paper, vermilion, Space Mono labels, offset shadows) is exactly the
-look the `frontend-design` skill lists as an AI default, so it was dropped rather than polished.
+## Sources used for content
 
-## Concept: the site is a game's front end
+`CV Mukrom Karunia Azza_2026.pdf`, `MukromKaruniaAzza_CV_GamesInstitut2026.pdf`,
+`MukromKaruniaAzza_Portfolio_Academy.pdf` and `MukromKaruniaAzza_Portfolio_GamesInstitut2026.pdf`.
+Case-study images in `public/case/` are crops of the GamesInstitut portfolio pages
+(Bos Gabut FTUE and 1.0 vs 2.0, Mie Ayam screens, Moon Flower colouring process).
 
-Azza designs game UI for a living, so the page behaves like one:
+## How the concept shows UI/UX skill
 
-| Section | Game-UI pattern | Why |
+| Part | Design-tool pattern | What it proves |
 | --- | --- | --- |
-| Hero | **Title screen** with a real keyboard-driven menu (↑ ↓ Enter) over a drifting mosaic of his game art | First proof of UI craft, before reading a word |
-| Featured work | **Level select**: ARIA tabs, ← → to switch, art wipes in with a clip-path | Four deep projects, one in focus at a time |
-| Game library | **Library grid** with filter tabs and FLIP re-layout; web builds play in a dialog | 14 titles, 4 playable without leaving the page |
-| Career | Timeline whose line fills as you scroll | Real sequence, so the progress line carries meaning |
-| About | Plain reading layout: bio, pull quote, skills | The quiet part of the page |
-| Contact | One big line and the channels | One job |
+| Toolbar | Notes toggle (key `A`), Play, live presence avatar | Working controls only, no fake chrome |
+| Layers panel | Frame tree with scroll-synced selection | Navigation as information architecture |
+| Inspector | Reads size, font and colour of whatever you hover, live from the DOM | Handoff literacy |
+| Cover | Azza's cursor draws a selection around the headline on load; photo selected with handles and spec tags | One authored intro moment |
+| Work | Each project is a section: overview frame plus real screens wired with prototype noodles and a sticky note | Process, not just mockups |
+| Games | Cards are one component with Playable/Store variants; WebGL builds play in a dialog | Component thinking + playable proof |
+| Career | Gantt bars on a real year axis, select to expand | Data shown in the right form |
+| About | Azza as a **main component with a Role variant** (UI/UX, game dev, 2D art & writer) and a properties panel | The signature interaction |
+| Handoff | Contact as a share dialog | Clear last step |
+
+Redlines (`Gap`) measure their own rendered height; frame sizes are live (`ResizeObserver`).
 
 ## Tokens
 
-| Token | Hex | Role |
-| --- | --- | --- |
-| `night` | `#0F1631` | Page background, a cobalt night that makes saturated game art pop |
-| `panel` | `#172046` | Raised surfaces |
-| `line` | `#2C3A78` | Hairlines and outlines |
-| `ink` | `#EEF0FF` | Text |
-| `dim` | `#A9B1DB` | Secondary text (≈8:1 on `night`) |
-| `cursor` | `#FFC93C` | **Only** for selection, focus and the primary action — the menu cursor colour |
-| `go` | `#5EE6B0` | "Plays in browser" status |
+Chrome `#2C2C31`, canvas `#E6E6EB` with 24px dots, ink `#16161B`, Azza orange `#E8743B`
+(from Azza's own portfolio PDF), selection `#2F6BFF`, redline `#EC2F68`, component `#8B5CF6`.
+Type: Baloo 2 (display, matches Azza's PDF), Inter (tool chrome and body), JetBrains Mono (measurements only).
 
-- **Type:** Unbounded (display, wide and logo-like) + Onest (body). No monospace costume.
-- **Shape:** 14px radius on media, 10px on controls; soft offset shadows only.
-- **Motion:** one authored moment (title-screen boot sequence). Everything else answers input:
-  cursor slides, tab wipes, FLIP filtering, dialog open. `MotionConfig reducedMotion="user"`
-  plus a CSS fallback stops the mosaic drift and parallax.
-- **Sound:** optional 8-bit blips on menu moves, off by default.
+## Skills used
+
+`frontend-design`, `ui-ux-pro-max`, `impeccable` in `.claude/skills/`.

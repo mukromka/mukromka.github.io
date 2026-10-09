@@ -4,9 +4,8 @@
 
 @layer base {
   html {
-    background-color: #0f1631;
-    color-scheme: dark;
-    scroll-padding-top: 88px;
+    background: #e6e6eb;
+    scroll-padding-top: 72px;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -16,16 +15,15 @@
   }
 
   body {
-    background-color: #0f1631;
-    color: #eef0ff;
+    color: #16161b;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "ss01";
   }
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     text-wrap: balance;
   }
 
@@ -34,28 +32,23 @@
   }
 
   ::selection {
-    background: #ffc93c;
-    color: #1c1400;
+    background: #2f6bff;
+    color: #fff;
   }
 
   :focus-visible {
-    outline: 2px solid #ffc93c;
-    outline-offset: 3px;
-    border-radius: 6px;
+    outline: 2px solid #2f6bff;
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   a {
-    text-underline-offset: 0.22em;
-    text-decoration-thickness: 1px;
-  }
-
-  input,
-  textarea {
-    caret-color: #ffc93c;
+    text-underline-offset: 0.2em;
   }
 
   * {
-    scrollbar-color: #2c3a78 transparent;
+    scrollbar-width: thin;
+    scrollbar-color: #a6a6b0 transparent;
   }
 }
 
@@ -64,14 +57,13 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Pause decorative loops when offscreen (toggled from JS). */
-  .is-paused * {
-    animation-play-state: paused !important;
+  .canvas-dots {
+    background-color: #e6e6eb;
+    background-image: radial-gradient(circle at 1px 1px, #c4c4ce 1px, transparent 0);
+    background-size: 24px 24px;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .motion-loop {
-    animation: none !important;
+  .chrome-scroll {
+    scrollbar-color: #45454e transparent;
   }
 }
