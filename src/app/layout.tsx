@@ -1,40 +1,38 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Space_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import type { Metadata, Viewport } from "next";
+import { Unbounded, Onest } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const display = Unbounded({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
+  display: "swap",
 });
 
-const inter = Inter({
+const sans = Onest({
   subsets: ["latin"],
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const spaceMono = Space_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
-});
+const title = "Mukrom Karunia Azza — Game Developer & UI/UX Designer";
+const description =
+  "Unity game developer and UI/UX designer from Indonesia. 15+ shipped mobile and web games, 80K+ downloads on Google Play, 13.4M reads on LINE Webtoon.";
 
 export const metadata: Metadata = {
-  title: "Mukrom Karunia Azza | Game Developer & UI/UX Designer",
-  description:
-    "Portfolio of Mukrom Karunia Azza — Unity Game Developer and UI/UX Designer building playful, high-impact mobile and web games.",
+  title,
+  description,
   keywords: [
     "Mukrom Karunia Azza",
     "Azza",
     "Game Developer",
     "Unity Developer",
     "UI/UX Designer",
+    "Game UI",
     "2D Artist",
     "Mie Ayam Simulator",
     "Bos Gabut",
-    "Game Portal",
     "Moon Flower Webtoon",
     "Indonesia Game Developer",
   ],
@@ -42,45 +40,33 @@ export const metadata: Metadata = {
   creator: "Mukrom Karunia Azza",
   metadataBase: new URL("https://mukromka.github.io"),
   openGraph: {
-    title: "Mukrom Karunia Azza | Game Developer & UI/UX Designer",
-    description:
-      "Crafting joyful games and user interfaces. 15+ titles shipped, 80K+ downloads on Google Play, 13.4M reads on LINE Webtoon.",
+    title,
+    description,
     url: "https://mukromka.github.io",
-    siteName: "Mukrom Karunia Azza Portfolio",
-    images: [
-      {
-        url: "/hero.webp",
-        width: 1200,
-        height: 1115,
-        alt: "Mukrom Karunia Azza Portfolio",
-      },
-    ],
+    siteName: "Mukrom Karunia Azza",
+    images: [{ url: "/hero.webp", width: 1200, height: 1115, alt: "Mukrom Karunia Azza" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mukrom Karunia Azza | Game Developer & UI/UX Designer",
-    description: "Crafting joyful games and user interfaces. 15+ titles shipped.",
+    title,
+    description,
     images: ["/hero.webp"],
   },
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23ff5733'/%3E%3Ctext x='11' y='44' font-family='Arial' font-size='27' font-weight='700' fill='%23ffffff'%3EMK%3C/text%3E%3C/svg%3E",
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1631'/%3E%3Cpath d='M20 18l26 14-26 14z' fill='%23FFC93C'/%3E%3C/svg%3E",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#0F1631",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${inter.variable} ${spaceMono.variable}`}>
-      <body className="font-sans min-h-screen selection:bg-brand-500 selection:text-white">
-        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem>
-          {children}
-        </ThemeProvider>
-      </body>
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <body className="min-h-screen bg-night font-sans text-ink">{children}</body>
     </html>
   );
 }

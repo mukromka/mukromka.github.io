@@ -3,54 +3,75 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --bg-base: #f2efe6;
-    --text-base: #131313;
-    --card-base: #ffffff;
-    --border-base: #131313;
-  }
-
-  [data-theme="dark"] {
-    --bg-base: #131313;
-    --text-base: #f2efe6;
-    --card-base: #1c1a17;
-    --border-base: #f2efe6;
-  }
-
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    background-color: #0f1631;
+    color-scheme: dark;
+    scroll-padding-top: 88px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    background-color: var(--bg-base);
-    color: var(--text-base);
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #0f1631;
+    color: #eef0ff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01";
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: #ffc93c;
+    color: #1c1400;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ffc93c;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  input,
+  textarea {
+    caret-color: #ffc93c;
+  }
+
+  * {
+    scrollbar-color: #2c3a78 transparent;
   }
 }
 
-/* Custom Sleek Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Pause decorative loops when offscreen (toggled from JS). */
+  .is-paused * {
+    animation-play-state: paused !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #131313;
-  border-radius: 9999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #f2efe6;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #e8352e;
+@media (prefers-reduced-motion: reduce) {
+  .motion-loop {
+    animation: none !important;
+  }
 }
