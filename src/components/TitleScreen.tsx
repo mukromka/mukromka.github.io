@@ -1,33 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { GameMosaic } from "./GameMosaic";
 import { sound } from "@/lib/sound";
 import { scrollToSection } from "@/lib/site";
-
-const MOSAIC = [
-  "/game 22.webp",
-  "/archive-mbg.webp",
-  "/game 18.webp",
-  "/game 24.webp",
-  "/archive-spike-the-beach.webp",
-  "/game 17.webp",
-  "/mie ayam simulator card.webp",
-  "/game 15.webp",
-  "/archive-bola-gila.webp",
-  "/game 5.webp",
-  "/archive-portal.webp",
-  "/game 2.webp",
-  "/game 23.webp",
-  "/game 1.webp",
-];
-
-// Six tiles per column (offset so neighbours differ); each column is rendered twice for a seamless loop.
-const COLUMNS = [0, 1, 2, 3, 4].map((c) =>
-  Array.from({ length: 6 }, (_, i) => MOSAIC[(c * 3 + i * 5) % MOSAIC.length])
-);
 
 const PROOF = [
   { value: "80K+", label: "Mie Ayam Simulator downloads" },
@@ -49,56 +26,13 @@ const rise: Variants = {
 
 export function TitleScreen() {
   const reduce = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [paused, setPaused] = useState(false);
-
-  // Pause the drifting background once the hero is offscreen.
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setPaused(!entry.isIntersecting));
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   return (
     <section
       id="top"
-      ref={sectionRef}
-      className={cn("relative isolate flex min-h-[100svh] items-center overflow-hidden", paused && "is-paused")}
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden"
     >
-      {/* Drifting mosaic of shipped game art */}
-      <div aria-hidden className="pointer-events-none absolute inset-[-12%] -z-20">
-        <div className="flex h-full -rotate-[9deg] scale-110 gap-4 opacity-[0.38]">
-          {COLUMNS.map((col, c) => (
-            <div key={c} className="relative h-full flex-1 overflow-visible">
-              <div
-                className={cn(
-                  "motion-loop flex flex-col gap-4",
-                  c % 2 ? "animate-drift-slow" : "animate-drift",
-                  c % 2 && "[animation-direction:reverse]"
-                )}
-              >
-                {[...col, ...col].map((src, i) => (
-                  <img
-                    key={`${src}-${i}`}
-                    src={src}
-                    alt=""
-                    loading={i < 3 ? "eager" : "lazy"}
-                    decoding="async"
-                    className="aspect-[4/3] w-full rounded-media object-cover"
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(75%_70%_at_50%_50%,rgba(15,22,49,0.95)_40%,rgba(15,22,49,0.78)_75%,rgba(15,22,49,0.6)_100%)]"
-      />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-night to-transparent" />
+      <GameMosaic fade="bottom" eager />
 
       <motion.div
         variants={boot}

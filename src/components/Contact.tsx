@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp, ArrowUpRight, Check, Copy, Mail, MessageCircle } from "lucide-react";
 import { sound } from "@/lib/sound";
+import { GameMosaic } from "./GameMosaic";
 import { CV_URL, EMAIL, LINKEDIN_URL, WHATSAPP_URL } from "@/lib/site";
 
 export function Contact() {
@@ -23,10 +24,7 @@ export function Contact() {
   return (
     <>
       <section id="contact" className="relative isolate overflow-hidden py-28 sm:py-40">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-[radial-gradient(60%_70%_at_50%_100%,rgba(255,201,60,0.13),transparent_70%)]"
-        />
+        <GameMosaic fade="top" />
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
           <h2 className="font-display text-[clamp(2.25rem,6.4vw,5rem)] font-bold leading-[1.02] tracking-[-0.035em]">
             Let&apos;s make something people want to play.

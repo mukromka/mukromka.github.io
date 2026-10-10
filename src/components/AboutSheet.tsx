@@ -4,12 +4,6 @@ import { CV_URL } from "@/lib/site";
 
 const TOOLS = ["Unity", "C#", "Figma", "Photoshop", "Illustrator", "Clip Studio Paint", "CorelDraw", "GitHub"];
 
-const FACTS = [
-  { label: "Now", value: "UI/UX Designer & Game Developer at PT. Kreatif Maju Bersama" },
-  { label: "Education", value: "Applied Bachelor in Game Technology, PENS (2019 to 2023)" },
-  { label: "Community", value: "Helping organize Global Game Jam Surabaya since 2023" },
-];
-
 const RECOGNITION = [
   { icon: BadgeCheck, title: "Certified Unity Developer", detail: "Google Play x Unity, 2024" },
   { icon: Award, title: "Best Booth", detail: "KMIPN, 2021" },
@@ -19,8 +13,8 @@ const RECOGNITION = [
 
 export function AboutSheet() {
   return (
-    <section id="about" className="border-y border-line/60 bg-panel/40 py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:px-10">
+    <section id="about" className="border-y border-line/60 bg-panel/40 py-20 sm:py-24">
+      <div className="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-10">
         <div className="lg:col-span-7">
           <div className="flex items-end gap-5">
             <img
@@ -33,60 +27,20 @@ export function AboutSheet() {
             </h2>
           </div>
 
-          <div className="mt-8 max-w-[62ch] space-y-5 text-lg leading-relaxed text-ink/90">
+          <div className="mt-6 max-w-[60ch] space-y-4 text-lg leading-relaxed text-ink/90">
             <p>
-              I&apos;m Azza, a game developer and UI/UX designer from Indonesia. I studied Game Technology at
-              Politeknik Elektronika Negeri Surabaya, and since December 2023 I&apos;ve worked at PT. Kreatif Maju
-              Bersama, designing game UI and building web games in Unity.
+              I&apos;m Azza, a game developer and UI/UX designer from Indonesia with a Game Technology degree from
+              PENS. Since December 2023 I&apos;ve been at PT. Kreatif Maju Bersama, designing game UI and building web
+              games in Unity.
             </p>
-            <p>
-              My first job in the creative industry was writing scripts and doing base colours for Moon Flower on LINE
-              Webtoon. I then joined Eternal Clover Studio as a 2D artist and worked on the UI and art for Mie Ayam
-              Simulator, my first published game. The Gameseed incubation taught me how much a game&apos;s first few
-              minutes matter, and I used that later when redesigning the onboarding for Bos Gabut.
-            </p>
-            <p>
-              Outside work I help organize Global Game Jam Surabaya and have joined several game jams. At Eternal Clover I
-              also mentored 2D art interns.
+            <p className="text-dim">
+              I started in webtoons, writing scripts and base colours for Moon Flower, then drew the UI and art for Mie
+              Ayam Simulator at Eternal Clover Studio. Outside work I help organize Global Game Jam Surabaya.
             </p>
           </div>
 
-          <dl className="mt-10 max-w-[62ch] divide-y divide-line/70 border-y border-line/70">
-            {FACTS.map((f) => (
-              <div key={f.label} className="grid gap-1 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4">
-                <dt className="text-sm font-medium text-dim">{f.label}</dt>
-                <dd>{f.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="lg:col-span-5">
-          <h3 className="font-display text-xl font-semibold tracking-tight">Skills</h3>
-          <div className="mt-6 divide-y divide-line/70 border-y border-line/70">
-            {skillCategories.map((cat) => (
-              <div key={cat.title} className="grid grid-cols-[9.5rem_1fr] gap-4 py-5 sm:grid-cols-[11rem_1fr]">
-                <h4 className="font-semibold">{cat.title}</h4>
-                <ul className="space-y-1.5 text-dim">
-                  {cat.skills.map((s) => (
-                    <li key={s.name}>{s.name}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <h3 className="mt-10 font-display text-xl font-semibold tracking-tight">Tools</h3>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {TOOLS.map((t) => (
-              <li key={t} className="rounded-control bg-raised px-3 py-1.5 text-sm font-medium">
-                {t}
-              </li>
-            ))}
-          </ul>
-
-          <h3 className="mt-10 font-display text-xl font-semibold tracking-tight">Awards &amp; certification</h3>
-          <ul className="mt-4 space-y-3">
+          <h3 className="mt-10 font-display text-lg font-semibold tracking-tight">Awards &amp; certification</h3>
+          <ul className="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2">
             {RECOGNITION.map(({ icon: Icon, title, detail }) => (
               <li key={title} className="flex gap-3">
                 <Icon className="mt-0.5 h-5 w-5 shrink-0 text-cursor" aria-hidden />
@@ -97,12 +51,33 @@ export function AboutSheet() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="lg:col-span-5">
+          <h3 className="font-display text-lg font-semibold tracking-tight">Skills</h3>
+          <dl className="mt-4 divide-y divide-line/70 border-y border-line/70">
+            {skillCategories.map((cat) => (
+              <div key={cat.title} className="py-3.5">
+                <dt className="font-semibold">{cat.title}</dt>
+                <dd className="mt-1 text-dim">{cat.skills.map((sk) => sk.name).join(", ")}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <h3 className="mt-8 font-display text-lg font-semibold tracking-tight">Tools</h3>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {TOOLS.map((t) => (
+              <li key={t} className="rounded-control bg-raised px-3 py-1.5 text-sm font-medium">
+                {t}
+              </li>
+            ))}
+          </ul>
 
           <a
             href={CV_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex h-12 items-center gap-2 rounded-control border border-line px-5 font-semibold transition-colors hover:border-cursor hover:text-cursor"
+            className="mt-8 inline-flex h-12 items-center gap-2 rounded-control border border-line px-5 font-semibold transition-colors hover:border-cursor hover:text-cursor"
           >
             <FileText className="h-4 w-4" />
             Read the full CV (PDF)
