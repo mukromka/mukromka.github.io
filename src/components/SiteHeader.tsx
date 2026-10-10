@@ -57,17 +57,10 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         <a
           href="#top"
-          className="group flex items-center gap-2.5 rounded-control py-1 pr-2"
+          className="rounded-control py-1 pr-2 font-display text-[15px] font-semibold tracking-tight"
           onClick={() => sound.playPop()}
         >
-          <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-            <rect width="32" height="32" rx="9" className="fill-panel" />
-            <path
-              d="M11 9l13 7-13 7z"
-              className="fill-cursor transition-transform duration-300 group-hover:translate-x-0.5"
-            />
-          </svg>
-          <span className="font-display text-[15px] font-semibold tracking-tight">Azza</span>
+          Azza Portfolio
         </a>
 
         <nav aria-label="Sections" className="hidden items-center gap-1 md:flex">
