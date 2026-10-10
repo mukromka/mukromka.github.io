@@ -59,7 +59,7 @@ export function TitleScreen() {
     <section
       id="top"
       ref={sectionRef}
-      className={cn("relative isolate flex min-h-[90svh] items-center overflow-hidden", paused && "is-paused")}
+      className={cn("relative isolate flex min-h-[85svh] items-center overflow-hidden", paused && "is-paused")}
     >
       {/* Drifting mosaic of shipped game art */}
       <div aria-hidden className="pointer-events-none absolute inset-[-12%] -z-20">
@@ -98,17 +98,31 @@ export function TitleScreen() {
         variants={boot}
         initial={reduce ? "show" : "hidden"}
         animate="show"
-        className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 pb-16 pt-28 sm:px-6 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-10 lg:pb-20"
+        className="mx-auto grid w-full max-w-7xl items-center gap-10 px-4 pb-20 pt-28 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-20"
       >
-        <div className="max-w-2xl">
+        {/* Portrait: first on mobile, right column on desktop */}
+        <motion.div variants={rise} className="select-none lg:order-2 lg:col-span-5 lg:flex lg:justify-center">
+          <div className="relative aspect-square w-32 sm:w-40 lg:w-[min(100%,340px)]">
+            <div aria-hidden className="absolute -inset-5 hidden rounded-full border border-line/70 lg:block" />
+            <div className="relative h-full w-full overflow-hidden rounded-full bg-panel ring-1 ring-line">
+              <img
+                src="/hero.webp"
+                alt="Portrait of Mukrom Karunia Azza"
+                className="h-full w-full scale-[1.15] object-cover object-[50%_20%]"
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="lg:order-1 lg:col-span-7">
           <motion.h1
             variants={rise}
-            className="font-display text-[clamp(1.9rem,4.2vw,3.25rem)] font-bold leading-[1.1] tracking-[-0.025em]"
+            className="font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-[1.1] tracking-[-0.025em]"
           >
             Mukrom Karunia Azza
           </motion.h1>
 
-          <motion.p variants={rise} className="mt-4 max-w-[34rem] text-lg leading-relaxed text-dim sm:text-xl">
+          <motion.p variants={rise} className="mt-5 max-w-[36rem] text-lg leading-relaxed text-dim sm:text-xl">
             Game developer and UI/UX designer from Indonesia. I build Unity games for mobile and web, and design the
             screens players tap through. 15+ titles shipped.
           </motion.p>
@@ -137,17 +151,6 @@ export function TitleScreen() {
             </button>
           </motion.div>
         </div>
-
-        <motion.div variants={rise} className="hidden select-none lg:block" aria-hidden>
-          <div className="relative w-[260px] xl:w-[300px]">
-            <div className="absolute inset-x-[8%] bottom-0 top-[24%] rounded-[24px] bg-panel ring-1 ring-line" />
-            <img
-              src="/hero.webp"
-              alt=""
-              className="relative w-full [mask-image:linear-gradient(to_bottom,black_88%,transparent)]"
-            />
-          </div>
-        </motion.div>
       </motion.div>
     </section>
   );
