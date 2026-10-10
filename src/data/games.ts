@@ -8,8 +8,7 @@ export const gamesData: GameItem[] = [
     categories: ["all", "gamedev"],
     image: "/mbg-idle.webp",
     href: "https://mukromka.itch.io/mbg-idle",
-    description:
-      "An idle cooking and restaurant management game built with Unity. Players prepare ingredients, cook meals and manage deliveries across a growing city map. Each day brings decisions about supplies, upgrades and new branches, while cooking mistakes can cause food poisoning and trigger ambulance calls. I developed the gameplay systems, cooking mini-games, delivery simulation and progression.",
+    description: "Idle cooking and restaurant management game made in Unity.",
     platform: "itch.io",
     isPlayableWeb: false,
     tags: ["Idle", "Restaurant management", "Unity C#"],
