@@ -106,27 +106,6 @@ export function TitleScreen() {
         animate="show"
         className="mx-auto flex w-full max-w-4xl flex-col items-center px-4 pb-16 pt-24 text-center sm:px-6"
       >
-        {/* Player tag: who this is, at a glance */}
-        <motion.div
-          variants={rise}
-          className="mb-8 inline-flex items-center gap-3 rounded-full bg-panel/90 py-1.5 pl-1.5 pr-5 text-left ring-1 ring-line"
-        >
-          <span className="relative">
-            <span className="block h-11 w-11 overflow-hidden rounded-full bg-raised">
-              <img
-                src="/hero.webp"
-                alt="Portrait of Mukrom Karunia Azza"
-                className="h-full w-full origin-[50%_12%] scale-[1.9] object-cover object-[50%_10%]"
-              />
-            </span>
-            <span aria-hidden className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-go ring-2 ring-panel" />
-          </span>
-          <span className="leading-tight">
-            <span className="block text-[15px] font-semibold">Mukrom Karunia Azza</span>
-            <span className="block text-[13px] text-dim">Game Developer &amp; UI/UX Designer</span>
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={rise}
           className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.03em]"
