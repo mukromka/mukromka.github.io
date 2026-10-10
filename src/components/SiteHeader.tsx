@@ -52,14 +52,14 @@ export function SiteHeader() {
         scrolled || open ? "border-b border-line/70 bg-night" : "border-b border-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr] lg:px-10">
         <a
           href="#top"
-          className="flex min-w-0 items-center gap-3 rounded-control py-1 pr-2"
+          className="flex items-center gap-2.5 justify-self-start rounded-control py-1 pr-2"
           onClick={() => sound.playPop()}
         >
           <span className="relative shrink-0">
-            <span className="block h-10 w-10 overflow-hidden rounded-full bg-raised ring-1 ring-line">
+            <span className="block h-9 w-9 overflow-hidden rounded-full bg-raised ring-1 ring-line">
               <img
                 src="/hero.webp"
                 alt=""
@@ -68,10 +68,7 @@ export function SiteHeader() {
             </span>
             <span aria-hidden className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-go ring-2 ring-night" />
           </span>
-          <span className="min-w-0 leading-tight">
-            <span className="block truncate text-[15px] font-semibold">Mukrom Karunia Azza</span>
-            <span className="block truncate text-[12.5px] text-dim">Game Developer &amp; UI/UX Designer</span>
-          </span>
+          <span className="font-display text-[15px] font-semibold tracking-tight">Azza</span>
         </a>
 
         <nav aria-label="Sections" className="hidden items-center gap-1 md:flex">
@@ -98,7 +95,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-self-end">
           <a
             href={CV_URL}
             target="_blank"
