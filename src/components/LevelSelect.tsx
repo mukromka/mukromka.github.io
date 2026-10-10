@@ -36,7 +36,10 @@ export function LevelSelect() {
   };
 
   return (
-    <section id="work" className="relative isolate overflow-hidden py-24 sm:py-32">
+    <section
+      id="work"
+      className="relative isolate flex flex-col justify-center overflow-hidden py-16 sm:py-20 lg:min-h-svh lg:-scroll-mt-[88px] lg:pb-6 lg:pt-20"
+    >
       {/* Ambient wash from the selected project's art */}
       <AnimatePresence initial={false}>
         <motion.img
@@ -54,17 +57,12 @@ export function LevelSelect() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-night via-night/60 to-night" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <h2 className="font-display text-[clamp(2rem,4.6vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-              Featured work
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-dim">
-              Four projects, from mobile game UI to a webtoon with 13.4M reads, and exactly what I did on each.
-            </p>
-          </div>
+        <div className="flex items-center justify-between gap-6">
+          <h2 className="font-display text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+            Featured work
+          </h2>
           <div className="flex items-center gap-2">
-            <span className="mr-2 text-sm font-medium text-dim tabular" aria-live="polite">
+            <span className="mr-2 whitespace-nowrap text-sm font-medium text-dim tabular" aria-live="polite">
               {index + 1} of {count}
             </span>
             <StepButton label="Previous project" onClick={() => go(index - 1)}>
@@ -81,7 +79,7 @@ export function LevelSelect() {
           role="tablist"
           aria-label="Featured projects"
           onKeyDown={onTabKey}
-          className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4"
+          className="mt-6 grid grid-cols-2 gap-3 lg:mt-5 lg:grid-cols-4"
         >
           {featuredProjects.map((p, i) => {
             const active = i === index;
@@ -134,9 +132,9 @@ export function LevelSelect() {
           id="level-panel"
           role="tabpanel"
           aria-labelledby={`level-tab-${project.id}`}
-          className="mt-8 grid items-start gap-8 lg:grid-cols-12 lg:gap-12"
+          className="mt-6 grid items-center gap-8 lg:mt-5 lg:grid-cols-12 lg:gap-12"
         >
-          <div className="relative aspect-[1400/955] overflow-hidden rounded-media bg-panel shadow-lift lg:col-span-7">
+          <div className="relative aspect-[1400/955] w-full overflow-hidden rounded-media bg-panel shadow-lift lg:col-span-7 lg:max-h-[calc(100svh-16rem)]">
             <AnimatePresence initial={false} custom={direction}>
               <motion.img
                 key={project.id}
@@ -159,6 +157,24 @@ export function LevelSelect() {
                 className="absolute inset-0 h-full w-full object-cover"
               />
             </AnimatePresence>
+
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.a
+                key={project.id}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => sound.playPowerUp()}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.35, ease, delay: 0.3 } }}
+                exit={{ opacity: 0, transition: { duration: 0.15 } }}
+                className="absolute bottom-3 right-3 inline-flex h-11 items-center gap-2 rounded-control bg-cursor px-4 text-sm font-semibold text-cursor-ink shadow-lift transition-[filter] hover:brightness-105 active:translate-y-px sm:bottom-4 sm:right-4 sm:h-12 sm:px-5 sm:text-base"
+              >
+                {project.playable ? <Play className="h-4 w-4 fill-current" /> : null}
+                {project.linkText}
+                <ArrowUpRight className="h-4 w-4" />
+              </motion.a>
+            </AnimatePresence>
           </div>
 
           <AnimatePresence mode="wait" initial={false}>
@@ -170,9 +186,9 @@ export function LevelSelect() {
               className="lg:col-span-5"
             >
               <h3 className="font-display text-3xl font-bold tracking-[-0.02em] sm:text-4xl">{project.title}</h3>
-              <p className="mt-2 text-lg text-dim">{project.subtitle}</p>
+              <p className="mt-1.5 text-lg text-dim">{project.subtitle}</p>
 
-              <dl className="mt-6 grid grid-cols-3 gap-4 border-y border-line py-5">
+              <dl className="mt-4 grid grid-cols-3 gap-4 border-y border-line py-3">
                 {project.metrics.map((m) => (
                   <div key={m.label}>
                     <dt className="text-[13px] text-dim">{m.label}</dt>
@@ -181,9 +197,9 @@ export function LevelSelect() {
                 ))}
               </dl>
 
-              <p className="mt-6 leading-relaxed text-ink/90">{project.description}</p>
+              <p className="mt-4 leading-relaxed text-ink/90">{project.description}</p>
 
-              <ul className="mt-5 space-y-2.5">
+              <ul className="mt-4 space-y-2">
                 {project.highlights.map((h) => (
                   <li key={h} className="flex gap-3 leading-relaxed text-dim">
                     <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-cursor" />
@@ -192,7 +208,7 @@ export function LevelSelect() {
                 ))}
               </ul>
 
-              <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+              <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
                 <div>
                   <dt className="text-dim">My role</dt>
                   <dd className="mt-0.5 font-medium">{project.role}</dd>
@@ -213,17 +229,6 @@ export function LevelSelect() {
                 </div>
               </dl>
 
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => sound.playPowerUp()}
-                className="mt-8 inline-flex h-12 items-center gap-2 rounded-control bg-cursor px-5 font-semibold text-cursor-ink transition-[filter,transform] hover:brightness-105 active:translate-y-px"
-              >
-                {project.playable ? <Play className="h-4 w-4 fill-current" /> : null}
-                {project.linkText}
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
             </motion.div>
           </AnimatePresence>
         </div>
