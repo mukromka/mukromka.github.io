@@ -2,6 +2,18 @@ import { GameItem } from "@/types";
 
 export const gamesData: GameItem[] = [
   {
+    id: "mbg-idle",
+    title: "MBG Idle",
+    role: "Game Developer",
+    categories: ["all", "gamedev"],
+    image: "/mbg-idle.webp",
+    href: "https://mukromka.itch.io/mbg-idle",
+    description: "An idle cooking game I made and published on itch.io.",
+    platform: "itch.io",
+    isPlayableWeb: false,
+    tags: ["Idle", "Cooking"],
+  },
+  {
     id: "trials-of-mageia",
     title: "Trials of Mageia",
     role: "2D Artist & UI/UX Designer",
