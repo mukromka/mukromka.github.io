@@ -10,7 +10,7 @@ export const experiencesData: ExperienceItem[] = [
     type: "Full-time",
     description: "Designing UI/UX systems and developing Unity mobile and web games.",
     achievements: [
-      "Redesigned Bos Gabut, contributing to +10K new sign-ups.",
+      "Redesigned Bos Gabut's UI and FTUE: 10K+ users within two months.",
       "Developed and iterated 15+ mobile and web game titles.",
     ],
     skills: ["Figma", "Unity", "C#", "UI/UX", "WebGL"],

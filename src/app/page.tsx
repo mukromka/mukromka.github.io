@@ -1,34 +1,32 @@
 "use client";
 
-import React from "react";
-import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { ProofStrip } from "@/components/ProofStrip";
-import { FeaturedWork } from "@/components/FeaturedWork";
-import { ExperienceTimeline } from "@/components/ExperienceTimeline";
-import { GameArchive } from "@/components/GameArchive";
-import { SkillMatrix } from "@/components/SkillMatrix";
-import { AboutMe } from "@/components/AboutMe";
-import { ContactCTA } from "@/components/ContactCTA";
-import { Footer } from "@/components/Footer";
-import { PlayfulEasterEgg } from "@/components/PlayfulEasterEgg";
+import { MotionConfig } from "framer-motion";
+import { SiteHeader } from "@/components/SiteHeader";
+import { TitleScreen } from "@/components/TitleScreen";
+import { LevelSelect } from "@/components/LevelSelect";
+import { GameLibrary } from "@/components/GameLibrary";
+import { CareerLog } from "@/components/CareerLog";
+import { AboutSheet } from "@/components/AboutSheet";
+import { Contact } from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen flex flex-col bg-paper dark:bg-ink text-ink dark:text-paper transition-colors duration-300">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <ProofStrip />
-        <FeaturedWork />
-        <ExperienceTimeline />
-        <GameArchive />
-        <SkillMatrix />
-        <AboutMe />
-        <ContactCTA />
+    <MotionConfig reducedMotion="user">
+      <a
+        href="#work"
+        className="sr-only z-50 rounded-control bg-cursor px-4 py-2 font-semibold text-cursor-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+      >
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main>
+        <TitleScreen />
+        <LevelSelect />
+        <GameLibrary />
+        <CareerLog />
+        <AboutSheet />
+        <Contact />
       </main>
-      <Footer />
-      <PlayfulEasterEgg />
-    </div>
+    </MotionConfig>
   );
 }

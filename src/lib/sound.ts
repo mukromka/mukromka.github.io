@@ -6,8 +6,11 @@ class SoundEngine {
 
   constructor() {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("sound_fx");
-      this.enabled = saved === "true";
+      try {
+        this.enabled = localStorage.getItem("sound_fx") === "true";
+      } catch {
+        this.enabled = false;
+      }
     }
   }
 
@@ -26,7 +29,11 @@ class SoundEngine {
   public toggle(): boolean {
     this.enabled = !this.enabled;
     if (typeof window !== "undefined") {
-      localStorage.setItem("sound_fx", this.enabled ? "true" : "false");
+      try {
+        localStorage.setItem("sound_fx", this.enabled ? "true" : "false");
+      } catch {
+        // Storage blocked: the setting just won't persist.
+      }
     }
     if (this.enabled) {
       this.playCoin();

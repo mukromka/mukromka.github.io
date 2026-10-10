@@ -9,14 +9,14 @@ export const featuredProjects: FeaturedProject[] = [
     type: "Work • Group Project",
     timeline: "2023 - 2024",
     metrics: [
-      { label: "New Users", value: "+10K", icon: "Users" },
+      { label: "Users in 2 months", value: "10K+", icon: "Users" },
       { label: "Mini-games", value: "8+", icon: "Gamepad2" },
       { label: "Revamp", value: "Full UI", icon: "Sparkles" },
     ],
     description:
       "A mobile quiz platform with daily challenges. I led the complete UI/UX redesign across events and core game flows.",
     highlights: [
-      "Overhauled event systems and onboarding, driving +10K new sign-ups.",
+      "Rebuilt the first-time user experience: 10K+ users within two months of release.",
       "Redesigned responsive landing pages and integrated SEO blog.",
     ],
     tags: ["UI/UX", "Figma", "Design System", "Gamification"],
@@ -34,7 +34,7 @@ export const featuredProjects: FeaturedProject[] = [
     timeline: "2023",
     metrics: [
       { label: "Downloads", value: "80K+", icon: "Download" },
-      { label: "Rating", value: "4.5★", icon: "Star" },
+      { label: "Published game", value: "1st", icon: "Star" },
       { label: "2D Assets", value: "100+", icon: "Palette" },
     ],
     description:
