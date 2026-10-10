@@ -22,18 +22,18 @@ export function Contact() {
   };
 
   return (
-    <>
-      <section id="contact" className="relative isolate overflow-hidden py-28 sm:py-40">
+    <div id="contact" className="flex min-h-[100svh] -scroll-mt-[88px] flex-col">
+      <section aria-label="Contact" className="relative isolate flex flex-1 items-center overflow-hidden pb-12 pt-24">
         <GameMosaic fade="top" />
-        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
-          <h2 className="font-display text-[clamp(2.25rem,6.4vw,5rem)] font-bold leading-[1.02] tracking-[-0.035em]">
+        <div className="mx-auto w-full max-w-5xl px-4 text-center sm:px-6">
+          <h2 className="font-display text-[clamp(2.25rem,min(6vw,8.5svh),4.5rem)] font-bold leading-[1.02] tracking-[-0.035em]">
             Let&apos;s make something people want to play.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-dim">
             Hiring a game developer or UI/UX designer, or looking for a creative collaborator? Reach out anytime.
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-3">
+          <div className="mt-8 flex flex-col items-center gap-3">
             <a
               href={`mailto:${EMAIL}`}
               onClick={() => sound.playPowerUp()}
@@ -68,7 +68,7 @@ export function Contact() {
             </p>
           </div>
 
-          <ul className="mx-auto mt-8 flex max-w-lg flex-wrap justify-center gap-3">
+          <ul className="mx-auto mt-6 flex max-w-lg flex-wrap justify-center gap-3">
             <li>
               <ChannelLink href={WHATSAPP_URL} icon={<MessageCircle className="h-4 w-4" />}>
                 WhatsApp
@@ -89,15 +89,15 @@ export function Contact() {
       </section>
 
       <footer className="border-t border-line/60">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-dim sm:flex-row sm:px-6 lg:px-10">
-          <p>© {new Date().getFullYear()} Mukrom Karunia Azza. Built with Next.js and Framer Motion.</p>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-5 text-sm text-dim sm:flex-row sm:px-6 lg:px-10">
+          <p>© {new Date().getFullYear()} Mukrom Karunia Azza</p>
           <a href="#top" className="inline-flex min-h-11 items-center gap-1.5 rounded-control px-2 transition-colors hover:text-ink">
             Back to the title screen
             <ArrowUp className="h-4 w-4" />
           </a>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 
