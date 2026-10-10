@@ -129,9 +129,11 @@ export function TitleScreen() {
 
         <motion.h1
           variants={rise}
-          className="mt-8 max-w-[16ch] font-display text-[clamp(2.4rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.03em]"
+          className="mt-8 font-display text-[clamp(2.4rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.03em]"
         >
-          I make games that feel good to play.
+          <span className="block">Hi, I&apos;m Azza.</span>
+          <span className="block">I design games</span>
+          <span className="block">for mobile.</span>
         </motion.h1>
 
         <motion.p variants={rise} className="mt-6 max-w-[38rem] text-lg leading-relaxed text-dim sm:text-xl">
