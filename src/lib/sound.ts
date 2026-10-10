@@ -6,11 +6,8 @@ class SoundEngine {
 
   constructor() {
     if (typeof window !== "undefined") {
-      try {
-        this.enabled = localStorage.getItem("sound_fx") === "true";
-      } catch {
-        this.enabled = false;
-      }
+      // The sound toggle was removed from the UI, so effects stay off.
+      this.enabled = false;
     }
   }
 

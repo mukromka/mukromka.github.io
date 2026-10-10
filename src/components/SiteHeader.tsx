@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { FileText, Menu, Volume2, VolumeX, X } from "lucide-react";
+import { FileText, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sound } from "@/lib/sound";
 import { CV_URL, SECTIONS } from "@/lib/site";
@@ -11,10 +11,8 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [soundOn, setSoundOn] = useState(false);
 
   useEffect(() => {
-    setSoundOn(sound.enabled);
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -57,10 +55,23 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
         <a
           href="#top"
-          className="rounded-control py-1 pr-2 font-display text-[15px] font-semibold tracking-tight"
+          className="flex min-w-0 items-center gap-3 rounded-control py-1 pr-2"
           onClick={() => sound.playPop()}
         >
-          Azza Portfolio
+          <span className="relative shrink-0">
+            <span className="block h-10 w-10 overflow-hidden rounded-full bg-raised ring-1 ring-line">
+              <img
+                src="/hero.webp"
+                alt=""
+                className="h-full w-full origin-[50%_12%] scale-[1.9] object-cover object-[50%_10%]"
+              />
+            </span>
+            <span aria-hidden className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-go ring-2 ring-night" />
+          </span>
+          <span className="min-w-0 leading-tight">
+            <span className="block truncate text-[15px] font-semibold">Mukrom Karunia Azza</span>
+            <span className="block truncate text-[12.5px] text-dim">Game Developer &amp; UI/UX Designer</span>
+          </span>
         </a>
 
         <nav aria-label="Sections" className="hidden items-center gap-1 md:flex">
@@ -88,22 +99,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSoundOn(sound.toggle())}
-            aria-pressed={soundOn}
-            aria-label={soundOn ? "Turn interface sounds off" : "Turn interface sounds on"}
-            title={soundOn ? "Interface sounds on" : "Interface sounds off"}
-            className={cn(
-              "grid h-10 w-10 place-items-center rounded-control border transition-colors",
-              soundOn
-                ? "border-cursor/60 bg-cursor/10 text-cursor"
-                : "border-line text-dim hover:border-dim hover:text-ink"
-            )}
-          >
-            {soundOn ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-          </button>
-
           <a
             href={CV_URL}
             target="_blank"
