@@ -55,7 +55,8 @@ export const metadata: Metadata = {
     images: ["/hero.webp"],
   },
   icons: {
-    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1631'/%3E%3Cpath d='M20 18l26 14-26 14z' fill='%23FFC93C'/%3E%3C/svg%3E",
+    // Transparent icon so the browser tab shows no logo (and doesn't fall back to /favicon.ico).
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'/%3E",
   },
 };
 
