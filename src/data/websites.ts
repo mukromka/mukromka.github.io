@@ -47,8 +47,7 @@ export const websitesData: GameItem[] = [
     categories: ["all"],
     image: "/web-bos-gabut.webp",
     href: "https://ngegabut.com/",
-    description:
-      "Landing page and blog for the Bos Gabut quiz app, redesigned to be responsive, with an SEO blog built in.",
+    description: "Landing page for the Bos Gabut quiz app, redesigned to be responsive, with an SEO blog built in.",
     platform: "ngegabut.com",
     linkLabel: "Visit ngegabut.com",
     tags: ["UI/UX", "Landing page", "SEO blog"],
