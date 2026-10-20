@@ -4,7 +4,7 @@ export const websitesData: GameItem[] = [
   {
     id: "yakin-lulus",
     title: "Yakin Lulus",
-    role: "Designer & Developer",
+    role: "Designer & Full-stack Developer",
     categories: ["all"],
     image: "/web-yakin-lulus.webp",
     href: "https://yakinlulus.id/",
@@ -15,9 +15,22 @@ export const websitesData: GameItem[] = [
     tags: ["Laravel", "Inertia React", "PostgreSQL"],
   },
   {
+    id: "kaorustore-ai",
+    title: "Kaorustore AI",
+    role: "Designer & Full-stack Developer",
+    categories: ["all"],
+    image: "/web-kaorustore-ai.webp",
+    href: "https://ai.kaorustore.web.id/",
+    description:
+      "My own AI API business: one OpenAI-compatible key for GLM, DeepSeek, Qwen, Kimi, and MiniMax, sold as pay-once token credit, with a self-serve usage page and an admin panel for keys, quotas, and monitoring.",
+    platform: "kaorustore.web.id",
+    linkLabel: "Visit Kaorustore AI",
+    tags: ["Node.js", "React admin", "SQLite"],
+  },
+  {
     id: "kcp-jatirejo",
     title: "KCP Jatirejo",
-    role: "Designer & Developer",
+    role: "Designer & Full-stack Developer",
     categories: ["all"],
     image: "/web-kcp-jatirejo.webp",
     href: "https://kcpjatirejo.vercel.app/",
@@ -30,13 +43,14 @@ export const websitesData: GameItem[] = [
   {
     id: "bos-gabut-web",
     title: "Bos Gabut",
-    role: "UI/UX Designer",
+    role: "Designer & Full-stack Developer",
     categories: ["all"],
     image: "/web-bos-gabut.webp",
-    href: "https://bosgabut.com/",
-    description: "Landing page and blog for the Bos Gabut quiz app, redesigned to be responsive and set up for SEO.",
-    platform: "bosgabut.com",
-    linkLabel: "Visit bosgabut.com",
+    href: "https://ngegabut.com/",
+    description:
+      "Landing page and blog for the Bos Gabut quiz app, designed and built to be responsive and ready for SEO.",
+    platform: "ngegabut.com",
+    linkLabel: "Visit ngegabut.com",
     tags: ["UI/UX", "Landing page", "SEO blog"],
   },
 ];
