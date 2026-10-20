@@ -26,7 +26,7 @@ type Kind = "games" | "websites" | "webtoon";
 const KINDS: { id: Kind; label: string; icon: LucideIcon; items: GameItem[]; blurb: string }[] = [
   { id: "games", label: "Games", icon: Gamepad2, items: gamesData, blurb: "Mobile, PC and browser" },
   { id: "websites", label: "Websites", icon: Globe, items: websitesData, blurb: "Web apps and sites" },
-  { id: "webtoon", label: "Webtoon", icon: BookOpen, items: webtoonsData, blurb: "Story and base colours" },
+  { id: "webtoon", label: "Webtoon", icon: BookOpen, items: webtoonsData, blurb: "Story and base colour" },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -71,7 +71,7 @@ export function GameLibrary() {
               ) : kind === "websites" ? (
                 "Platforms and sites I've designed and built, from the first screen to the database behind it."
               ) : (
-                "Series on LINE Webtoon where I assisted the webtoonist, handling story and base colours."
+                "Comics on LINE Webtoon where I worked with the webtoonist on story, scripts, and base colours."
               )}
             </p>
           </div>
