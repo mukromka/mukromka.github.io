@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { BookOpen, Gamepad2, Globe, Play, type LucideIcon } from "lucide-react";
+import { BookOpen, ChevronLeft, ChevronRight, Gamepad2, Globe, Play, type LucideIcon } from "lucide-react";
 import { gamesData } from "@/data/games";
 import { webtoonsData } from "@/data/webtoons";
 import { websitesData } from "@/data/websites";
@@ -31,11 +31,32 @@ const KINDS: { id: Kind; label: string; icon: LucideIcon; items: GameItem[]; blu
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+// Columns match the grid's breakpoints (sm 2, lg 3, xl 4) so a page is always two full rows.
+function usePageSize() {
+  const [size, setSize] = useState(8);
+  useEffect(() => {
+    const queries = ["(min-width: 1280px)", "(min-width: 1024px)", "(min-width: 640px)"].map((q) =>
+      window.matchMedia(q)
+    );
+    const update = () => {
+      const cols = queries[0].matches ? 4 : queries[1].matches ? 3 : queries[2].matches ? 2 : 1;
+      setSize(cols === 1 ? 4 : cols * 2);
+    };
+    update();
+    queries.forEach((q) => q.addEventListener("change", update));
+    return () => queries.forEach((q) => q.removeEventListener("change", update));
+  }, []);
+  return size;
+}
+
 export function GameLibrary() {
   const [kind, setKind] = useState<Kind>("games");
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<GameItem | null>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const grid = useRef<HTMLUListElement>(null);
+  const pageSize = usePageSize();
+  const [page, setPage] = useState(0);
 
   const items = useMemo(
     () =>
@@ -48,6 +69,19 @@ export function GameLibrary() {
     () => Object.fromEntries(FILTERS.map((f) => [f.id, gamesData.filter((g) => g.categories.includes(f.id)).length])),
     []
   );
+
+  const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
+  const current = Math.min(page, pageCount - 1);
+  const shown = items.slice(current * pageSize, (current + 1) * pageSize);
+
+  useEffect(() => setPage(0), [kind, filter]);
+
+  const goTo = (next: number) => {
+    setPage(next);
+    sound.playBlip(next > current ? 640 : 520);
+    const top = grid.current?.getBoundingClientRect().top ?? 0;
+    if (top < 0) window.scrollBy({ top: top - 120, behavior: "smooth" });
+  };
 
   const close = useCallback(() => {
     setOpen(null);
@@ -173,6 +207,7 @@ export function GameLibrary() {
         </div>
 
         <motion.ul
+          ref={grid}
           layout
           id="library-panel"
           role="tabpanel"
@@ -180,7 +215,7 @@ export function GameLibrary() {
           className="mt-12 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           <AnimatePresence mode="popLayout" initial={false}>
-            {items.map((game) => (
+            {shown.map((game) => (
               <motion.li
                 key={game.id}
                 layout
@@ -226,6 +261,49 @@ export function GameLibrary() {
             ))}
           </AnimatePresence>
         </motion.ul>
+
+        {pageCount > 1 && (
+          <nav aria-label="Library pages" className="mt-12 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-sm text-dim tabular">
+              {current * pageSize + 1}–{Math.min((current + 1) * pageSize, items.length)} of {items.length}
+            </p>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => goTo(current - 1)}
+                disabled={current === 0}
+                aria-label="Previous page"
+                className="grid h-11 w-11 place-items-center rounded-full border border-line transition-colors hover:border-cursor hover:text-cursor disabled:pointer-events-none disabled:opacity-40"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              {Array.from({ length: pageCount }, (_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-label={`Page ${i + 1}`}
+                  aria-current={i === current ? "page" : undefined}
+                  className={cn(
+                    "grid h-11 w-11 place-items-center rounded-full text-sm font-semibold tabular transition-colors",
+                    i === current ? "bg-cursor text-cursor-ink" : "text-dim hover:text-ink"
+                  )}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => goTo(current + 1)}
+                disabled={current === pageCount - 1}
+                aria-label="Next page"
+                className="grid h-11 w-11 place-items-center rounded-full border border-line transition-colors hover:border-cursor hover:text-cursor disabled:pointer-events-none disabled:opacity-40"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+          </nav>
+        )}
       </div>
 
       <GameDialog game={open} onClose={close} />
