@@ -23,10 +23,10 @@ const FILTERS: { id: Filter; label: string }[] = [
 
 type Kind = "games" | "websites" | "webtoon";
 
-const KINDS: { id: Kind; label: string; icon: LucideIcon; items: GameItem[]; blurb: string }[] = [
-  { id: "games", label: "Games", icon: Gamepad2, items: gamesData, blurb: "Mobile, PC and browser" },
-  { id: "websites", label: "Websites", icon: Globe, items: websitesData, blurb: "Web apps and sites" },
-  { id: "webtoon", label: "Webtoon", icon: BookOpen, items: webtoonsData, blurb: "Story and base colour" },
+const KINDS: { id: Kind; label: string; icon: LucideIcon; items: GameItem[] }[] = [
+  { id: "games", label: "Games", icon: Gamepad2, items: gamesData },
+  { id: "websites", label: "Websites", icon: Globe, items: websitesData },
+  { id: "webtoon", label: "Webtoon", icon: BookOpen, items: webtoonsData },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -83,6 +83,11 @@ export function GameLibrary() {
     if (top < 0) window.scrollBy({ top: top - 120, behavior: "smooth" });
   };
 
+  const select = (id: Kind) => {
+    setKind(id);
+    sound.playBlip(id === "games" ? 520 : id === "websites" ? 600 : 680);
+  };
+
   const close = useCallback(() => {
     setOpen(null);
     opener.current?.focus();
@@ -92,83 +97,68 @@ export function GameLibrary() {
     <section id="games" className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div>
-          <div className="max-w-3xl">
-            <h2 className="font-display text-[clamp(2rem,4.6vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-              Project library
-            </h2>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-dim">
-              {kind === "games" ? (
-                <>
-                  Everything I&apos;ve shipped or jammed on, with what I did on each. The {counts.web} browser builds
-                  open and play right here.
-                </>
-              ) : kind === "websites" ? (
-                "Platforms and sites I've designed and built, from the first screen to the database behind it."
-              ) : (
-                "Comics on LINE Webtoon where I worked with the webtoonist on story, scripts, and base colours."
-              )}
-            </p>
-          </div>
-
-          <div
-            role="tablist"
-            aria-label="Project type"
-            className="mt-8 grid grid-cols-3 gap-2 sm:gap-3 lg:max-w-3xl"
-            onKeyDown={(e) => {
-              if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-              const i = KINDS.findIndex((k) => k.id === kind);
-              const next = KINDS[(i + (e.key === "ArrowRight" ? 1 : KINDS.length - 1)) % KINDS.length];
-              setKind(next.id);
-              document.getElementById(`library-tab-${next.id}`)?.focus();
-            }}
-          >
-            {KINDS.map(({ id, label, icon: Icon, items: list, blurb }) => {
-              const active = kind === id;
-              return (
-                <button
-                  key={id}
-                  id={`library-tab-${id}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  aria-controls="library-panel"
-                  tabIndex={active ? 0 : -1}
-                  onClick={() => {
-                    setKind(id);
-                    sound.playBlip(id === "games" ? 520 : id === "websites" ? 600 : 680);
-                  }}
-                  className={cn(
-                    "flex flex-col items-start gap-3 rounded-media p-3.5 text-left ring-1 transition-[background-color,box-shadow,color] sm:flex-row sm:items-center sm:p-4",
-                    active
-                      ? "bg-raised shadow-cursor ring-transparent"
-                      : "bg-panel/60 ring-line/70 hover:bg-panel hover:ring-line"
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "grid h-10 w-10 shrink-0 place-items-center rounded-control transition-colors",
-                      active ? "bg-cursor text-cursor-ink" : "bg-raised text-dim"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" aria-hidden />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-display text-base font-semibold tracking-tight sm:text-lg">{label}</span>
-                      <span className={cn("tabular text-sm", active ? "text-cursor" : "text-dim/80")}>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="font-display text-[clamp(2rem,4.6vw,3.5rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                Project library
+              </h2>
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-dim">
+                Games I&apos;ve shipped, websites I&apos;ve designed and built end to end, and webtoons I&apos;ve
+                written and coloured.
+              </p>
+            </div>
+            <LayoutGroup id="kind-segment">
+              <div
+                role="tablist"
+                aria-label="Project type"
+                className="grid shrink-0 grid-cols-3 rounded-full bg-panel p-1 ring-1 ring-line/70 md:flex"
+                onKeyDown={(e) => {
+                  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+                  const i = KINDS.findIndex((k) => k.id === kind);
+                  const next = KINDS[(i + (e.key === "ArrowRight" ? 1 : KINDS.length - 1)) % KINDS.length];
+                  select(next.id);
+                  document.getElementById(`library-tab-${next.id}`)?.focus();
+                }}
+              >
+                {KINDS.map(({ id, label, icon: Icon, items: list }) => {
+                  const active = kind === id;
+                  return (
+                    <button
+                      key={id}
+                      id={`library-tab-${id}`}
+                      type="button"
+                      role="tab"
+                      aria-selected={active}
+                      aria-controls="library-panel"
+                      tabIndex={active ? 0 : -1}
+                      onClick={() => select(id)}
+                      className={cn(
+                        "relative flex h-10 items-center justify-center gap-1.5 rounded-full px-3 text-sm font-semibold transition-colors sm:gap-2 sm:px-5",
+                        active ? "text-cursor-ink" : "text-dim hover:text-ink"
+                      )}
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="kind-segment-pill"
+                          className="absolute inset-0 rounded-full bg-cursor"
+                          transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                        />
+                      )}
+                      <Icon className="relative hidden h-4 w-4 sm:block" aria-hidden />
+                      <span className="relative">{label}</span>
+                      <span className={cn("relative tabular", active ? "text-cursor-ink/70" : "text-dim/70")}>
                         {list.length}
                       </span>
-                    </span>
-                    <span className="mt-0.5 hidden text-sm text-dim sm:block">{blurb}</span>
-                  </span>
-                </button>
-              );
-            })}
+                    </button>
+                  );
+                })}
+              </div>
+            </LayoutGroup>
           </div>
 
           {kind === "games" && (
             <LayoutGroup id="library-filters">
-              <div role="radiogroup" aria-label="Filter games" className="mt-6 flex flex-wrap gap-1.5">
+              <div role="radiogroup" aria-label="Filter games" className="mt-8 flex flex-wrap gap-1.5">
                 {FILTERS.map((f) => {
                   const active = filter === f.id;
                   return (
