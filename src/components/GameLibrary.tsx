@@ -2,8 +2,9 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { Gamepad2, Globe, Play, Smartphone, type LucideIcon } from "lucide-react";
+import { BookOpen, Gamepad2, Globe, Play, type LucideIcon } from "lucide-react";
 import { gamesData } from "@/data/games";
+import { webtoonsData } from "@/data/webtoons";
 import { websitesData } from "@/data/websites";
 import type { GameItem } from "@/types";
 import { cn } from "@/lib/utils";
@@ -20,12 +21,12 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: "art", label: "2D art" },
 ];
 
-type Kind = "games" | "websites" | "apps";
+type Kind = "games" | "websites" | "webtoon";
 
 const KINDS: { id: Kind; label: string; icon: LucideIcon; items: GameItem[]; blurb: string }[] = [
   { id: "games", label: "Games", icon: Gamepad2, items: gamesData, blurb: "Mobile, PC and browser" },
   { id: "websites", label: "Websites", icon: Globe, items: websitesData, blurb: "Web apps and sites" },
-  { id: "apps", label: "Apps", icon: Smartphone, items: [], blurb: "Coming soon" },
+  { id: "webtoon", label: "Webtoon", icon: BookOpen, items: webtoonsData, blurb: "Story and base colours" },
 ];
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -70,7 +71,7 @@ export function GameLibrary() {
               ) : kind === "websites" ? (
                 "Platforms and sites I've designed and built, from the first screen to the database behind it."
               ) : (
-                "Apps I'm working on. They'll show up here once they ship."
+                "Series on LINE Webtoon where I assisted the webtoonist, handling story and base colours."
               )}
             </p>
           </div>
@@ -171,73 +172,60 @@ export function GameLibrary() {
           )}
         </div>
 
-        {items.length === 0 ? (
-          <div
-            id="library-panel"
-            role="tabpanel"
-            aria-labelledby={`library-tab-${kind}`}
-            className="mt-12 grid place-items-center rounded-media border border-dashed border-line px-6 py-16 text-center"
-          >
-            <Smartphone className="h-8 w-8 text-dim" aria-hidden />
-            <p className="mt-4 font-display text-lg font-semibold">Nothing here yet</p>
-            <p className="mt-1 max-w-sm text-dim">New apps are in the works. Check back soon.</p>
-          </div>
-        ) : (
-          <motion.ul
-            layout
-            id="library-panel"
-            role="tabpanel"
-            aria-labelledby={`library-tab-${kind}`}
-            className="mt-12 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          >
-            <AnimatePresence mode="popLayout" initial={false}>
-              {items.map((game) => (
-                <motion.li
-                  key={game.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.94 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.15 } }}
-                  transition={{ duration: 0.45, ease }}
+        <motion.ul
+          layout
+          id="library-panel"
+          role="tabpanel"
+          aria-labelledby={`library-tab-${kind}`}
+          className="mt-12 grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
+          <AnimatePresence mode="popLayout" initial={false}>
+            {items.map((game) => (
+              <motion.li
+                key={game.id}
+                layout
+                initial={{ opacity: 0, scale: 0.94 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.15 } }}
+                transition={{ duration: 0.45, ease }}
+              >
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    opener.current = e.currentTarget;
+                    setOpen(game);
+                    sound.playPop();
+                  }}
+                  aria-haspopup="dialog"
+                  className="group block w-full rounded-media text-left focus-visible:outline-offset-4"
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      opener.current = e.currentTarget;
-                      setOpen(game);
-                      sound.playPop();
-                    }}
-                    aria-haspopup="dialog"
-                    className="group block w-full rounded-media text-left focus-visible:outline-offset-4"
-                  >
-                    <span className="relative block aspect-[16/10] overflow-hidden rounded-media bg-panel ring-1 ring-line/60 transition-shadow duration-300 group-hover:shadow-cursor">
-                      <img
-                        src={game.image}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                      />
-                      {game.isPlayableWeb && (
-                        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-night/85 px-2.5 py-1 text-xs font-semibold text-go">
-                          <Play className="h-3 w-3 fill-current" aria-hidden />
-                          Plays in browser
-                        </span>
-                      )}
-                    </span>
-                    <span className="mt-4 flex items-start justify-between gap-3">
-                      <span className="min-w-0">
-                        <span className="block font-display text-lg font-semibold tracking-tight">{game.title}</span>
-                        <span className="mt-1 block text-sm text-dim">{game.role}</span>
+                  <span className="relative block aspect-[16/10] overflow-hidden rounded-media bg-panel ring-1 ring-line/60 transition-shadow duration-300 group-hover:shadow-cursor">
+                    <img
+                      src={game.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                    />
+                    {game.isPlayableWeb && (
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-night/85 px-2.5 py-1 text-xs font-semibold text-go">
+                        <Play className="h-3 w-3 fill-current" aria-hidden />
+                        Plays in browser
                       </span>
-                      <span className="shrink-0 pt-1 text-xs font-medium text-dim">{game.platform}</span>
+                    )}
+                  </span>
+                  <span className="mt-4 flex items-start justify-between gap-3">
+                    <span className="min-w-0">
+                      <span className="block font-display text-lg font-semibold tracking-tight">{game.title}</span>
+                      <span className="mt-1 block text-sm text-dim">{game.role}</span>
                     </span>
-                  </button>
-                </motion.li>
-              ))}
-            </AnimatePresence>
-          </motion.ul>
-        )}
+                    <span className="shrink-0 pt-1 text-xs font-medium text-dim">{game.platform}</span>
+                  </span>
+                </button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
       </div>
 
       <GameDialog game={open} onClose={close} />
