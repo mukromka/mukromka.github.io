@@ -94,7 +94,7 @@ export function AboutSheet() {
             href={CV_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex h-12 items-center gap-2 rounded-control border border-line px-5 font-semibold transition-colors hover:border-cursor hover:text-cursor"
+            className="mt-6 inline-flex h-12 items-center gap-2 rounded-control border border-line px-5 font-semibold transition-colors hover:border-cursor hover:text-cursor"
           >
             <FileText className="h-4 w-4" />
             Read the full CV (PDF)
