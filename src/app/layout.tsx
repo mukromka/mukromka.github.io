@@ -16,9 +16,9 @@ const sans = Onest({
   display: "swap",
 });
 
-const title = "Mukrom Karunia Azza — Game Developer & UI/UX Designer";
+const title = "Mukrom Karunia Azza — Designer & Developer";
 const description =
-  "Unity game developer and UI/UX designer from Indonesia. 15+ shipped mobile and web games, 80K+ downloads on Google Play, 13.4M reads on LINE Webtoon.";
+  "Designer and developer from Indonesia who builds games, websites, and other creative things. 15+ shipped mobile and web games, 80K+ downloads on Google Play, 13.4M reads on LINE Webtoon.";
 
 export const metadata: Metadata = {
   title,

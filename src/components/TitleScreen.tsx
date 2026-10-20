@@ -45,13 +45,13 @@ export function TitleScreen() {
           className="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.03em]"
         >
           <span className="block">Hi, I&apos;m Azza.</span>
-          <span className="block">I design games</span>
-          <span className="block">for mobile.</span>
+          <span className="block">I design things,</span>
+          <span className="block">then I&nbsp;build&nbsp;them.</span>
         </motion.h1>
 
         <motion.p variants={rise} className="mt-6 max-w-[38rem] text-lg leading-relaxed text-dim sm:text-xl">
-          Unity developer and UI/UX designer from Indonesia. I design the screens players tap through, then build the
-          game behind them, across 15+ mobile and web titles.
+          Designer and developer from Indonesia. I make games, websites, and other creative things, taking each one
+          from the first sketch to something you can actually play with.
         </motion.p>
 
         <motion.div variants={rise} className="mt-9 flex flex-wrap items-center justify-center gap-3">
