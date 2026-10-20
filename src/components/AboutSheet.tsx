@@ -2,7 +2,19 @@ import { Award, BadgeCheck, FileText } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import { CV_URL } from "@/lib/site";
 
-const TOOLS = ["Unity", "C#", "Figma", "Photoshop", "Illustrator", "Clip Studio Paint", "CorelDraw", "GitHub"];
+const TOOLS = [
+  "Unity",
+  "C#",
+  "Figma",
+  "Photoshop",
+  "Illustrator",
+  "Clip Studio Paint",
+  "CorelDraw",
+  "GitHub",
+  "Claude",
+  "Codex",
+  "Antigravity",
+];
 
 const RECOGNITION = [
   { icon: BadgeCheck, title: "Certified Unity Developer", detail: "Google Play x Unity, 2024" },
@@ -29,9 +41,14 @@ export function AboutSheet() {
 
           <div className="mt-6 max-w-[60ch] space-y-4 text-lg leading-relaxed text-ink/90">
             <p>
-              I&apos;m Azza, a game developer and UI/UX designer from Indonesia with a Game Technology degree from
-              PENS. Since December 2023 I&apos;ve been at PT. Kreatif Maju Bersama, designing game UI and building web
-              games in Unity.
+              I&apos;m Azza, a designer and developer from Indonesia with a Game Technology degree from PENS. I make
+              games, websites, and other creative things, and I like owning both halves: the design and the code that
+              makes it work. Since December 2023 I&apos;ve been at PT. Kreatif Maju Bersama, designing game UI and
+              building web games in Unity.
+            </p>
+            <p>
+              AI is part of how I build. I use Claude, Codex, and Antigravity every day to speed up the technical side,
+              from writing and debugging code to trying ideas quickly, so more of my time goes into design and detail.
             </p>
             <p className="text-dim">
               I started in webtoons, writing scripts and base colours for Moon Flower, then drew the UI and art for Mie
@@ -39,7 +56,7 @@ export function AboutSheet() {
             </p>
           </div>
 
-          <h3 className="mt-10 font-display text-lg font-semibold tracking-tight">Awards &amp; certification</h3>
+          <h3 className="mt-8 font-display text-lg font-semibold tracking-tight">Awards &amp; certification</h3>
           <ul className="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2">
             {RECOGNITION.map(({ icon: Icon, title, detail }) => (
               <li key={title} className="flex gap-3">

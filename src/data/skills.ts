@@ -13,6 +13,17 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
+    title: "Web Development",
+    icon: "Globe",
+    color: "from-sky-500/20 to-blue-500/20",
+    skills: [
+      { name: "Next.js" },
+      { name: "React" },
+      { name: "TypeScript" },
+      { name: "Tailwind CSS" },
+    ],
+  },
+  {
     title: "UI/UX Design",
     icon: "Layout",
     color: "from-emerald-500/20 to-teal-500/20",
