@@ -150,7 +150,7 @@ export function GameDialog({ game, onClose }: { game: GameItem | null; onClose: 
                   rel="noopener noreferrer"
                   className="inline-flex h-11 items-center gap-2 rounded-control border border-line px-4 text-sm font-semibold transition-colors hover:border-cursor hover:text-cursor"
                 >
-                  {game.isPlayableWeb ? "Open in a new tab" : `Open on ${game.platform}`}
+                  {game.linkLabel ?? (game.isPlayableWeb ? "Open in a new tab" : `Open on ${game.platform}`)}
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
               </div>

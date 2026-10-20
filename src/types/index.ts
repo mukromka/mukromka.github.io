@@ -28,6 +28,7 @@ export interface GameItem {
   description: string;
   platform: string;
   isPlayableWeb?: boolean;
+  linkLabel?: string;
   tags: string[];
 }
 
