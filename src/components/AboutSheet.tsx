@@ -17,7 +17,7 @@ const TOOLS = [
 ];
 
 const RECOGNITION = [
-  { icon: BadgeCheck, title: "Certified Unity Developer", detail: "Google Play x Unity, 2024" },
+  { icon: BadgeCheck, title: "Unity Certified Game Developer", detail: "Google Play x Unity, 2024" },
   { icon: Award, title: "Best Booth", detail: "KMIPN, 2021" },
   { icon: Award, title: "3rd place, mobile game category", detail: "IMETC, 2020" },
   { icon: Award, title: "Top 5 Favorite", detail: "LINE Creativate, 2018" },
@@ -41,9 +41,9 @@ export function AboutSheet() {
 
           <div className="mt-6 max-w-[60ch] space-y-4 text-lg leading-relaxed text-ink/90">
             <p>
-              I&apos;m Azza, a designer and developer from Indonesia with a Game Technology degree from PENS. I make
-              games, websites, and other creative things, and I like owning both halves: the design and the code that
-              makes it work. Since December 2023 I&apos;ve been at PT. Kreatif Maju Bersama, designing game UI and
+              I&apos;m Azza, a designer and developer from Indonesia, a Unity Certified Game Developer with a Game
+              Technology degree from PENS. I make games, websites, and other creative things, and I like owning both
+              halves: the design and the code that makes it work. Since December 2023 I&apos;ve been at PT. Kreatif Maju Bersama, designing game UI and
               building web games in Unity.
             </p>
             <p>
