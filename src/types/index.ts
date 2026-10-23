@@ -32,19 +32,6 @@ export interface GameItem {
   tags: string[];
 }
 
-export interface ExperienceItem {
-  id: string;
-  period: string;
-  role: string;
-  company: string;
-  location: string;
-  type: string;
-  description: string;
-  achievements: string[];
-  skills: string[];
-  accentColor: string;
-}
-
 export interface SkillCategory {
   title: string;
   icon: string;

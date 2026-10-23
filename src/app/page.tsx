@@ -5,7 +5,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { TitleScreen } from "@/components/TitleScreen";
 import { LevelSelect } from "@/components/LevelSelect";
 import { GameLibrary } from "@/components/GameLibrary";
-import { CareerLog } from "@/components/CareerLog";
 import { AboutSheet } from "@/components/AboutSheet";
 import { Contact } from "@/components/Contact";
 
@@ -23,7 +22,6 @@ export default function Home() {
         <TitleScreen />
         <LevelSelect />
         <GameLibrary />
-        <CareerLog />
         <AboutSheet />
         <Contact />
       </main>
