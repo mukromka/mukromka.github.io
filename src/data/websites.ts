@@ -9,7 +9,7 @@ export const websitesData: GameItem[] = [
     image: "/web-yakin-lulus.webp",
     href: "https://yakinlulus.id/",
     description:
-      "Online tryout platform for school and CPNS exams: timed tests that autosave, automatic scoring, answer reviews, and an admin panel for managing packages and questions.",
+      "Tryout platform for the SKD CPNS exam with 1K+ registered users and a 7K+ question bank: CAT-style tests with a timer, per-subtest passing thresholds, answer explanations, a filterable catalog, and plain Free vs Premium pricing.",
     platform: "yakinlulus.id",
     linkLabel: "Visit yakinlulus.id",
     tags: ["Laravel", "Inertia React", "PostgreSQL"],
@@ -22,7 +22,7 @@ export const websitesData: GameItem[] = [
     image: "/web-kaorustore-ai.webp",
     href: "https://ai.kaorustore.web.id/",
     description:
-      "My own AI API business: one OpenAI-compatible key for GLM, DeepSeek, Qwen, Kimi, and MiniMax, sold as pay-once token credit, with a self-serve usage page and an admin panel for keys, quotas, and monitoring.",
+      "My own AI API business: one OpenAI-compatible key for 48 models, including Claude, GPT, Gemini, DeepSeek, and Qwen, sold as pay-once token credit. Three-step setup, per-model price multipliers, a self-serve usage page, and a live status monitor.",
     platform: "kaorustore.web.id",
     linkLabel: "Visit Kaorustore AI",
     tags: ["Node.js", "React admin", "SQLite"],
